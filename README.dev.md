@@ -1,11 +1,5 @@
 # Setup Instructions
 
-## Recommended versions
-
-* npm: 8.6.0
-* node: 17.3.0
-* aws-amplify/cli: 7.6.26
-
 ## Setup React + Amplify
 
 1. CD into your empty project folder locally and ensure your CLI is using recommended Node version: `nvm list`
