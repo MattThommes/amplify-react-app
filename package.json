@@ -30,11 +30,12 @@
     "@aws-amplify/cli": "^7.6.26"
   },
   "scripts": {
-    "requirements-check": "node check_node_version.js",
+    "node-version-check": "node check_node_version.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "npm run node-version-check"
   },
   "eslintConfig": {
     "extends": [
