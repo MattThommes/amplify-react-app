@@ -1,8 +1,13 @@
 # Setup Instructions
 
+## Setup Amplify
+
+1. Install Amplify CLI: `npm install -g @aws-amplify/cli@7.6.26`
+
 ## Setup React + Amplify
 
-1. CD into your empty project folder locally and ensure your CLI is using recommended Node version: `nvm list`
+1. CD into your empty project folder locally.
+2. Run `nvm use`, `nvm install`, `nvm exec`, and `nvm which`
 2. Run `npm install`
 2. Update the newly generated `README.md` to be specific to the project.
 3. Ensure the command `amplify --version` works and outputs recommended Amplify CLI version.
