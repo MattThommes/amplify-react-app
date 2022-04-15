@@ -1,14 +1,19 @@
 # Setup Instructions
 
+## Setup repo
+
+1. Run `git clone git@github.com:MattThommes/amplify-react-app.git .` in an empty project folder.
+
 ## Setup Amplify
 
-1. Install Amplify CLI: `npm install -g @aws-amplify/cli@7.6.26`
+1. Check Amplify version: `amplify --version`
+2. If it’s not matching the [package.json](package.json) version requirement, install it:
+    1. `npm install -g @aws-amplify/cli@^[VERSION_FROM_PACKAGE_JSON]`
+    2. Example: `npm install -g @aws-amplify/cli@^7.6.26`
 
 ## Setup React + Amplify
 
-1. CD into your empty project folder locally.
-2. Run `nvm use`, `nvm install`, `nvm exec`, and `nvm which`
-2. Run `npm install`
+1. Run `npm install`
 2. Update the newly generated `README.md` to be specific to the project.
 3. Ensure the command `amplify --version` works and outputs recommended Amplify CLI version.
 4. Run `amplify init` to setup a new Amplify project.
