@@ -5,7 +5,7 @@
 1. Create Github repo for new project.
 2. Run `git clone git@github.com:MattThommes/amplify-react-app.git .` in your empty project folder locally.
 3. Change the remote repo to your project specific repo:
-    1. `git remote remove origin`
+    1. `git remote rename origin source` <-- or whatever you want to call the original repo
     2. `git remote add upstream [YOUR_PROJECT_GIT_CLONE_URI]`
 4. Update the `README.md` file to be specific to your project.
 5. Run `nvm use` to use the correct Node version.
@@ -28,13 +28,11 @@
     10. Start Command: `npm start`
     11. Select `AWS profile` for the authentication method you want to use.
     12. Select `amplify-feb2021-b` for the profile you want to use.
-11. Delete `README.dev.md` file.
-12. Commit changes then push:
+11. Commit changes then push:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify`
-    4. `git rm README.dev.md`
-13. Create `staging` branch (from `master` branch) locally then push.
+12. Create `staging` branch (from `master` branch) locally then push.
 
 ## Amplify console setup
 

@@ -1,0 +1,69 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+.App {
+	font-family: 'Varela Round';
+	margin: 10px 0;
+	text-align: center;
+
+	.container, div[class^=container-] {
+	
+		.row >.col, .row>[class^=col-] {
+			/*border: 1px dashed teal;*/
+		}
+
+		.header-brand {
+			background-color: white;
+			padding-left: 20px; /* To nudge the logo over slightly */
+
+			.navbar-brand {
+				margin: auto;
+
+				img {
+					height: auto;
+					max-width: 230px;
+				}
+			}
+		}
+		
+		.header-sub {
+			font-size: 18px;
+			padding: 10px 0;
+		}
+		
+		.sidebar {
+			background-color: teal;
+			color: white;
+			margin-bottom: 15px;
+			
+			a {
+				&:link {
+					color: white;
+				}
+
+				&:visited {
+					color: white;
+				}
+
+				&:hover {
+					color: white;
+				}
+
+				&:active {
+					color: white;
+				}
+			}
+		}
+		
+		.content {
+			text-align: left;
+		}
+
+		.footer {
+			border: 1px dashed green;
+			border-width: 1px 0 0 0;
+			margin: 25px 0;
+			padding: 10px 0;
+		}
+	}
+}
