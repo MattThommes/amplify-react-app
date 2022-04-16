@@ -41,8 +41,8 @@
 1. In the AWS console, connect your new app to Github for both `master` and `staging` branches.
     1. Choose ”dev” environment.
     2. Check `Enable full-stack continuous deployments (CI/CD)`
-    3. Under Advanced settings > Live package updates, set Amplify CLI to the version from `package.json` (example: 7.6.26).
+    3. Under Advanced settings > Live package updates, set Amplify CLI to the version from [package.json](package.json) (example: 7.6.26).
     4. Click Next then Save and deploy.
-2. Under Build settings, paste in the contents of `amplify.yml`.
+2. Under Build settings, paste in the contents of [amplify.yml](amplify.yml).
 3. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
 
