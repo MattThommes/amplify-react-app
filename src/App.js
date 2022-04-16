@@ -53,11 +53,13 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home content="1" />} />
                             <Route path="/section-1" element={<Section content="1" />} />
+                            <Route path="/section-2" element={<Section content="1" />} />
                         </Routes>
                     </Col>
                     <Col sm>
                         <Routes>
                             <Route path="/" element={<Home content="2" />} />
+                            <Route path="/section-1" element={<Section content="2" />} />
                             <Route path="/section-2" element={<Section content="2" />} />
                         </Routes>
                     </Col>
@@ -96,12 +98,12 @@ function Section(params) {
             <div className="content test">
                 {params.content === "1" &&
                     <>
-                        <p>Section 1 content</p>
+                        <p>Section content 1</p>
                     </>
                 }
                 {params.content === "2" &&
                     <>
-                        <p>Section 2 content</p>
+                        <p>Section content 2</p>
                     </>
                 }
             </div>
@@ -113,7 +115,7 @@ function Footer() {
     return (
         <div className="footer">
             <br />
-            <a href="/">The Amplify React website</a>
+            <Nav.Link as={Link} to="/">The Amplify React website</Nav.Link>
             <br />
             Established {new Date().getFullYear()}
         </div>
