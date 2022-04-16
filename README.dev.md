@@ -5,8 +5,7 @@
 1. Create Github repo for new project.
 2. Run `git clone git@github.com:MattThommes/amplify-react-app.git .` in your empty project folder locally.
 3. Change the remote repo to your project specific repo:
-    1. `git remote rename origin source` <-- or whatever you want to call the original repo
-    2. `git remote add upstream [YOUR_PROJECT_GIT_CLONE_URI]`
+    1. `git remote add upstream [YOUR_PROJECT_GIT_CLONE_URI]`
 4. Update the `README.md` file to be specific to your project.
 5. Run `nvm use` to use the correct Node version.
 6. Check Amplify version: `amplify --version`
