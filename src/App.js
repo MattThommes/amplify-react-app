@@ -52,15 +52,15 @@ function App() {
                     <Col sm>
                         <Routes>
                             <Route path="/" element={<Home content="1" />} />
-                            <Route path="/section-1" element={<Section content="1" />} />
-                            <Route path="/section-2" element={<Section content="1" />} />
+                            <Route path="/section-1" element={<SectionContent section="1" content="1" />} />
+                            <Route path="/section-2" element={<SectionContent section="2" content="1" />} />
                         </Routes>
                     </Col>
                     <Col sm>
                         <Routes>
                             <Route path="/" element={<Home content="2" />} />
-                            <Route path="/section-1" element={<Section content="2" />} />
-                            <Route path="/section-2" element={<Section content="2" />} />
+                            <Route path="/section-1" element={<SectionContent section="1" content="2" />} />
+                            <Route path="/section-2" element={<SectionContent section="2" content="2" />} />
                         </Routes>
                     </Col>
                     <Col sm>
@@ -92,21 +92,40 @@ function Home(params) {
     );
 }
 
-function Section(params) {
+function SectionContent(params) {
     return (
         <>
-            <div className="content test">
-                {params.content === "1" &&
-                    <>
-                        <p>Section content 1</p>
-                    </>
-                }
-                {params.content === "2" &&
-                    <>
-                        <p>Section content 2</p>
-                    </>
-                }
-            </div>
+            {params.section === "1" ? (
+                <>
+                    <div className="content test">
+                        {params.content === "1" &&
+                            <>
+                                <p>Section 1 Content 1</p>
+                            </>
+                        }
+                        {params.content === "2" &&
+                            <>
+                                <p>Section 1 Content 2</p>
+                            </>
+                        }
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="content test">
+                        {params.content === "1" &&
+                            <>
+                                <p>Section 2 Content 1</p>
+                            </>
+                        }
+                        {params.content === "2" &&
+                            <>
+                                <p>Section 2 Content 2</p>
+                            </>
+                        }
+                    </div>
+                </>
+            )}
         </>
     );
 }
