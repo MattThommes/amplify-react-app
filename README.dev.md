@@ -13,6 +13,15 @@
     1. `npm install -g @aws-amplify/cli@^[VERSION_FROM_PACKAGE_JSON]`
     2. Example: `npm install -g @aws-amplify/cli@^7.6.26`
 8. Run `npm install`
+    1. You may receive some warnings about GraphQL which can be ignored:
+        ```
+        npm WARN ERESOLVE overriding peer dependency
+        npm WARN While resolving: relay-compiler@12.0.0
+        npm WARN Found: graphql@14.7.0
+        npm WARN node_modules/graphql
+        npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
+        ...
+        ```
 9. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
 10. Run `amplify init` to setup a new Amplify project.
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
@@ -27,7 +36,7 @@
     10. Start Command: `npm start`
     11. Select `AWS profile` for the authentication method you want to use.
     12. Select `amplify-feb2021-b` for the profile you want to use.
-11. Commit changes then push:
+11. Commit changes then push. Don’t forget newly generated files:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify`
