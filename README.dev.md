@@ -2,6 +2,9 @@
 
 ## Local project setup
 
+/bin/chmod 700 run.sh
+
+
 1. Create Github repo for new project.
 2. Run `git clone git@github.com:MattThommes/amplify-react-app.git .` in your empty project folder locally.
 3. Change the remote repo to your project specific repo:
@@ -23,7 +26,7 @@
         ...
         ```
 9. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-10. Run `amplify init` to setup a new Amplify project.
+10. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter a name for the environment: Can leave at `dev` for now.
