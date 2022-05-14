@@ -2,8 +2,12 @@
 
 ## Local project setup
 
-/bin/chmod 700 run.sh
+### Automated steps
 
+1. Set permissions for script: `/bin/chmod 700 setup.sh`
+2. Run script: `./path/to/script/setup.sh`
+
+### Manual steps
 
 1. Create Github repo for new project.
 2. Run `git clone git@github.com:MattThommes/amplify-react-app.git .` in your empty project folder locally.

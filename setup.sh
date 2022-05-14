@@ -39,10 +39,14 @@ echo "  -> Amplify version found: ${amplify_version}"
 
 if [ "$amplify_version" != "7.6.26" ] ; then
 	echo -e "${RED}Amplify version incorrect; currently set to $amplify_version${NC}"
+	exit 1
 fi
 
 echo "-> Installing dependencies..."
-npm install
+npm ci --prefer-offline --no-audit --progress=false
 
-echo "-> Starting local server..."
+echo "-> Initializing Amplify project..."
+amplify init
+
+echo "-> Starting local server to test that it's working..."
 npm start
