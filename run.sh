@@ -10,7 +10,7 @@ rm -rf .git
 echo "-> Cloning Amplify React App repo..."
 git clone git@github.com:MattThommes/amplify-react-app.git . --quiet
 clone_success=$?
-if [ clone_success <> 0 ] ; then
+if [ clone_success -ne 0 ] ; then
 	echo -e "${RED}Failed to clone the repo (error code $clone_success)${NC}"
 	exit 1
 fi
@@ -37,6 +37,12 @@ amplify_version=$(amplify --version)
 
 echo "  -> Amplify version found: ${amplify_version}"
 
-if [ "$amplify_version" <> "7.6.26" ] ; then
-	echo -e "${RED}Amplify version incorrect${NC}"
+if [ "$amplify_version" != "7.6.26" ] ; then
+	echo -e "${RED}Amplify version incorrect; currently set to $amplify_version${NC}"
 fi
+
+echo "-> Installing dependencies..."
+npm install
+
+echo "-> Starting local server..."
+npm start
