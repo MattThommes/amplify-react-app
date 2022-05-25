@@ -33,7 +33,7 @@
 10. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
-    3. Enter a name for the environment: Can leave at `dev` for now.
+    3. Enter `dev` for name of the environment.
     4. Choose `None` for your default editor.
     5. Choose `javascript` the type of app that you're building.
     6. Choose `react` javascript framework.
