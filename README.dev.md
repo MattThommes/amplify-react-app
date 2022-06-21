@@ -4,8 +4,9 @@
 
 ### Automated steps
 
-1. Set permissions for script: `/bin/chmod 700 setup.sh`
-2. Run script: `./path/to/script/setup.sh`
+1. Clone repo into project folder: `git clone git@github.com:MattThommes/amplify-react-app.git project`
+2. Set permissions for script: `/bin/chmod 700 setup.sh`
+3. Run script: `./path/to/script/setup.sh`
 
 ### Manual steps
 
