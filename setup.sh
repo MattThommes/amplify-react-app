@@ -3,9 +3,10 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo "-> Initializing git..."
-echo "  -> Removing any existing git setup..."
+echo "-> Removing any existing git setup..."
 rm -rf .git
+echo "-> Initializing git..."
+git init
 
 echo "-> Cloning Amplify React App repo..."
 git clone git@github.com:MattThommes/amplify-react-app.git . --quiet
