@@ -17,10 +17,12 @@ echo "-> Updating readme..."
 > README.md
 echo "# Custom Amplify React App - $date" > README.md
 
+echo "-> Setting up Node version manager..."
+brew install nvm
+source ~/.nvm/nvm.sh
+
 echo "-> Setting up Node..."
 nvm install v17.3.0
-# source nvm so it is found
-. ~/.nvm/nvm.sh
 nvm use
 
 echo "-> Checking Amplify version..."
