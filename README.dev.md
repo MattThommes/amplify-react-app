@@ -4,7 +4,7 @@
 
 ### Automated steps
 
-1. Clone repo into project directory: `git clone git@github.com:MattThommes/amplify-react-app.git project`
+1. Clone template repo into project directory: `git clone git@github.com:MattThommes/amplify-react-app.git project`
 2. cd into project directory
 2. Set permissions for script (if needed): `/bin/chmod 700 setup.sh`
 3. Run script (from project directory root): `./setup.sh`
