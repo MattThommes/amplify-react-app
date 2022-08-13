@@ -24,6 +24,10 @@ source ~/.nvm/nvm.sh
 echo "-> Setting up Node..."
 nvm install v17.3.0
 nvm use
+nvm list
+
+echo "-> Setting correct AWS profile/credentials..."
+export AWS_PROFILE=amplify-feb2021-b
 
 echo "-> Checking Amplify version..."
 amplify_version=$(amplify --version)
