@@ -13,6 +13,8 @@ import {
     Link
 } from "react-router-dom";
 
+const SiteName = "Amplify React Site";
+
 function App() {
   return (
     <div className="App">
@@ -32,7 +34,7 @@ function App() {
                         <Container className="header-sub">
                             <Row>
                                 <Col>
-                                    Welcome to the Amplify React website!
+                                    Welcome to the {SiteName} website!
                                     <br />
                                 </Col>
                             </Row>
@@ -42,8 +44,8 @@ function App() {
                         <Navbar>
                             <Nav>
                                 <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                <Nav.Link as={Link} to="/section-1">Section 1</Nav.Link>
-                                <Nav.Link as={Link} to="/section-2">Section 2</Nav.Link>
+                                <Nav.Link as={Link} to="/page-1">Page 1</Nav.Link>
+                                <Nav.Link as={Link} to="/page-2">Page 2</Nav.Link>
                             </Nav>
                         </Navbar>
                     </Col>
@@ -52,17 +54,12 @@ function App() {
                     <Col sm>
                         <Routes>
                             <Route path="/" element={<Home content="1" />} />
-                            <Route path="/section-1" element={<SectionContent section="1" content="1" />} />
-                            <Route path="/section-2" element={<SectionContent section="2" content="1" />} />
+                            <Route path="/page-1" element={<PageContent page="1" />} />
+                            <Route path="/page-2" element={<PageContent page="2" />} />
                         </Routes>
                     </Col>
-                    <Col sm>
-                        <Routes>
-                            <Route path="/" element={<Home content="2" />} />
-                            <Route path="/section-1" element={<SectionContent section="1" content="2" />} />
-                            <Route path="/section-2" element={<SectionContent section="2" content="2" />} />
-                        </Routes>
-                    </Col>
+                </Row>
+                <Row>
                     <Col sm>
                         <Footer />
                     </Col>
@@ -79,12 +76,7 @@ function Home(params) {
             <div className="content home">
                 {params.content === "1" &&
                     <>
-                        <p>Home 1 content</p>
-                    </>
-                }
-                {params.content === "2" &&
-                    <>
-                        <p>Home 2 content</p>
+                        <p>Home content</p>
                     </>
                 }
             </div>
@@ -92,40 +84,30 @@ function Home(params) {
     );
 }
 
-function SectionContent(params) {
+function PageContent(params) {
+    if (params.page === "1") {
+        return (
+            <Page1Content />
+        );
+    } else if (params.page === "2") {
+        return (
+            <Page2Content />
+        );
+    }
+}
+
+function Page1Content() {
     return (
         <>
-            {params.section === "1" ? (
-                <>
-                    <div className="content test">
-                        {params.content === "1" &&
-                            <>
-                                <p>Section 1 Content 1</p>
-                            </>
-                        }
-                        {params.content === "2" &&
-                            <>
-                                <p>Section 1 Content 2</p>
-                            </>
-                        }
-                    </div>
-                </>
-            ) : (
-                <>
-                    <div className="content test">
-                        {params.content === "1" &&
-                            <>
-                                <p>Section 2 Content 1</p>
-                            </>
-                        }
-                        {params.content === "2" &&
-                            <>
-                                <p>Section 2 Content 2</p>
-                            </>
-                        }
-                    </div>
-                </>
-            )}
+            <p>Page 1 Content</p>
+        </>
+    );
+}
+
+function Page2Content() {
+    return (
+        <>
+            <p>Page 2 Content</p>
         </>
     );
 }
@@ -134,7 +116,7 @@ function Footer() {
     return (
         <div className="footer">
             <br />
-            <Nav.Link as={Link} to="/">The Amplify React website</Nav.Link>
+            <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
             <br />
             Established {new Date().getFullYear()}
         </div>
