@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-import logo from './logo.svg';
+import HeaderImage from './images/header_image.png';
 
 import {
     BrowserRouter as Router,
@@ -26,10 +26,8 @@ function App() {
                             <Navbar.Brand as={Link} to="/">
                                 <img
                                     alt=""
-                                    src={logo}
-                                    width="300"
-                                    height="151"
-                                    className="d-inline-block align-top"
+                                    src={HeaderImage}
+                                    className=""
                                 />{'  '}
                             </Navbar.Brand>
                         </Navbar>
