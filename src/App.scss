@@ -12,23 +12,28 @@
 			border: 1px dashed teal;
 		}
 
-		.header-brand {
-			background-color: white;
-			padding-left: 20px; /* To nudge the logo over slightly */
+		.header-row {
+			.header-col {
+				padding: 0;
+			}
+
+			.header-brand {
+				background-color: white;
+				padding: 0; /* To nudge the logo over slightly */
 
 			.navbar-brand {
 				margin: auto;
 
-				img {
-					height: auto;
-					max-width: 230px;
+					img {
+
+					}
 				}
 			}
-		}
-		
-		.header-sub {
-			font-size: 18px;
-			padding: 10px 0;
+			
+			.header-sub {
+				font-size: 18px;
+				padding: 10px 0;
+			}
 		}
 		
 		.sidebar {

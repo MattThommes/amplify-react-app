@@ -20,14 +20,14 @@ function App() {
     <div className="App">
         <Router>
             <Container>
-                <Row>
-                    <Col sm={8}>
+                <Row className="header-row">
+                    <Col sm={8} className="header-col">
                         <Navbar className="header-brand">
                             <Navbar.Brand as={Link} to="/">
                                 <img
                                     alt=""
                                     src={HeaderImage}
-                                    className=""
+                                    className="img-fluid"
                                 />{'  '}
                             </Navbar.Brand>
                         </Navbar>
