@@ -50,7 +50,7 @@ function App() {
                         </Navbar>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="content-row">
                     <Col sm>
                         <Routes>
                             <Route path="/"       element={<HomeContent />} />
@@ -59,7 +59,7 @@ function App() {
                         </Routes>
                     </Col>
                 </Row>
-                <Row>
+                <Row className="footer-row">
                     <Col sm>
                         <Footer />
                     </Col>

@@ -7,7 +7,7 @@
 	text-align: center;
 
 	.container, div[class^=container-] {
-	
+
 		.row >.col, .row>[class^=col-] {
 			border: 1px dashed teal;
 		}
@@ -21,8 +21,8 @@
 				background-color: yellow;
 				padding: 0; /* To nudge the logo over slightly */
 
-			.navbar-brand {
-				margin: auto;
+				.navbar-brand {
+					margin: auto;
 
 					img {
 
@@ -32,29 +32,30 @@
 			
 			.header-sub {
 				font-size: 18px;
+				margin: 15px 0;
 			}
-		}
-		
-		.sidebar {
-			background-color: #ccc;
-			color: white;
-			margin-bottom: 15px;
-			
-			a {
-				&:link {
-					color: white;
-				}
 
-				&:visited {
-					color: white;
-				}
-
-				&:hover {
-					color: white;
-				}
-
-				&:active {
-					color: white;
+			.sidebar {
+				background-color: #ccc;
+				color: white;
+				margin-bottom: 15px;
+				
+				a {
+					&:link {
+						color: white;
+					}
+	
+					&:visited {
+						color: white;
+					}
+	
+					&:hover {
+						color: white;
+					}
+	
+					&:active {
+						color: white;
+					}
 				}
 			}
 		}
