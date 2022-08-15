@@ -53,9 +53,9 @@ function App() {
                 <Row>
                     <Col sm>
                         <Routes>
-                            <Route path="/" element={<Home content="1" />} />
-                            <Route path="/page-1" element={<PageContent page="1" />} />
-                            <Route path="/page-2" element={<PageContent page="2" />} />
+                            <Route path="/"       element={<HomeContent />} />
+                            <Route path="/page-1" element={<Page1Content />} />
+                            <Route path="/page-2" element={<Page2Content />} />
                         </Routes>
                     </Col>
                 </Row>
@@ -70,34 +70,26 @@ function App() {
   );
 }
 
-function Home(params) {
+function Content(pageOutput) {
     return (
         <>
-            <div className="content home">
-                {params.content === "1" &&
-                    <>
-                        <p>Home content</p>
-                    </>
-                }
+            <div className="content">
+                {pageOutput}
             </div>
         </>
     );
 }
 
-function PageContent(params) {
-    if (params.page === "1") {
-        return (
-            <Page1Content />
-        );
-    } else if (params.page === "2") {
-        return (
-            <Page2Content />
-        );
-    }
+function HomeContent() {
+    return Content(
+        <>
+            <p>Home Content</p>
+        </>
+    );
 }
 
 function Page1Content() {
-    return (
+    return Content(
         <>
             <p>Page 1 Content</p>
         </>
@@ -105,7 +97,7 @@ function Page1Content() {
 }
 
 function Page2Content() {
-    return (
+    return Content(
         <>
             <p>Page 2 Content</p>
         </>
