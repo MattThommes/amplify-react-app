@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+
+import logo from './logo.svg';
 
 import {
     BrowserRouter as Router,
@@ -27,7 +27,9 @@ function App() {
                                 <img
                                     alt=""
                                     src={logo}
-                                    className=""
+                                    width="300"
+                                    height="151"
+                                    className="d-inline-block align-top"
                                 />{'  '}
                             </Navbar.Brand>
                         </Navbar>
