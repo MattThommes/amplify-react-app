@@ -86,3 +86,16 @@ When adding image storage for the first time:
 14. Verify in AWS console you see the new bucket created, something like `thommesfamvacationsaf92c0e5c7194a05804f41a082b0110057-dev`
     1. You can also run `aws s3 ls` locally to see your buckets.
 
+Syncing local images to S3:
+
+```
+$ aws s3 sync ~/Documents/dev/[PROJECT]/images/ s3://[BUCKET_NAME] --acl public-read
+```
+
+The `images` folder is just a placeholder for syncing purposes. It is not meant to hold every single image. Once an image is synced to the cloud you can delete the file locally. You can update `.gitignore` to include the images folder so it does not appear as changed for source control.
+
+Example image usage in code:
+
+```
+<img className="img-fluid" src="https://[BUCKET_NAME].s3.amazonaws.com/[FILENAME].jpg" />
+```
