@@ -18,10 +18,10 @@
 2. Update the `README.md` file to be specific to your project.
 3. Run `nvm use` to use the correct Node version.
 4. Run `nvm list` to ensure your CLI session is using the same version from the .nvmrc file.
-4. Check Amplify version: `amplify --version`
-5. If it says command not found, try to install it using the current Node version in your CLI session:
-    1. `npm install -g @aws-amplify/cli`
-6. Run `npm install`
+5. Check Amplify version: `amplify --version`
+6. If you see 'command not found' for anything, try running `source ~/.nvm/nvm.sh` in your current CLI session.
+    1. If amplify is still not found, you may need to install it: `npm install -g @aws-amplify/cli`
+7. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored:
         ```
         npm WARN ERESOLVE overriding peer dependency
@@ -31,8 +31,8 @@
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-8. Run `amplify init` to setup a new Amplify project:
+8. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+9. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment.
@@ -46,11 +46,11 @@
     11. Select `AWS profile` for the authentication method you want to use.
     12. Select `amplify-feb2021-b` for the profile you want to use.
         1. If you don’t see the above profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-9. Commit changes then push. Don’t forget newly generated files:
+10. Commit changes then push. Don’t forget newly generated files:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify` (not sure this is needed since it can be auto-generated again)
-10. Create `staging` branch (from `master` branch) locally then push:
+11. Create `staging` branch (from `master` branch) locally then push:
     1. `git checkout -b staging`
     2. `git push upstream staging`
 
@@ -63,4 +63,26 @@
     4. Click Next then Save and deploy.
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
 3. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
+
+## Adding resources
+
+### Images
+
+When adding image storage for the first time:
+
+1. `amplify add storage`
+2. Choose `Content (Images, audio, video, etc.)`
+3. Enter `y` when asked to add auth (Amazon Cognito)
+4. Choose `Default configuration`
+5. Choose `Email` when asked `How do you want users to be able to sign in?`
+6. Enter a short custom identifier string for `Provide a friendly name for your resource`
+7. You can leave the default bucket name as it is already unique - just hit Enter.
+8. For `Who should have access` choose `Auth users only`
+9. For `What kind of access do you want for Authenticated users?` select all options using the spacebar.
+10. Enter `n` for `Do you want to add a Lambda Trigger for your S3 Bucket?`
+11. Log into the AWS console and go to the S3 section.
+12. Verify the number of buckets you have - once you push the changes you should see a new bucket created.
+13. Run `amplify push` to push the local storage changes to the cloud.
+14. Verify in AWS console you see the new bucket created, something like `thommesfamvacationsaf92c0e5c7194a05804f41a082b0110057-dev`
+    1. You can also run `aws s3 ls` locally to see your buckets.
 
