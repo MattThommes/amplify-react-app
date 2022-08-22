@@ -57,12 +57,13 @@
 ## Amplify console setup
 
 1. In the AWS console, under ”Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
-    1. Choose ”dev” environment.
+    1. Choose “dev” environment.
     2. Check `Enable full-stack continuous deployments (CI/CD)`
     3. Under Advanced settings > Live package updates, Amplify CLI should be set to ”latest” (confirm in the local [package.json](package.json) file and by running `amplify --version` to check).
     4. Click Next then Save and deploy.
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
 3. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
+4. Under 'Rewrites and redirects' section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose '200 (Rewrite)' for the Type.
 
 ## Adding resources
 
