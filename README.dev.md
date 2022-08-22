@@ -92,7 +92,7 @@ Syncing local images to S3:
 $ aws s3 sync ~/Documents/dev/[PROJECT]/images/ s3://[BUCKET_NAME] --acl public-read
 ```
 
-The `images` folder is just a placeholder for syncing purposes. It is not meant to hold every single image. Once an image is synced to the cloud you can delete the file locally. You can update `.gitignore` to include the images folder so it does not appear as changed for source control.
+The `images` folder is just a placeholder for syncing purposes. It is not meant to hold every single image. Once an image is synced to the cloud you can delete the file locally. `.gitignore` already has a rule to ignore the root level `/images/` directory.
 
 Example image usage in code:
 
