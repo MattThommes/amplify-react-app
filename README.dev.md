@@ -16,8 +16,8 @@
 1. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
 2. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
 3. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
-    * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v17.3.0>`
-    * `Now using node v17.3.0 (npm v8.3.0)`
+    * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
+    * `Now using node v16.13.0 (npm v9.5.1)`
 4. Check Amplify version:
     * `amplify --version`
     * Assuming it is installed globally (check package.json for `@aws-amplify/cli`). If it is not installed yet, try running:
