@@ -14,12 +14,16 @@
 ### Manual steps
 
 1. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
-2. Run `nvm use` to use the correct Node version.
-3. Run `nvm list` to ensure your CLI session is using the same version from the .nvmrc file.
-4. Check Amplify version: `amplify --version`
-5. If you see 'command not found' for anything, try running `source ~/.nvm/nvm.sh` in your current CLI session.
-    1. If amplify is still not found, you may need to install it: `npm install -g @aws-amplify/cli`
-6. Run `npm install`
+2. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
+3. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
+    * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v17.3.0>`
+    * `Now using node v17.3.0 (npm v8.3.0)`
+4. Check Amplify version:
+    * `amplify --version`
+    * Assuming it is installed globally (check package.json for `@aws-amplify/cli`). If it is not installed yet, try running:
+        * `npm install -g @aws-amplify/cli`
+        * [More information](https://docs.amplify.aws/cli/start/install/)
+5. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored:
         ```
         npm WARN ERESOLVE overriding peer dependency
@@ -29,8 +33,8 @@
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-8. Run `amplify init` to setup a new Amplify project:
+6. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+7. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment.
@@ -44,15 +48,15 @@
     11. Select `AWS profile` for the authentication method you want to use.
     12. Select `amplify-feb2021-b` for the profile you want to use.
         1. If you don’t see the above profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-9. Commit changes then push. Don’t forget newly generated files:
+8. Commit changes then push. Don’t forget newly generated files:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify` (not sure this is needed since it can be auto-generated again)
-10. Create `staging` branch (from `master` branch) locally  then push:
+9. Create `staging` branch (from `master` branch) locally  then push:
     1. `git checkout -b staging`
     2. `git push upstream staging`
 
-### Automated steps
+### Automated steps (BETA)
 
 1. cd into project directory
 2. Set permissions for script (if needed): `/bin/chmod 700 setup.sh`
@@ -60,7 +64,7 @@
 
 ## Amplify console setup
 
-1. In the AWS console, under ”Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
+1. In the AWS console, under “Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
     1. Choose “dev” environment.
     2. Check `Enable full-stack continuous deployments (CI/CD)`
     3. Under Advanced settings > Live package updates, Amplify CLI should be set to “latest” (confirm in the local [package.json](package.json) file and by running `amplify --version` to check).
