@@ -1,4 +1,8 @@
-# Setup Instructions
+# Development Instructions
+
+## Background
+
+Amplify React App is generated from [Create React App](https://create-react-app.dev/). Once created, the app is updated via the `react-scripts` development dependency (see [Updating to New Releases](https://create-react-app.dev/docs/updating-to-new-releases) and [changelog](https://github.com/facebook/create-react-app/blob/main/CHANGELOG.md)).
 
 ## Local project setup
 
