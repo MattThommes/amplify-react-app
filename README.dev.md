@@ -2,26 +2,24 @@
 
 ## Local project setup
 
-1. Create Github repo for new project.
-2. Clone template repo into new project directory: `git clone git@github.com:MattThommes/amplify-react-app.git project-name`
-
-### Automated steps
-
-1. cd into project directory
-2. Set permissions for script (if needed): `/bin/chmod 700 setup.sh`
-3. Run script (from project directory root): `./setup.sh`
+1. Create Github repo for new project from the amplify-react-app template:
+    * ![Create new repo from template](readme_images/repo_from_template.png)
+    * ![New repo settings](readme_images/new_repo_settings.png) 
+2. Clone new repo into project directory locally:
+    * `git clone git@github.com:MattThommes/test1.git`
+3. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
+    * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
+4. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.
 
 ### Manual steps
 
-1. Change the remote repo to your project specific repo:
-    1. `git remote add upstream [YOUR_PROJECT_GIT_CLONE_URI]`
-2. Update the `README.md` file to be specific to your project.
-3. Run `nvm use` to use the correct Node version.
-4. Run `nvm list` to ensure your CLI session is using the same version from the .nvmrc file.
-5. Check Amplify version: `amplify --version`
-6. If you see 'command not found' for anything, try running `source ~/.nvm/nvm.sh` in your current CLI session.
+1. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
+2. Run `nvm use` to use the correct Node version.
+3. Run `nvm list` to ensure your CLI session is using the same version from the .nvmrc file.
+4. Check Amplify version: `amplify --version`
+5. If you see 'command not found' for anything, try running `source ~/.nvm/nvm.sh` in your current CLI session.
     1. If amplify is still not found, you may need to install it: `npm install -g @aws-amplify/cli`
-7. Run `npm install`
+6. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored:
         ```
         npm WARN ERESOLVE overriding peer dependency
@@ -31,8 +29,8 @@
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-8. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-9. Run `amplify init` to setup a new Amplify project:
+7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+8. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment.
@@ -46,24 +44,37 @@
     11. Select `AWS profile` for the authentication method you want to use.
     12. Select `amplify-feb2021-b` for the profile you want to use.
         1. If you don’t see the above profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-10. Commit changes then push. Don’t forget newly generated files:
+9. Commit changes then push. Don’t forget newly generated files:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify` (not sure this is needed since it can be auto-generated again)
-11. Create `staging` branch (from `master` branch) locally then push:
+10. Create `staging` branch (from `master` branch) locally  then push:
     1. `git checkout -b staging`
     2. `git push upstream staging`
+
+### Automated steps
+
+1. cd into project directory
+2. Set permissions for script (if needed): `/bin/chmod 700 setup.sh`
+3. Run script (from project directory root): `./setup.sh`
 
 ## Amplify console setup
 
 1. In the AWS console, under ”Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
     1. Choose “dev” environment.
     2. Check `Enable full-stack continuous deployments (CI/CD)`
-    3. Under Advanced settings > Live package updates, Amplify CLI should be set to ”latest” (confirm in the local [package.json](package.json) file and by running `amplify --version` to check).
+    3. Under Advanced settings > Live package updates, Amplify CLI should be set to “latest” (confirm in the local [package.json](package.json) file and by running `amplify --version` to check).
     4. Click Next then Save and deploy.
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
 3. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
 4. Under 'Rewrites and redirects' section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose '200 (Rewrite)' for the Type.
+
+### Adding custom domain
+
+1. Go to Route 53 > Hosted zones > Create hosted zone. Mirror how another domain already setup looks.
+2. Under Amplify Domain management, click Add domain. You should see the Route 53 domain you just added appear in the dropdown/selector.
+3. I personally don’t care for the www redirect, so I uncheck “Setup redirect from https:// to https://www”
+4. Update nameservers at the domain registrar (Ie. Name.com) to point to AWS - you should see the nameservers in Route 53 when editing the new domain.
 
 ## Adding resources
 
