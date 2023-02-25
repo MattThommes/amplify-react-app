@@ -60,6 +60,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify` (not sure this is needed since it can be auto-generated again)
+    4. `git push origin master`
 9. Create `staging` branch (from `master` branch) locally  then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
