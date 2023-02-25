@@ -13,7 +13,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * `git clone git@github.com:MattThommes/test1.git`
 3. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
     * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
-4. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.
+4. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.dev.md.
 
 ### Manual steps
 
@@ -38,6 +38,10 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         ...
         ```
 6. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+7. Update generic project name in various files to your own project name:
+    1. package.json
+    2. public/index.html
+    3. public/manifest.json
 7. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
