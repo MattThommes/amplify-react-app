@@ -22,11 +22,11 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 3. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
     * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
     * `Now using node v16.13.0 (npm v9.5.1)`
-4. Check Amplify version:
+4. Check Amplify version to verify it is installed globally:
     * `amplify --version`
     * Assuming it is installed globally (check package.json for `@aws-amplify/cli`). If it is not installed yet, try running:
         * `npm install -g @aws-amplify/cli`
-        * [More information](https://docs.amplify.aws/cli/start/install/)
+        * [More information](https://docs.amplify.aws/cli/start/install/).
 5. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored:
         ```
@@ -43,9 +43,9 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     2. public/index.html
     3. public/manifest.json
 7. Run `amplify init` to setup a new Amplify project:
-    1. Enter a name for the project: all lower case without dashes, underscores, or spaces.
+    1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
-    3. Enter `dev` for name of the environment.
+    3. Enter `dev` for name of the environment (or hit Enter to use the default).
     4. Choose `Visual Studio Code` or `None` for your default editor.
     5. Choose `javascript` the type of app that you're building.
     6. Choose `react` javascript framework.
@@ -53,16 +53,16 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     8. Distribution Directory Path: `build`
     9. Build Command: `npm run build`
     10. Start Command: `npm start`
-    11. Select `AWS profile` for the authentication method you want to use.
-    12. Select `amplify-feb2021-b` for the profile you want to use.
-        1. If you don’t see the above profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
+    11. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
+    12. Select the profile you want to use.
+        * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
 8. Commit changes then push. Don’t forget newly generated files:
     1. `git add .gitignore`
     2. `git add package-lock.json`
     3. `git add amplify` (not sure this is needed since it can be auto-generated again)
 9. Create `staging` branch (from `master` branch) locally  then push:
     1. `git checkout -b staging`
-    2. `git push upstream staging`
+    2. `git push origin staging`
 
 ### Automated steps (BETA)
 
