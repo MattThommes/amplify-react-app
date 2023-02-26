@@ -16,6 +16,10 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 3. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.dev.md.
 4. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
     * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
+    * When you need to update your new repo with changes from the upstream template repo, run these commands:
+        1. `git fetch upstream`
+        2. `git merge upstream/master --allow-unrelated-histories`
+        3. `git push origin master` (assuming `master` branch)
 5. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
 6. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
 7. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
