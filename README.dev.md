@@ -113,7 +113,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 3. I personally don’t care for the www redirect, so I uncheck “Setup redirect from https:// to https://www”
 4. Update nameservers at the domain registrar (Ie. Name.com) to point to AWS - you should see the nameservers in Route 53 when editing the new domain.
 
-## Adding resources
+## Adding cloud resources
 
 ### Images
 
