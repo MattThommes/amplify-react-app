@@ -20,7 +20,11 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         1. `git fetch upstream`
         2. `git merge upstream/master --allow-unrelated-histories`
         3. `git push origin master` (assuming `master` branch)
-5. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
+5. Update these files to include your specific project name and description:
+    1. README.md (keep the `README.dev.md` for following along or future debugging)
+    2. package.json
+    3. public/index.html
+    4. public/manifest.json
 6. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
 7. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
     * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
@@ -41,11 +45,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         ...
         ```
 10. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-11. Update generic project name in various files to your own project name:
-    1. package.json
-    2. public/index.html
-    3. public/manifest.json
-12. Run `amplify init` to setup a new Amplify project:
+11. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -66,7 +66,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * `Your project has been successfully initialized and connected to the cloud!`
     14. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
-13. Commit changes then push. Initial changes should look similar to:
+12. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
     * `modified:   package.json`
