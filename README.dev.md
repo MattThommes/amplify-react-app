@@ -97,15 +97,16 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 1. In the AWS console, under “Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
     1. Click Next after the first screen:
         * ![Amplify connect branch](readme_images/amplify_connect_branch.png)
-    1. Choose “dev” environment.
-    2. Check `Enable full-stack continuous deployments (CI/CD)`
-    3. Under Advanced settings > Live package updates, Amplify CLI should be set to “latest” (confirm in the local [package.json](package.json) file and by running `amplify --version` to check).
-    4. Click Next then Save and deploy.
+    2. Under “Select a backend environment to use with this branch,” choose “dev” environment.
+    3. Check “Enable full-stack continuous deployments (CI/CD).”
+    4. For “Select an existing service role or create a new one,” use your best judgement - there are no hard requirements here yet.
+    5. Under “Live package updates,” Amplify CLI should be set to “latest.”
+    6. Click Next then “Save and deploy.”
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
-3. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
-4. Under 'Rewrites and redirects' section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose '200 (Rewrite)' for the Type.
+3. Under the “Rewrites and redirects” section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose “200 (Rewrite)” for the Type.
+4. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
 
-### Adding custom domain
+### Adding a custom domain
 
 1. Go to Route 53 > Hosted zones > Create hosted zone. Mirror how another domain already setup looks.
 2. Under Amplify Domain management, click Add domain. You should see the Route 53 domain you just added appear in the dropdown/selector.
