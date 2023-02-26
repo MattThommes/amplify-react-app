@@ -11,24 +11,21 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * ![New repo settings](readme_images/new_repo_settings.png) 
 2. Clone new repo into project directory locally:
     * `git clone git@github.com:MattThommes/test1.git`
-3. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
+3. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.dev.md.
+4. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
     * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
-4. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.dev.md.
-
-### Manual steps
-
-1. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
-2. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
-3. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
+5. Update the `README.md` file to be specific to your project. Keep the `README.dev.md` for following along or future debugging.
+6. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
+7. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
     * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
     * `Now using node v16.13.0 (npm v9.5.1)`
-4. Check Amplify version to verify it is installed globally:
+8. Check Amplify version to verify it is installed globally:
     * `amplify --version`
-    * Assuming it is installed globally (check package.json for `@aws-amplify/cli`). If it is not installed yet, try running:
+    * Assuming it is installed globally (check package.json for `aws-amplify`). If it is not installed yet, try running:
         * `npm install -g @aws-amplify/cli`
-        * [More information](https://docs.amplify.aws/cli/start/install/).
-5. Run `npm install`
-    1. You may receive some warnings about GraphQL which can be ignored:
+        * [More information](https://docs.amplify.aws/cli/start/install/)
+9. Run `npm install`
+    1. You may receive some warnings about GraphQL which can be ignored (this needs to be cleaned up but has not caused any issues yet):
         ```
         npm WARN ERESOLVE overriding peer dependency
         npm WARN While resolving: relay-compiler@12.0.0
@@ -37,12 +34,12 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-6. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-7. Update generic project name in various files to your own project name:
+10. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+11. Update generic project name in various files to your own project name:
     1. package.json
     2. public/index.html
     3. public/manifest.json
-7. Run `amplify init` to setup a new Amplify project:
+12. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -56,12 +53,23 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     11. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
     12. Select the profile you want to use.
         * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-8. Commit changes then push. Don’t forget newly generated files:
-    1. `git add .gitignore`
-    2. `git add package-lock.json`
-    3. `git add amplify` (not sure this is needed since it can be auto-generated again)
-    4. `git push origin master`
-9. Create `staging` branch (from `master` branch) locally  then push:
+    13. Once it finishes setting up your local and cloud environment, you should see a message similar to:
+        * `Deployment state saved successfully.`
+        * `✔ Initialized provider successfully.`
+        * `✅ Initialized your environment successfully.`
+        * `Your project has been successfully initialized and connected to the cloud!`
+    14. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
+        * ![Amplify new app created](readme_images/amplify_new_app_created.png)
+13. Commit changes then push. Initial changes should look similar to:
+    * `modified:   .gitignore`
+    * `modified:   README.md`
+    * `modified:   package.json`
+    * `modified:   public/index.html`
+    * `modified:   public/manifest.json`
+    * Don’t forget newly generated files:
+        1. `git add amplify` (not sure if this is needed since it can be auto-generated again)
+    * Then push: `git push origin master`
+14. Create `staging` branch (from `master` branch) locally  then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
 
