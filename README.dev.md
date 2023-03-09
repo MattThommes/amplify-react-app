@@ -54,8 +54,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-11. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-12. Run `amplify init` to setup a new Amplify project:
+11. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -76,6 +75,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * `Your project has been successfully initialized and connected to the cloud!`
     14. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
+12. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
 13. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
