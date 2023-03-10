@@ -65,16 +65,21 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     8. Distribution Directory Path: `build`
     9. Build Command: `npm run build`
     10. Start Command: `npm start`
-    11. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
-    12. Select the profile you want to use.
+    11. If you ran `amplify init`, continue to step 12. If you ran `amplify pull --appId ...`, continue to step 16.
+    12. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
+    13. Select the profile you want to use.
         * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-    13. Once it finishes setting up your local and cloud environment, you should see a message similar to:
+    14. Once it finishes setting up your local and cloud environment, you should see a message similar to:
         * `Deployment state saved successfully.`
         * `✔ Initialized provider successfully.`
         * `✅ Initialized your environment successfully.`
         * `Your project has been successfully initialized and connected to the cloud!`
-    14. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
+    15. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
+    16. For `Do you plan on modifying this backend?` choose `Yes`. It should then show:
+        * `⠦ Fetching updates to backend environment: [env] from the cloud ...`
+        * `⠦ Building resource auth/t`
+        * `✔ Successfully pulled backend environment dev from the cloud.`
 12. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
 13. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
