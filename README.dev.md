@@ -1,6 +1,6 @@
 # Development Instructions
 
-_Updated February 26, 2023_
+_Updated March 10, 2023_
 
 ## Background
 
@@ -27,8 +27,10 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 5. Sync your new repo to merge all unrelated history from the upstream/template repo:
     1. `git fetch upstream`
     2. `git merge upstream/master --allow-unrelated-histories`
-    3. `git push origin master` (assuming `master` branch)
-    4. Whenever you need to update your repo with changes from the upstream repo, repeat the above steps.
+    3. Fix conflicts (if any; most likely there will be). Don’t fix package-lock.json conflicts - just `git add package-lock.json` and it will get regenerted.
+    4. Run `npm update`.
+    5. `git push origin master` (assuming `master` branch)
+    6. Whenever you need to update your repo with changes from the upstream repo, repeat the above steps.
 6. Update these files to include your specific project name and description:
     1. README.md (keep the `README.dev.md` for following along or future debugging)
     2. package.json
