@@ -1,4 +1,4 @@
-# Amplify React App: Developer Guide
+# ☁️ ⚛︎ Amplify React App: 🛠️ Developer Guide
 
 ## Overview
 
