@@ -1,20 +1,10 @@
-# Development Instructions
+# Amplify React App - Developer Guide
 
-_Updated March 10, 2023_
-
-## Background
+## Overview
 
 Amplify React App is generated from [Create React App](https://create-react-app.dev/). Once created, the app is updated via the `react-scripts` development dependency (see [Updating to New Releases](https://create-react-app.dev/docs/updating-to-new-releases) and [changelog](https://github.com/facebook/create-react-app/blob/main/CHANGELOG.md)).
 
 ## Local project setup
-
-### Automated steps (BETA)
-
-1. cd into project directory
-2. Set permissions for script (if needed): `/bin/chmod 700 setup.sh`
-3. Run script (from project directory root): `./setup.sh`
-
-### Manual steps (PREFERRED)
 
 1. Create Github repo for new project from the amplify-react-app template:
     * ![Create new repo from template](readme_images/repo_from_template.png)
@@ -45,6 +35,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * `Now using node v16.13.0 (npm v9.5.1)`
 9. Check Amplify version to verify it is installed globally:
     * `amplify --version`
+        * _As of July 2, 2023 the latest version is 12.1.1._
     * Assuming it is installed globally (check package.json for `aws-amplify`). If it is not installed yet, try running:
         * `npm install -g @aws-amplify/cli`
         * [More information](https://docs.amplify.aws/cli/start/install/)

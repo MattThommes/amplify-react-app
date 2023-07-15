@@ -1,6 +1,5 @@
 # Amplify React App
 
-This repo makes it easier to set up a new Amplify and React app lifecycle with a common template
-and tools/utilities already loaded.
+Amplify React App allows you to quickly get a SPA website up and running using [Amplify](https://aws.amazon.com/amplify/) and [React](https://react.dev/) using a common template with tools/utilities already loaded.
 
-See [setup instructions](README.dev.md) to get started.
+See [developer setup instructions](README.dev.md) to get started.
