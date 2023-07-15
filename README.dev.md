@@ -1,4 +1,4 @@
-# Amplify React App - Developer Guide
+# Amplify React App: Developer Guide
 
 ## Overview
 
@@ -6,7 +6,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ## Local project setup
 
-1. Create a new Github repo for new project from the amplify-react-app template:
+1. Create a new Github repo for your new project from the amplify-react-app template:
     * ![Create new repo from template](readme_images/repo_from_template.png) 
 2. Clone new repo into project directory locally:
     * `git clone git@github.com:MattThommes/test1.git`
