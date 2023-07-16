@@ -62,7 +62,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
 7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-8. Commit changes then push. Initial changes should look similar to:
+8. If you haven’t already, commit and push any changes. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
     * `modified:   package-lock.json`
@@ -70,10 +70,9 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * `modified:   public/index.html`
     * `modified:   public/manifest.json`
     * Don’t forget newly generated files:
-        1. `git add amplify` (not sure if this is needed since it can be auto-generated again)
+        1. `git add amplify` (not fully sure if this is needed since it can be auto-generated again when pulling an app down, but better safe than sorry)
     * Using `git add *` is faster.
     * `git commit -m "After running amplify init"`
-    * Then push: `git push origin master`
 9. Prepare `staging` branch (from `master` branch) locally then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
