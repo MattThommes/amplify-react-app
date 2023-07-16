@@ -61,10 +61,6 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * `Some next steps:`
     16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
-    17. For `Do you plan on modifying this backend?` choose `Yes`. It should then show:
-        * `⠦ Fetching updates to backend environment: [env] from the cloud ...`
-        * `⠦ Building resource auth/t`
-        * `✔ Successfully pulled backend environment dev from the cloud.`
 7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
 8. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
