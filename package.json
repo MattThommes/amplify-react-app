@@ -4,8 +4,7 @@
   "private": true,
   "engineStrict": true,
   "engines": {
-    "node": "16.13.0",
-    "npm": "9.5.1"
+    "node": "16.13.0"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.3.8",
