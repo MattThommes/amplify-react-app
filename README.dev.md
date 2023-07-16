@@ -73,19 +73,23 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         1. `git add amplify` (not fully sure if this is needed since it can be auto-generated again when pulling an app down, but better safe than sorry)
     * Using `git add *` is faster.
     * `git commit -m "After running amplify init"`
-9. Prepare `staging` branch (from `master` branch) locally then push:
+9. To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
 
 ## Amplify console setup
 
 1. In the AWS console, under “Hosting environments,” connect your new app to Github for both `master` and `staging` branches.
-    1. Click Next after the first screen:
+    1. Choose your Git repository:
+        * ![Amplify connect repo](readme_images/amplify_connect_repo.png)
+    2. Choose repository and `master` branch:
         * ![Amplify connect branch](readme_images/amplify_connect_branch.png)
-    2. Under “Select a backend environment to use with this branch,” choose “dev” environment.
     3. Check “Enable full-stack continuous deployments (CI/CD).”
+        * ![Amplify CI/CD](readme_images/amplify_cicd.png)
     4. For “Select an existing service role or create a new one,” use your best judgement - there are no hard requirements here yet.
+        * ![Amplify service role](readme_images/amplify_service_role.png)
     5. Under “Live package updates,” Amplify CLI should be set to “latest.”
+        * ![Amplify live package updates](readme_images/amplify_live_package_updates.png)
     6. Click Next then “Save and deploy.”
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
 3. Under the “Rewrites and redirects” section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose “200 (Rewrite)” for the Type.
