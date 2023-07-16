@@ -18,32 +18,28 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 1. Update the remotes for your new project to include `upstream` for the base repo (amplify-react-app) so future changes can be pulled in:
     * `git remote add upstream git@github.com:[GITHUB_USERNAME]/amplify-react-app.git`
-2. Sync your new repo to merge all unrelated history from the upstream/template repo:
+2. Sync your new repo to merge all unrelated history from the upstream/template repo. Whenever you need to update your repo with changes from the upstream repo, repeat these steps:
     1. `git fetch upstream`
     2. `git merge upstream/master --allow-unrelated-histories`
-    3. Fix conflicts (if any; the further your app has diverged, the more there will be). Don’t fix `package-lock.json` conflicts - just do `git add package-lock.json` and it will get regenerted.
+    3. Fix conflicts (if any; the further your app has diverged, the more there will be). Don’t fix package-lock.json conflicts - just do `git add package-lock.json` and it will get regenerted.
     4. Run `nvm use` then `npm update`.
         1. If nvm is not found, run `source ~/.nvm/nvm.sh`.
     5. Run `git add package-lock.json`.
     6. Commit changes: `git commit -m "Updated to latest amplify-react-app"`
     7. `git push origin master` (assuming `master` branch)
-    8. Whenever you need to update your repo with changes from the upstream repo, repeat the above steps.
 3. Update these files to include your specific project name and description:
-    1. README.md (keep the `README.dev.md` for following along or future debugging)
+    1. README.md (keep the README.dev.md for following along or future debugging)
     2. package.json
     3. public/index.html
     4. public/manifest.json
     5. src/App.js (`const SiteName`)
-4. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
-    * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
-    * `Now using node v16.13.0 (npm v9.5.1)`
-5. Check Amplify version to verify it is installed globally:
+4. Check Amplify version to verify it is installed globally:
     * `amplify --version`
         * _As of July 2, 2023 the latest version is 12.1.1._
     * Assuming it is installed globally (check package.json for `aws-amplify`). If it is not installed yet, try running:
         * `npm install -g @aws-amplify/cli`
         * [More information](https://docs.amplify.aws/cli/start/install/)
-6. Run `npm install`
+5. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored (this needs to be cleaned up but has not caused any issues yet):
         ```
         npm WARN ERESOLVE overriding peer dependency
@@ -53,7 +49,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-7. Run `amplify init` to setup a new Amplify project:
+6. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -79,8 +75,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * `⠦ Fetching updates to backend environment: [env] from the cloud ...`
         * `⠦ Building resource auth/t`
         * `✔ Successfully pulled backend environment dev from the cloud.`
-8. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-9. Commit changes then push. Initial changes should look similar to:
+7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+8. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
     * `modified:   package-lock.json`
@@ -92,7 +88,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * Using `git add *` is faster.
     * `git commit -m "After running amplify init"`
     * Then push: `git push origin master`
-10. Prepare `staging` branch (from `master` branch) locally then push:
+9. Prepare `staging` branch (from `master` branch) locally then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
 
