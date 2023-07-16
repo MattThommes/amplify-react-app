@@ -35,43 +35,33 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     5. src/App.js (`const SiteName`)
 4. Check Amplify version to verify it is installed globally:
     * `amplify --version`
-        * _As of July 2, 2023 the latest version is 12.1.1._
-    * Assuming it is installed globally (check package.json for `aws-amplify`). If it is not installed yet, try running:
-        * `npm install -g @aws-amplify/cli`
-        * [More information](https://docs.amplify.aws/cli/start/install/)
-5. Run `npm install`
-    1. You may receive some warnings about GraphQL which can be ignored (this needs to be cleaned up but has not caused any issues yet):
-        ```
-        npm WARN ERESOLVE overriding peer dependency
-        npm WARN While resolving: relay-compiler@12.0.0
-        npm WARN Found: graphql@14.7.0
-        npm WARN node_modules/graphql
-        npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
-        ...
-        ```
-6. Run `amplify init` to setup a new Amplify project:
+5. Run `npm install`. Add and commit package-lock.json again: `git commit -m "Dependency updates"`
+6. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
     4. Choose `Visual Studio Code` or `None` for your default editor.
-    5. Choose `javascript` the type of app that you're building.
-    6. Choose `react` javascript framework.
+    5. Choose `javascript` for the type of app that you’re building.
+    6. Choose `react` for javascript framework.
     7. Source Directory Path: `src`
     8. Distribution Directory Path: `build`
     9. Build Command: `npm run build`
     10. Start Command: `npm start`
-    11. If you ran `amplify init`, continue to step 12. If you ran `amplify pull --appId ...`, continue to step 16.
+    11. If you ran `amplify init` for a fresh Amplify app, continue to the next step. If you ran `amplify pull --appId ...` to pull down an existing Amplify app, continue to step 16.
     12. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
     13. Select the profile you want to use.
         * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-    14. Once it finishes setting up your local and cloud environment, you should see a message similar to:
+    14. Decide for yourself for this question:
+        * `✔ Help improve Amplify CLI by sharing non sensitive configurations on failures (y/N)`
+    15. Once it finishes setting up your local and cloud environment, you should see a message similar to:
         * `Deployment state saved successfully.`
         * `✔ Initialized provider successfully.`
         * `✅ Initialized your environment successfully.`
         * `Your project has been successfully initialized and connected to the cloud!`
-    15. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
+        * `Some next steps:`
+    16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
-    16. For `Do you plan on modifying this backend?` choose `Yes`. It should then show:
+    17. For `Do you plan on modifying this backend?` choose `Yes`. It should then show:
         * `⠦ Fetching updates to backend environment: [env] from the cloud ...`
         * `⠦ Building resource auth/t`
         * `✔ Successfully pulled backend environment dev from the cloud.`
