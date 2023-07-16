@@ -10,8 +10,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 1. Create a new Github repo for your new project from the amplify-react-app template:
     * ![Create new repo from template](readme_images/repo_from_template.png) 
-2. Clone new repo locally:
-    * `git clone git@github.com:MattThommes/amplify-react-app-test1.git`
+2. Clone your new repo locally, example:
+    * `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3. Create a new project in your IDE. Proceed to below steps from within your project README.dev.md.
 
 ### Project specific setup
