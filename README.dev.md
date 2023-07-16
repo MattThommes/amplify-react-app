@@ -23,8 +23,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     2. `git merge upstream/master --allow-unrelated-histories`
     3. Fix conflicts (if any; the further your app has diverged, the more there will be). Don’t fix `package-lock.json` conflicts - just do `git add package-lock.json` and it will get regenerted.
     4. Run `nvm use` then `npm update`.
-        1. If nvm is not found, run `source ~/.nvm/nvm.sh`
-    5. `git add package-lock.json` again.
+        1. If nvm is not found, run `source ~/.nvm/nvm.sh`.
+    5. Run `git add package-lock.json`.
     6. Commit changes: `git commit -m "Updated to latest amplify-react-app"`
     7. `git push origin master` (assuming `master` branch)
     8. Whenever you need to update your repo with changes from the upstream repo, repeat the above steps.
