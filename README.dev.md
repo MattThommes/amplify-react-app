@@ -6,14 +6,19 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ## Local project setup
 
+### Create from template
+
 1. Create a new Github repo for your new project from the amplify-react-app template:
     * ![Create new repo from template](readme_images/repo_from_template.png) 
-2. Clone new repo into project directory locally:
+2. Clone new repo locally:
     * `git clone git@github.com:MattThommes/test1.git`
 3. Create new project in your IDE for the new directory. Proceed to below steps from within your new project README.dev.md.
-4. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
+
+### Project specific setup
+
+1. Update the remotes for the new project to include `upstream` to the base repo (amplify-react-app) so future changes can be pulled in:
     * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
-5. Sync your new repo to merge all unrelated history from the upstream/template repo:
+2. Sync your new repo to merge all unrelated history from the upstream/template repo:
     1. `git fetch upstream`
     2. `git merge upstream/master --allow-unrelated-histories`
     3. Fix conflicts (if any; the further your app has diverged, the more there will be). Don’t fix package-lock.json conflicts - just `git add package-lock.json` and it will get regenerted.
@@ -22,23 +27,23 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     6. Commit changes: `git commit -m "Updated to latest amplify-react-app"`
     7. `git push origin master` (assuming `master` branch)
     8. Whenever you need to update your repo with changes from the upstream repo, repeat the above steps.
-6. Update these files to include your specific project name and description:
+3. Update these files to include your specific project name and description:
     1. README.md (keep the `README.dev.md` for following along or future debugging)
     2. package.json
     3. public/index.html
     4. public/manifest.json
     5. src/App.js (`const SiteName`)
-7. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
-8. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
+4. Get `nvm` available in your current CLI session: `source ~/.nvm/nvm.sh`. You may need to install it if you haven’t used it before.
+5. Run `nvm use` to use the correct Node version associated with the project. You should see output similar to:
     * `Found '/Users/mattthommes/Documents/dev/test1/.nvmrc' with version <v16.13.0>`
     * `Now using node v16.13.0 (npm v9.5.1)`
-9. Check Amplify version to verify it is installed globally:
+6. Check Amplify version to verify it is installed globally:
     * `amplify --version`
         * _As of July 2, 2023 the latest version is 12.1.1._
     * Assuming it is installed globally (check package.json for `aws-amplify`). If it is not installed yet, try running:
         * `npm install -g @aws-amplify/cli`
         * [More information](https://docs.amplify.aws/cli/start/install/)
-10. Run `npm install`
+7. Run `npm install`
     1. You may receive some warnings about GraphQL which can be ignored (this needs to be cleaned up but has not caused any issues yet):
         ```
         npm WARN ERESOLVE overriding peer dependency
@@ -48,7 +53,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         npm WARN   peer graphql@"^0.13.0 || ^14.0.0" from @ardatan/graphql-tools@4.1.0
         ...
         ```
-11. Run `amplify init` to setup a new Amplify project:
+8. Run `amplify init` to setup a new Amplify project:
     1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -74,8 +79,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * `⠦ Fetching updates to backend environment: [env] from the cloud ...`
         * `⠦ Building resource auth/t`
         * `✔ Successfully pulled backend environment dev from the cloud.`
-12. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-13. Commit changes then push. Initial changes should look similar to:
+9. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+10. Commit changes then push. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
     * `modified:   package-lock.json`
@@ -87,7 +92,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * Using `git add *` is faster.
     * `git commit -m "After running amplify init"`
     * Then push: `git push origin master`
-14. Prepare `staging` branch (from `master` branch) locally then push:
+11. Prepare `staging` branch (from `master` branch) locally then push:
     1. `git checkout -b staging`
     2. `git push origin staging`
 
