@@ -91,9 +91,10 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     5. Under Advanced settings > “Live package updates,” Amplify CLI should be set to “latest.”
         * ![Amplify live package updates](readme_images/amplify_live_package_updates.png)
     6. Click Next then “Save and deploy.”
-2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
-3. Under the “Rewrites and redirects” section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html` (don’t include the backticks for either). Choose “200 (Rewrite)” for the Type.
-4. Confirm the build and deploy fully works in AWS along with the default URL showing the React app.
+    7. Repeat the same steps for the staging branch.
+2. Under the “Rewrites and redirects” section, add a new item with source address `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>` and target address `/index.html`. Choose “200 (Rewrite)” for the Type.
+3. Under “Hosting environments” confirm the build and deploy fully worked for staging and master branches.
+4. Click the amplifyapp URL’s for each environment and verify the default React app is showing.
 
 ### Adding a custom domain
 
