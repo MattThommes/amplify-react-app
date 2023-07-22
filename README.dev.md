@@ -88,7 +88,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
         * ![Amplify CI/CD](readme_images/amplify_cicd.png)
     4. For “Select an existing service role or create a new one,” use your best judgement - there are no hard requirements here yet.
         * ![Amplify service role](readme_images/amplify_service_role.png)
-    5. Under “Live package updates,” Amplify CLI should be set to “latest.”
+    5. Under Advanced settings > “Live package updates,” Amplify CLI should be set to “latest.”
         * ![Amplify live package updates](readme_images/amplify_live_package_updates.png)
     6. Click Next then “Save and deploy.”
 2. Under Build settings, verify the contents of [amplify.yml](amplify.yml) match what is in the repo file.
