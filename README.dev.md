@@ -98,7 +98,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ### Adding a custom domain
 
-1. Go to Route 53 > Hosted zones > Create hosted zone. Mirror how another domain already setup looks.
+1. Go to Route 53 > Hosted zones > Create hosted zone.
+    * ![Route 53 Create hosted zone](readme_images/route53_create_hosted_zone.png)
 2. Under Amplify Domain management, click Add domain. You should see the Route 53 domain you just added appear in the dropdown/selector.
 3. I personally don’t care for the www redirect, so I uncheck “Setup redirect from https:// to https://www”
 4. Update nameservers at the domain registrar (Ie. Name.com) to point to AWS - you should see the nameservers in Route 53 when editing the new domain.
