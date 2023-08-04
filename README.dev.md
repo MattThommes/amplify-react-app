@@ -16,8 +16,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ### Project specific setup
 
-1. Update the remotes for your new project to include `upstream` for the base repo (amplify-react-app) so future changes can be pulled in:
-    * `git remote add upstream git@github.com:[GITHUB_USERNAME]/amplify-react-app.git`
+1. Update the git remotes for your new project to include a remote named `upstream` for the base repo ([amplify-react-app](https://github.com/MattThommes/amplify-react-app)) so future changes can be pulled in:
+    * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
 2. Sync your new repo to merge all unrelated history from the upstream/template repo. Whenever you need to update your repo with changes from the upstream repo, repeat these steps:
     1. `git fetch upstream`
     2. `git merge upstream/master --allow-unrelated-histories`
@@ -27,11 +27,11 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     5. Run `git add package-lock.json`.
     6. Commit changes: `git commit -m "Updated to latest amplify-react-app"`
     7. `git push origin master` (assuming `master` branch)
-3. Update these files to include your specific project name and description:
-    1. README.md (keep the README.dev.md for following along or future debugging)
-    2. package.json
-    3. public/index.html
-    4. public/manifest.json
+3. Update these files to include your specific project related information:
+    1. README.md (keep README.dev.md for following along or future debugging)
+    2. package.json (name and description)
+    3. public/index.html (`<title>` and `<meta name="description"`)
+    4. public/manifest.json (`short_name` and `name`)
     5. src/App.js (`const SiteName`)
 4. Check Amplify version to verify it is installed globally:
     * `amplify --version`
