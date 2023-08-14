@@ -13,7 +13,7 @@ import {
     Link
 } from "react-router-dom";
 
-const SiteName = "Amplify React Site";
+const SiteName = "Amplify React App";
 
 function App() {
   return (
