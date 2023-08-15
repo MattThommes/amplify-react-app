@@ -43,9 +43,11 @@ function App() {
                     <Col sm={4} className="sidebar">
                         <Navbar>
                             <Nav>
-                                <Nav.Link as={Link} to="/">Home</Nav.Link>
-                                <Nav.Link as={Link} to="/page-1">Page 1</Nav.Link>
-                                <Nav.Link as={Link} to="/page-2">Page 2</Nav.Link>
+                                <ul>
+                                    <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
+                                    <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
+                                    <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
+                                </ul>
                             </Nav>
                         </Navbar>
                     </Col>
