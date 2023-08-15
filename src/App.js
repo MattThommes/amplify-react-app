@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import HeaderImage from './images/header_image.png';
+import HeartIcon from './images/heart.svg';
 
 import {
     BrowserRouter as Router,
@@ -106,6 +107,17 @@ function Page2Content() {
     );
 }
 
+function BuiltWith() {
+    return (
+        <>
+            <div className="built-with">
+                Website hand-crafted with <img src={HeartIcon} width="20" alt="" /> using
+                &nbsp;<a href="https://github.com/MattThommes/amplify-react-app">Amplify React App</a>
+            </div>
+        </>
+    );
+}
+
 function Footer() {
     return (
         <div className="footer">
@@ -113,6 +125,8 @@ function Footer() {
             <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
             <br />
             Established {new Date().getFullYear()}
+            <br />
+            <BuiltWith />
         </div>
     );
 }
