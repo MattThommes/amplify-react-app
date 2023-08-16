@@ -121,11 +121,8 @@ function BuiltWith() {
 function Footer() {
     return (
         <div className="footer">
-            <br />
             <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
-            <br />
-            Established {new Date().getFullYear()}
-            <br />
+            <div className='established'>Established {new Date().getFullYear()}</div>
             <BuiltWith />
         </div>
     );

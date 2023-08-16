@@ -6,6 +6,24 @@
 	margin: 0;
 	text-align: center;
 
+	a {
+		&:link {
+			color: teal;
+		}
+
+		&:visited {
+			color: teal;
+		}
+
+		&:hover {
+			color: black;
+		}
+
+		&:active {
+			color: black;
+		}
+	}
+
 	.container, div[class^=container-] {
 
 		.row >.col, .row>[class^=col-] {
@@ -86,6 +104,10 @@
 			border-width: 1px 0 0 0;
 			margin: 25px 0;
 			padding: 10px 0;
+
+			.established {
+				font-size: 0.9em;
+			}
 
 			.built-with {
 				background-color: azure;
