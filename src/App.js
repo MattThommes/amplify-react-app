@@ -86,7 +86,7 @@ function Content(pageOutput) {
 function HomeContent() {
     return Content(
         <>
-            <p>Home Content</p>
+            <h2>Home</h2>
         </>
     );
 }
@@ -94,7 +94,7 @@ function HomeContent() {
 function Page1Content() {
     return Content(
         <>
-            <p>Page 1 Content</p>
+            <h2>Page 1</h2>
         </>
     );
 }
@@ -102,7 +102,7 @@ function Page1Content() {
 function Page2Content() {
     return Content(
         <>
-            <p>Page 2 Content</p>
+            <h2>Page 2</h2>
         </>
     );
 }
