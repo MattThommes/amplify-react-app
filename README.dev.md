@@ -37,7 +37,25 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * `amplify --version`
 5. Run `npm install`. Add and commit package-lock.json again: `git commit -m "Dependency updates"`
 6. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
-7. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
+7. Proceed to Amplify CLI setup steps, then come back here.
+8. If you haven’t already, commit and push any changes. Initial changes should look similar to:
+    * `modified:   .gitignore`
+    * `modified:   README.md`
+    * `modified:   package-lock.json`
+    * `modified:   package.json`
+    * `modified:   public/index.html`
+    * `modified:   public/manifest.json`
+    * Don’t forget newly generated files:
+        1. `git add amplify` (not fully sure if this is needed since it can be auto-generated again when pulling an app down, but better safe than sorry)
+    * Using `git add *` is faster.
+    * `git commit -m "After running amplify init"`
+9. To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+    1. `git checkout -b staging`
+    2. `git push origin staging`
+
+## Amplify CLI setup
+
+1. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
     1. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -62,20 +80,6 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     15. You should see a new amplify directory appear in your project files.
     16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
-8. If you haven’t already, commit and push any changes. Initial changes should look similar to:
-    * `modified:   .gitignore`
-    * `modified:   README.md`
-    * `modified:   package-lock.json`
-    * `modified:   package.json`
-    * `modified:   public/index.html`
-    * `modified:   public/manifest.json`
-    * Don’t forget newly generated files:
-        1. `git add amplify` (not fully sure if this is needed since it can be auto-generated again when pulling an app down, but better safe than sorry)
-    * Using `git add *` is faster.
-    * `git commit -m "After running amplify init"`
-9. To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
-    1. `git checkout -b staging`
-    2. `git push origin staging`
 
 ## Amplify console setup
 
