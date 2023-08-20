@@ -36,8 +36,9 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 4. Check Amplify version to verify it is installed globally:
     * `amplify --version`
 5. Run `npm install`. Add and commit package-lock.json again: `git commit -m "Dependency updates"`
-6. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
-    1. Enter a name for the project (or hit Enter to use the default): all lower case without dashes, underscores, or spaces.
+6. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+7. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
+    1. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
     2. Enter `n` (No) for `Initialize the project with the above configuration?`
     3. Enter `dev` for name of the environment (or hit Enter to use the default).
     4. Choose `Visual Studio Code` or `None` for your default editor.
@@ -48,20 +49,19 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     9. Build Command: `npm run build`
     10. Start Command: `npm start`
     11. If you ran `amplify init` for a fresh Amplify app, continue to the next step. If you ran `amplify pull --appId ...` to pull down an existing Amplify app, continue to step 16.
-    12. For `Using default provider  awscloudformation ? Select the authentication method you want to use:`, choose `AWS profile`.
-    13. Select the profile you want to use.
+    12. Select the profile you want to use.
         * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-    14. Decide for yourself for this question:
+    13. Decide for yourself for this question:
         * `✔ Help improve Amplify CLI by sharing non sensitive configurations on failures (y/N)`
-    15. Once it finishes setting up your local and cloud environment, you should see a message similar to:
+    14. Once it finishes setting up your local and cloud environment, you should see a message similar to:
         * `Deployment state saved successfully.`
         * `✔ Initialized provider successfully.`
         * `✅ Initialized your environment successfully.`
         * `Your project has been successfully initialized and connected to the cloud!`
         * `Some next steps:`
+    15. You should see a new amplify directory appear in your project files.
     16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
         * ![Amplify new app created](readme_images/amplify_new_app_created.png)
-7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
 8. If you haven’t already, commit and push any changes. Initial changes should look similar to:
     * `modified:   .gitignore`
     * `modified:   README.md`
