@@ -141,8 +141,11 @@ Your frontend may eventually need to call a backend for accessing cloud resource
 Example of how to test your function locally:
 
 1. `amplify mock function amplifyreactappaug20lambda`
-    * ✔ Provide the path to the event JSON object relative to `/Users/[USERNAME]/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappaug20lambda`
-        * `src/event.json` is fine.
+    * Example output:
+        ```
+        ✔ Provide the path to the event JSON object relative to /Users/[USERNAME]/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappaug20lambda
+        ```
+        * _Using_ `src/event.json` _is fine._
     * In the function folder locally you should see an event.json file appear with a test event object:
         ```
         {
