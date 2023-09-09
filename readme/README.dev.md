@@ -23,7 +23,7 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     2. `git merge upstream/master --allow-unrelated-histories`
     3. Fix conflicts (if any; the further your app has diverged, the more there will be). Don’t fix package-lock.json conflicts - just do `git add package-lock.json` and it will get regenerted.
     4. Run `nvm use` then `npm update`.
-        1. If nvm is not found, run `source ~/.nvm/nvm.sh`.
+        1. If nvm is not found, run `source ~/.nvm/nvm.sh`
     5. Run `git add package-lock.json`.
     6. Commit changes: `git commit -m "Updated to latest amplify-react-app"`
     7. `git push origin master` (assuming `master` branch)
@@ -145,7 +145,7 @@ Example of how to test your function locally:
         ```
         ✔ Provide the path to the event JSON object relative to /Users/[USERNAME]/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappaug20lambda
         ```
-        * _Using_ `src/event.json` _is fine._
+        * _Using the default_ `src/event.json` _is fine._
     * In the function folder locally you should see an event.json file appear with a test event object:
         ```
         {
@@ -162,8 +162,8 @@ Example of how to test your function locally:
                 "httpMethod": "GET"
             }
             ```
-    * You can also edit the actual Lambda code ([our example Lambda file here](amplify/backend/function/amplifyreactappaug20lambda/src/index.js)) and save that, which will then be pushed up to the AWS Lambda.
-        * Go ahead and edit the Lambda code and add in custom output that changes based on the path used in the request ([full example here](examples/lambda_intro_index.js)):
+    * You can also edit [the actual Lambda code](../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save that, which will then be pushed up to the cloud AWS Lambda.
+        * Go ahead and edit the Lambda code and add in custom output that changes based on the path used in the request ([full example here](examples/lambda_intro_index_1.js)):
             ```
             // exports.handler = async (event) => { ...
 
@@ -178,7 +178,7 @@ Example of how to test your function locally:
                 body: JSON.stringify(bodyOutput),
             };
             ```
-            * Re-run the `amplify mock` test and you should see the custom output for the About page request:
+            * Re-run the `amplify mock` command from above and you should see the custom output for the About page request:
                 ```
                 Starting execution...
                 EVENT: {"resource":"/about","path":"/about","httpMethod":"GET"}
@@ -189,6 +189,10 @@ Example of how to test your function locally:
                 }
                 Finished execution.
                 ```
+
+#### Building out your function
+
+The function is now aware of the URL path requested and can perform different things based on that.
 
 ### Images
 
