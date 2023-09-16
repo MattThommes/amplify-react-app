@@ -110,5 +110,5 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ## Adding cloud resources
 
-* [API](api/README.md)
+* [API’s](api/README.md)
 * [Images](images/README.md)

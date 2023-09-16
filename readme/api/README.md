@@ -1,6 +1,6 @@
 # ⛅️ ⚛︎ Amplify React App: 🛠️ Developer Guide
 
-## Cloud Resources: API
+## Cloud Resources: API’s
 
 Your frontend may eventually need to call a backend for accessing cloud resources. Here is how to create an initial generic endpoint to get started:
 
@@ -15,7 +15,7 @@ Your frontend may eventually need to call a backend for accessing cloud resource
     * _Starting with “Hello World” is usually simplest._
 7. Do you want to configure advanced settings?
     * _It is wise to review these settings even if you don’t change anything yet._
-8. Do you want to edit the local lambda function now? The location for our example is [here](amplify/backend/function/amplifyreactappaug20lambda/src/index.js).
+8. Do you want to edit the local lambda function now? The location for our example is [here](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js).
 9. After creating the function locally you should see these next steps output (these are good to keep in mind as a reference):
     * Check out sample function code generated in `<project-dir>/amplify/backend/function/amplifyreactappaug20lambda/src`.
     * `amplify function build` builds all of your functions currently in the project.
@@ -52,8 +52,8 @@ Example of how to test your function locally:
                 "httpMethod": "GET"
             }
             ```
-    * You can also edit [the actual Lambda code](../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save that, which will then be pushed up to the cloud AWS Lambda.
-        * Go ahead and edit the Lambda code and add in custom output that changes based on the path used in the request ([full example here](examples/lambda_intro_index_1.js)):
+    * You can also edit [the actual Lambda code](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save that, which will then be pushed up to the cloud AWS Lambda.
+        * Go ahead and edit the Lambda code and add in custom output that changes based on the path used in the request ([full example here](lambda_intro_index_1.js)):
             ```
             // exports.handler = async (event) => { ...
 
@@ -83,3 +83,5 @@ Example of how to test your function locally:
 #### Building out your function
 
 The function is now aware of the URL path requested and can perform different things based on that.
+
+
