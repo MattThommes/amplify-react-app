@@ -118,3 +118,25 @@ To deploy these resources to the cloud run `amplify push` and then `amplify stat
 │ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
+
+You should also see a new unique REST endpoint is provided to you. Example:
+
+```
+REST API endpoint: https://0s0wabuvr4.execute-api.us-east-1.amazonaws.com/dev
+```
+
+You can now use your unique endpoint to make requests to your Lambda function. Example browser request output:
+
+![API Lambda browser output](../images/api_lambda_browser_output.png)
+
+When you make changes to the [the actual Lambda code](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save them, running `amplify status` will show that the function has changed and needs to be deployed again by running `amplify push`:
+
+```
+┌──────────┬────────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name              │ Operation │ Provider plugin   │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappaug20lambda │ Update    │ awscloudformation │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
+└──────────┴────────────────────────────┴───────────┴───────────────────┘
+```
