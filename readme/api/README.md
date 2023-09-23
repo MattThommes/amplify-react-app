@@ -89,10 +89,6 @@ Example of how to test your function locally:
                 Finished execution.
                 ```
 
-### Building out your function
-
-The function is now aware of the URL path requested and can perform different things based on that.
-
 ### Deploying your function
 
 Running the `amplify status` command should show you that the function is not deployed yet. The operation column should say `Create` for the function and the API:
