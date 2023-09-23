@@ -25,7 +25,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@aws-amplify/cli": "^12.5"
+    "@aws-amplify/cli": "^12.5.0"
   },
   "scripts": {
     "node-version-check": "node check_node_version.js",
