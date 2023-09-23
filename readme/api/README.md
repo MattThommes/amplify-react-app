@@ -1,5 +1,7 @@
 # ⛅️ ⚛︎ Amplify React App: 🛠️ Developer Guide
 
+[Developer Guide home](../README.dev.md)
+
 ## Cloud Resources: API’s
 
 Your frontend may eventually need to call a backend for accessing cloud resources. Here is how to create an initial generic endpoint to get started:
@@ -26,7 +28,7 @@ Your frontend may eventually need to call a backend for accessing cloud resource
 10. Restrict API access?
     * _Choose no for now._
 
-#### Run your function locally
+### Run your function locally
 
 Example of how to test your function locally:
 
@@ -44,12 +46,19 @@ Example of how to test your function locally:
             "key3": "value3"
         }
         ```
-        * Let’s change this to a more realistic event from an API request (an About page):
+        * Let’s change this to a more realistic event from an API request (an About page request):
             ```
             {
-                "resource": "/about",
-                "path": "/about",
-                "httpMethod": "GET"
+                "resource": "/backend/{proxy+}",
+                "path": "/backend/about",
+                "httpMethod": "GET",
+                "queryStringParameters": null,
+                "multiValueQueryStringParameters": null,
+                "pathParameters": {
+                    "proxy": "about"
+                },
+                "body": null,
+                "isBase64Encoded": false
             }
             ```
     * You can also edit [the actual Lambda code](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save that, which will then be pushed up to the cloud AWS Lambda.
@@ -59,8 +68,8 @@ Example of how to test your function locally:
 
             bodyOutput = JSON.stringify('Hello from Lambda!');
 
-            if (event.path.match(/^\/about\/?/)) {
-                bodyOutput = JSON.stringify('Hello from Lambda! This is the about page.');
+            if (event.path.match(/^\/backend\/about\/?/)) {
+                bodyOutput = JSON.stringify('Hello from Lambda! This is the About page.');
             }
 
             return {
@@ -75,13 +84,37 @@ Example of how to test your function locally:
                 ✅ Result:
                 {
                 "statusCode": 200,
-                "body": "\"\\\"Hello from Lambda! This is the about page.\\\"\""
+                "body": "\"\\\"Hello from Lambda! This is the About page.\\\"\""
                 }
                 Finished execution.
                 ```
 
-#### Building out your function
+### Building out your function
 
 The function is now aware of the URL path requested and can perform different things based on that.
 
+### Deploying your function
 
+Running the `amplify status` command should show you that the function is not deployed yet. The operation column should say `Create` for the function and the API:
+
+```
+┌──────────┬────────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name              │ Operation │ Provider plugin   │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappaug20lambda │ Create    │ awscloudformation │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Api      │ amplifyreactappaug20api1   │ Create    │ awscloudformation │
+└──────────┴────────────────────────────┴───────────┴───────────────────┘
+```
+
+To deploy these resources to the cloud run `amplify push` and then `amplify status` again to see the updated status:
+
+```
+┌──────────┬────────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name              │ Operation │ Provider plugin   │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappaug20lambda │ No Change │ awscloudformation │
+├──────────┼────────────────────────────┼───────────┼───────────────────┤
+│ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
+└──────────┴────────────────────────────┴───────────┴───────────────────┘
+```

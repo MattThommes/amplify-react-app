@@ -9,10 +9,12 @@ Amplify Params - DO NOT EDIT */
 exports.handler = async (event) => {
     console.log(`EVENT: ${JSON.stringify(event)}`);
 
-    bodyOutput = JSON.stringify('Hello from Lambda!');
+    var path = event.path;
 
-    if (event.path.match(/^\/about\/?/)) {
-        bodyOutput = JSON.stringify('Hello from Lambda! This is the about page.');
+    bodyOutput = JSON.stringify('Hello from Lambda! Path is ' + path + '.');
+
+    if (event.path.match(/^\/backend\/about\/?/)) {
+        bodyOutput = JSON.stringify('Hello from Lambda! This is the About page.');
     }
 
     return {
