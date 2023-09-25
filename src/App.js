@@ -25,14 +25,14 @@ function fetchBackend(path) {
 }
 
 function App() {
-    const [path, setPath] = useState('');
+    const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
 
     useEffect(() => {
         if (ApiName !== '') {
             let ignore = false;
             setBackendResponse(null);
-            fetchBackend(path).then(response => {
+            fetchBackend(backendPath).then(response => {
                 if (!ignore) {
                     setBackendResponse(response);
                 }
@@ -41,7 +41,7 @@ function App() {
                 ignore = true;
             }
         }
-    }, [path]);
+    }, [backendPath]);
 
     return (
         <div className="App">
@@ -72,8 +72,8 @@ function App() {
                                 <Nav>
                                     <ul>
                                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-1" onClick={() => setBackendPath('page-1')}>Page 1</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-2" onClick={() => setBackendPath('page-2')}>Page 2</Nav.Link></li>
                                     </ul>
                                 </Nav>
                             </Navbar>
