@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - REACT_APP_ENV_API_NAME=$REACT_APP_ENV_API_NAME
         - nvm install v18.13.0
         - npm install -g npm@9
         - npm install

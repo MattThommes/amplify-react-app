@@ -136,3 +136,15 @@ When you make changes to the [the actual Lambda code](../../amplify/backend/func
 │ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
+
+### Securing your API endpoint
+
+Initially your API endpoint can be requested without authorization. You might want to restrict access to only authenticated users. To do this you can run `amplify update api` and follow the prompts:
+
+1. Select the API you want to update: `amplifyreactappaug20api1`
+2. Select the path: `/backend`
+3. Select the Lambda source: `amplifyreactappaug20lambda`
+4. Set Restrict API access: `yes`
+5. Who should have access? `Authenticated users only`
+6. What kind of access do you want for Authenticated users? `create, read, update, delete`
+

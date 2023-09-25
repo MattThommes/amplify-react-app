@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +8,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import HeaderImage from './images/header_image.png';
 import HeartIcon from './images/heart.svg';
 
+import { API } from "aws-amplify";
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -15,62 +18,83 @@ import {
 } from "react-router-dom";
 
 const SiteName = "Amplify React App";
+const ApiName = process.env.REACT_APP_ENV_API_NAME;
+
+function fetchBackend(path) {
+    return API.get(ApiName, '/backend/' + path);
+}
 
 function App() {
-  return (
-    <div className="App">
-        <Router>
-            <Container>
-                <Row className="header-row">
-                    <Col sm={8} className="header-col">
-                        <Navbar className="header-brand">
-                            <Navbar.Brand as={Link} to="/">
-                                <img
-                                    alt=""
-                                    src={HeaderImage}
-                                    className="img-fluid"
-                                />{'  '}
-                            </Navbar.Brand>
-                        </Navbar>
-                        <Container className="header-sub">
-                            <Row>
-                                <Col>
-                                    Welcome to the {SiteName} website!
-                                    <br />
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Col>
-                    <Col sm={4} className="sidebar">
-                        <Navbar>
-                            <Nav>
-                                <ul>
-                                    <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                                    <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
-                                    <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
-                                </ul>
-                            </Nav>
-                        </Navbar>
-                    </Col>
-                </Row>
-                <Row className="content-row">
-                    <Col sm>
-                        <Routes>
-                            <Route path="/"       element={<HomeContent />} />
-                            <Route path="/page-1" element={<Page1Content />} />
-                            <Route path="/page-2" element={<Page2Content />} />
-                        </Routes>
-                    </Col>
-                </Row>
-                <Row className="footer-row">
-                    <Col sm>
-                        <Footer />
-                    </Col>
-                </Row>
-            </Container>
-        </Router>
-    </div>
-  );
+    const [path, setPath] = useState('about');
+    const [backendResponse, setBackendResponse] = useState(null);
+
+    useEffect(() => {
+        let ignore = false;
+        setBackendResponse(null);
+        fetchBackend(path).then(response => {
+            if (!ignore) {
+                setBackendResponse(response);
+            }
+        });
+        return () => {
+            ignore = true;
+        }
+    }, [path]);
+
+    return (
+        <div className="App">
+            <Router>
+                <Container>
+                    <Row className="header-row">
+                        <Col sm={8} className="header-col">
+                            <Navbar className="header-brand">
+                                <Navbar.Brand as={Link} to="/">
+                                    <img
+                                        alt=""
+                                        src={HeaderImage}
+                                        className="img-fluid"
+                                    />{'  '}
+                                </Navbar.Brand>
+                            </Navbar>
+                            <Container className="header-sub">
+                                <Row>
+                                    <Col>
+                                        Welcome to the {SiteName} website!
+                                        <br />
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </Col>
+                        <Col sm={4} className="sidebar">
+                            <Navbar>
+                                <Nav>
+                                    <ul>
+                                        <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
+                                    </ul>
+                                </Nav>
+                            </Navbar>
+                        </Col>
+                    </Row>
+                    <Row className="content-row">
+                        <Col sm>
+                            <Routes>
+                                <Route path="/"       element={<HomeContent />} />
+                                <Route path="/page-1" element={<Page1Content />} />
+                                <Route path="/page-2" element={<Page2Content />} />
+                            </Routes>
+                        </Col>
+                    </Row>
+                    <Row className="footer-row">
+                        <Col sm>
+                            <Footer />
+                        </Col>
+                    </Row>
+                </Container>
+            </Router>
+        </div>
+    );
 }
 
 function Content(pageOutput) {
