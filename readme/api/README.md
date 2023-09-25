@@ -28,7 +28,9 @@ Your frontend may eventually need to call a backend for accessing cloud resource
 10. Restrict API access?
     * _Choose no for now._
 
-### Run your function locally
+### Run your API function locally
+
+Your API will automatically hit the Lambda function you created. Locally you will want to test hitting the Lambda function as you build it out.
 
 Example of how to test your function locally:
 
@@ -103,6 +105,12 @@ Running the `amplify status` command should show you that the function is not de
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
 
+First, update your `.env` file with your API resource name listed above:
+
+```
+REACT_APP_ENV_API_NAME=amplifyreactappaug20api1
+```
+
 To deploy these resources to the cloud run `amplify push` and then `amplify status` again to see the updated status:
 
 ```
@@ -139,7 +147,7 @@ When you make changes to the [the actual Lambda code](../../amplify/backend/func
 
 ### Securing your API endpoint
 
-Initially your API endpoint can be requested without authorization. You might want to restrict access to only authenticated users. To do this you can run `amplify update api` and follow the prompts:
+Initially your API endpoint can be requested without authorization which is fine for simple backend requests from your website. If you need a more standalone API, you might want to restrict access to only authenticated users. To do this you can run `amplify update api` and follow the prompts:
 
 1. Select the API you want to update: `amplifyreactappaug20api1`
 2. Select the path: `/backend`
@@ -147,4 +155,3 @@ Initially your API endpoint can be requested without authorization. You might wa
 4. Set Restrict API access: `yes`
 5. Who should have access? `Authenticated users only`
 6. What kind of access do you want for Authenticated users? `create, read, update, delete`
-

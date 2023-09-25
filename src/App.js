@@ -25,19 +25,21 @@ function fetchBackend(path) {
 }
 
 function App() {
-    const [path, setPath] = useState('about');
+    const [path, setPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
 
     useEffect(() => {
-        let ignore = false;
-        setBackendResponse(null);
-        fetchBackend(path).then(response => {
-            if (!ignore) {
-                setBackendResponse(response);
+        if (ApiName !== '') {
+            let ignore = false;
+            setBackendResponse(null);
+            fetchBackend(path).then(response => {
+                if (!ignore) {
+                    setBackendResponse(response);
+                }
+            });
+            return () => {
+                ignore = true;
             }
-        });
-        return () => {
-            ignore = true;
         }
     }, [path]);
 
