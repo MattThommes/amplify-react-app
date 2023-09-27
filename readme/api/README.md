@@ -147,44 +147,18 @@ When you make changes to the [the actual Lambda code](../../amplify/backend/func
 
 ### Accessing your API from your frontend code
 
-You can now access your API from your frontend code. There is already code in App.js to make requests once the environment variable `REACT_APP_ENV_API_NAME` is provided a value:
+You can now access your API from your frontend code. There is already code in App.js to make requests once the environment variable `REACT_APP_ENV_API_NAME` is provided a value.
+
+By default on page load an API request will run for whatever the URL path is.
 
 ```
-const [backendPath, setBackendPath] = useState('');
-const [backendResponse, setBackendResponse] = useState(null);
-
-useEffect(() => {
-    if (ApiName !== '') {
-        let ignore = false;
-        setBackendResponse(null);
-        fetchBackend(backendPath).then(response => {
-            if (!ignore) {
-                setBackendResponse(response);
-            }
-        });
-        return () => {
-            ignore = true;
-        }
-    }
-}, [backendPath]);
+setBackendPath(location.pathname.replace(/^\/+/, ''));
 ```
 
-By default on page load a request will run for the root path. You can change this by editing the default `path` state variable in App.js:
-
-```
-const [backendPath, setBackendPath] = useState('about');
-```
-
-Or you can trigger a request by updating the state value:
+You can also trigger a backend request for any path by simply updating the state value:
 
 ```
 setBackendPath('blog-posts');
-```
-
-In the nav links you will see how you can make a separate request per route:
-
-```
-onClick={() => setBackendPath('page-2')}
 ```
 
 ### Securing your API endpoint

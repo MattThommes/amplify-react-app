@@ -11,10 +11,10 @@ import HeartIcon from './images/heart.svg';
 import { API } from "aws-amplify";
 
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
-    Link
+    Link,
+    useLocation
 } from "react-router-dom";
 
 const SiteName = "Amplify React App";
@@ -27,6 +27,12 @@ function fetchBackend(path) {
 function App() {
     const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
+
+    // Get URL path from React Router and call backend API
+    let location = useLocation();
+    useEffect(() => {
+        setBackendPath(location.pathname.replace(/^\/+/, ''));
+    }, [location]);
 
     useEffect(() => {
         if (ApiName !== '') {
@@ -45,7 +51,6 @@ function App() {
 
     return (
         <div className="App">
-            <Router>
                 <Container>
                     <Row className="header-row">
                         <Col sm={8} className="header-col">
@@ -72,8 +77,8 @@ function App() {
                                 <Nav>
                                     <ul>
                                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-1" onClick={() => setBackendPath('page-1')}>Page 1</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-2" onClick={() => setBackendPath('page-2')}>Page 2</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
                                     </ul>
                                 </Nav>
                             </Navbar>
@@ -94,7 +99,6 @@ function App() {
                         </Col>
                     </Row>
                 </Container>
-            </Router>
         </div>
     );
 }
