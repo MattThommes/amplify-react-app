@@ -7,25 +7,27 @@
 Your frontend may eventually need to call a backend for accessing cloud resources. Here is how to create an initial generic endpoint to get started:
 
 1. `amplify add api`
-2. Provide friendly name, example `amplifyreactappapi1`
-3. Provide a path: `/backend`
+2. Select from one of the below mentioned services: `REST`
+3. Provide friendly name, example: `amplifyreactappapi1`
+4. Provide a path: `/backend`
     * _This is usually a more specific resource name but for example sake it is generic here. You can still add custom request endpoints using only one Lambda. Example: /backend/posts or /backend/books/whatever_
-4. Provide an AWS Lambda function name. Example: `amplifyreactappaug20lambda`
-5. Choose the runtime that you want to use.
-    * _I normally go with NodeJS but completely up to your skillset and level of comfort._
-6. Choose the function template that you want to use.
+5. Provide an AWS Lambda function name. Example: `amplifyreactapplambda1`
+6. Choose the runtime that you want to use.
+    * _I normally go with NodeJS but completely up to your skillset and level of comfort. The rest of these instructions assume you are using NodeJS._
+7. Choose the function template that you want to use.
     * _Starting with “Hello World” is usually simplest._
-7. Do you want to configure advanced settings?
+8. Do you want to configure advanced settings?
     * _It is wise to review these settings even if you don’t change anything yet._
-8. Do you want to edit the local lambda function now? The location for our example is [here](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js).
-9. After creating the function locally you should see these next steps output (these are good to keep in mind as a reference):
-    * Check out sample function code generated in `<project-dir>/amplify/backend/function/amplifyreactappaug20lambda/src`.
+9. Choose the package manager that you want to use to manage dependencies: `NPM`
+10. Do you want to edit the local lambda function now? You can choose `No` and then look for the file here (so you get familiar with where it lives): `/amplify/backend/function/amplifyreactapplambda1/src/index.js`.
+11. After creating the function locally you should see these next steps output (these are good to keep in mind as a reference):
+    * Check out sample function code generated in `<project-dir>/amplify/backend/function/amplifyreactapplambda1/src`.
     * `amplify function build` builds all of your functions currently in the project.
     * `amplify mock function <functionName>` runs your function locally.
-    * To access AWS resources outside of this Amplify app, edit the `/Users/[USERNAME]/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappaug20lambda/custom-policies.json`.
+    * To access AWS resources outside of this Amplify app, edit the `/[...]/amplify-react-app/amplify/backend/function/amplifyreactapplambda1/custom-policies.json`.
     * `amplify push` builds all of your local backend resources and provisions them in the cloud.
     * `amplify publish` builds all of your local backend and front-end resources (if you added hosting category) and provisions them in the cloud.
-10. Restrict API access?
+12. Restrict API access?
     * _Choose no for now._
 
 ### Run your API function locally
@@ -34,10 +36,10 @@ Your API will automatically hit the Lambda function you created. Locally you wil
 
 Example of how to test your function locally:
 
-1. `amplify mock function amplifyreactappaug20lambda`
+1. `amplify mock function amplifyreactapplambda1`
     * Example output:
         ```
-        ✔ Provide the path to the event JSON object relative to /Users/[USERNAME]/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappaug20lambda
+        ✔ Provide the path to the event JSON object relative to /[...]/amplify-react-app/amplify/backend/function/amplifyreactapplambda1
         ```
         * _Using the default_ `src/event.json` _is fine._
     * In the function folder locally you should see an event.json file appear with a test event object:
@@ -63,33 +65,19 @@ Example of how to test your function locally:
                 "isBase64Encoded": false
             }
             ```
-    * You can also edit [the actual Lambda code](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save that, which will then be pushed up to the cloud AWS Lambda.
-        * Go ahead and edit the Lambda code and add in custom output that changes based on the path used in the request ([full example here](lambda_intro_index_1.js)):
+    * You can also edit the actual Lambda code: `../../amplify/backend/function/amplifyreactapplambda1/src/index.js` and save that, which will then be pushed up to the cloud AWS Lambda.
+        * Go ahead and edit the Lambda function file and paste in the [full example here](lambda_intro_index_1.js).
+        * Re-run the `amplify mock` command from above and you should see the custom output for the About page request:
             ```
-            // exports.handler = async (event) => { ...
-
-            bodyOutput = JSON.stringify('Hello from Lambda!');
-
-            if (event.path.match(/^\/backend\/about\/?/)) {
-                bodyOutput = JSON.stringify('Hello from Lambda! This is the About page.');
+            Starting execution...
+            EVENT: {"resource":"/about","path":"/about","httpMethod":"GET"}
+            ✅ Result:
+            {
+            "statusCode": 200,
+            "body": "\"\\\"Hello from Lambda! This is the About page.\\\"\""
             }
-
-            return {
-                statusCode: 200,
-                body: JSON.stringify(bodyOutput),
-            };
+            Finished execution.
             ```
-            * Re-run the `amplify mock` command from above and you should see the custom output for the About page request:
-                ```
-                Starting execution...
-                EVENT: {"resource":"/about","path":"/about","httpMethod":"GET"}
-                ✅ Result:
-                {
-                "statusCode": 200,
-                "body": "\"\\\"Hello from Lambda! This is the About page.\\\"\""
-                }
-                Finished execution.
-                ```
 
 ### Deploying your function
 
@@ -99,16 +87,16 @@ Running the `amplify status` command should show you that the function is not de
 ┌──────────┬────────────────────────────┬───────────┬───────────────────┐
 │ Category │ Resource name              │ Operation │ Provider plugin   │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappaug20lambda │ Create    │ awscloudformation │
+│ Function │ amplifyreactapplambda1     │ Create    │ awscloudformation │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappaug20api1   │ Create    │ awscloudformation │
+│ Api      │ amplifyreactappapi1        │ Create    │ awscloudformation │
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
 
-First, update your `.env` file with your API resource name listed above:
+Update your `.env` file with your API resource name listed above:
 
 ```
-REACT_APP_ENV_API_NAME=amplifyreactappaug20api1
+REACT_APP_ENV_API_NAME=amplifyreactappapi1
 ```
 
 To deploy these resources to the cloud run `amplify push` and then `amplify status` again to see the updated status:
@@ -117,9 +105,9 @@ To deploy these resources to the cloud run `amplify push` and then `amplify stat
 ┌──────────┬────────────────────────────┬───────────┬───────────────────┐
 │ Category │ Resource name              │ Operation │ Provider plugin   │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappaug20lambda │ No Change │ awscloudformation │
+│ Function │ amplifyreactapplambda1     │ No Change │ awscloudformation │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
+│ Api      │ amplifyreactappapi1        │ No Change │ awscloudformation │
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
 
@@ -139,9 +127,9 @@ When you make changes to the [the actual Lambda code](../../amplify/backend/func
 ┌──────────┬────────────────────────────┬───────────┬───────────────────┐
 │ Category │ Resource name              │ Operation │ Provider plugin   │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappaug20lambda │ Update    │ awscloudformation │
+│ Function │ amplifyreactapplambda1     │ Update    │ awscloudformation │
 ├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappaug20api1   │ No Change │ awscloudformation │
+│ Api      │ amplifyreactappapi1        │ No Change │ awscloudformation │
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
 
