@@ -133,6 +133,8 @@ When you make changes to the [the actual Lambda code](../../amplify/backend/func
 └──────────┴────────────────────────────┴───────────┴───────────────────┘
 ```
 
+Lastly, update your environment variables in AWS Amplify console with the same API name as above.
+
 ### Accessing your API from your frontend code
 
 You can now access your API from your frontend code. There is already code in App.js to make requests once the environment variable `REACT_APP_ENV_API_NAME` is provided a value.
