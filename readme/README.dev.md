@@ -46,7 +46,8 @@ Amplify React App is generated from [Create React App](https://create-react-app.
     * `modified:   public/index.html`
     * `modified:   public/manifest.json`
     * Don’t forget newly generated files:
-        1. `git add amplify` (not fully sure if this is needed since it can be auto-generated again when pulling an app down, but better safe than sorry)
+        1. `git add amplify`
+            * If you commit the amplify directory it will use this at deployment time to generate the cloud resources. I’ve noticed the builds take a bit longer when this is included. You can also opt to not include it and let Amplify generate the cloud resources from the CLI.
     * Using `git add *` is faster.
     * `git commit -m "After running amplify init"`
 9. To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
