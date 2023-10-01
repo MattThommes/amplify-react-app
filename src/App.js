@@ -49,6 +49,13 @@ function App() {
         }
     }, [backendPath]);
 
+    // Monitor backend response changes
+    useEffect(() => {
+        if (backendResponse !== null) {
+            console.log('Backend response: ' + JSON.stringify(backendResponse));
+        }
+    }, [backendResponse]);
+
     return (
         <div className="App">
                 <Container>
@@ -87,9 +94,9 @@ function App() {
                     <Row className="content-row">
                         <Col sm>
                             <Routes>
-                                <Route path="/"       element={<HomeContent />} />
-                                <Route path="/page-1" element={<Page1Content />} />
-                                <Route path="/page-2" element={<Page2Content />} />
+                                <Route path="/"       element={<HomeContent backendResponse={backendResponse} />} />
+                                <Route path="/page-1" element={<Page1Content backendResponse={backendResponse} />} />
+                                <Route path="/page-2" element={<Page2Content backendResponse={backendResponse} />} />
                             </Routes>
                         </Col>
                     </Row>
@@ -103,37 +110,41 @@ function App() {
     );
 }
 
-function Content(pageOutput) {
+function Content(pageOutput, backendResponse) {
     return (
         <>
             <div className="content">
                 {pageOutput}
+                {backendResponse}
             </div>
         </>
     );
 }
 
-function HomeContent() {
+function HomeContent({ backendResponse }) {
     return Content(
         <>
             <h2>Home</h2>
-        </>
+        </>,
+        backendResponse
     );
 }
 
-function Page1Content() {
+function Page1Content({ backendResponse }) {
     return Content(
         <>
             <h2>Page 1</h2>
-        </>
+        </>,
+        backendResponse
     );
 }
 
-function Page2Content() {
+function Page2Content({ backendResponse }) {
     return Content(
         <>
             <h2>Page 2</h2>
-        </>
+        </>,
+        backendResponse
     );
 }
 
