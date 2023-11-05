@@ -2,7 +2,29 @@
 
 ## Cloud Resources: Images
 
-When adding image storage for the first time:
+### Syncing local images to S3
+
+```
+$ aws s3 sync ~/Documents/dev/[PROJECT]/images/ s3://[BUCKET_NAME] --acl public-read
+```
+
+There should be a shortcut in package.json also:
+
+```
+$ npm run image-sync
+```
+
+The `images` folder is just a placeholder for syncing purposes. It is not meant to hold every single image. Once an image is synced to the cloud you can delete the file locally. `.gitignore` already has a rule to ignore the root level `/images/` directory.
+
+### Example image usage in code
+
+```
+<img className="img-fluid" src="https://[BUCKET_NAME].s3.amazonaws.com/[FILENAME].jpg" />
+```
+
+Resize your image dimensions to be around 800-1000px width. The image will automatically be resized to fit the container it is in, but it is better obviously to have the image already sized correctly to reduce the file size.
+
+### Adding image storage for the first time
 
 1. `amplify add storage`
 2. Choose `Content (Images, audio, video, etc.)`
@@ -19,17 +41,3 @@ When adding image storage for the first time:
 13. Run `amplify push` to push the local storage changes to the cloud.
 14. Verify in AWS console you see the new bucket created, something like `thommesfamvacationsaf92c0e5c7194a05804f41a082b0110057-dev`
     1. You can also run `aws s3 ls` locally to see your buckets.
-
-Syncing local images to S3:
-
-```
-$ aws s3 sync ~/Documents/dev/[PROJECT]/images/ s3://[BUCKET_NAME] --acl public-read
-```
-
-The `images` folder is just a placeholder for syncing purposes. It is not meant to hold every single image. Once an image is synced to the cloud you can delete the file locally. `.gitignore` already has a rule to ignore the root level `/images/` directory.
-
-Example image usage in code:
-
-```
-<img className="img-fluid" src="https://[BUCKET_NAME].s3.amazonaws.com/[FILENAME].jpg" />
-```

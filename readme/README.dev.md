@@ -6,6 +6,16 @@ Amplify React App is generated from [Create React App](https://create-react-app.
 
 ## Local project setup
 
+### Make quick updates to website content
+
+If you just need to make a quick update to the website content, you can follow
+these steps:
+
+1. Load the right Node version: `source ~/.nvm/nvm.sh && nvm use`
+2. Run `npm start` to start the local development server.
+3. Make your changes to the website content.
+4. For new images, run `npm run image-sync` (see [Images](images/README.md)).
+
 ### Create from template
 
 1. Create a new Github repo for your new project from the amplify-react-app template:
