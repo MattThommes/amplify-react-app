@@ -36,14 +36,12 @@
 			}
 
 			.header-brand {
-				background-color: yellow;
-				padding: 0; /* To nudge the logo over slightly */
+				background-color: white;
+				margin: -10px -8px -20px 0;
 
 				.navbar-brand {
 					margin: auto;
-
 					img {
-
 					}
 				}
 			}
@@ -55,7 +53,7 @@
 				opacity: 0.8;
 				font-size: 16px;
 				margin: 0;
-				padding: 10px 0;
+				padding: 14px 0 10px 0;
 
 				.row >.col, .row>[class^=col-] {
 					border: none;
@@ -122,7 +120,8 @@
 			.built-with {
 				background-color: azure;
 				color: gray;
-				font-size: 0.8em;
+				font-family: 'Varela Round', serif;
+				font-size: 0.7em;
 				margin-top: 25px;
 				padding: 2px;
 			}

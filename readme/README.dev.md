@@ -15,6 +15,7 @@ these steps:
 2. Run `npm start` to start the local development server.
 3. Make your changes to the website content.
 4. For new images, run `npm run image-sync` (see [Images](images/README.md)).
+5. Commit your changes and push to Github which should trigger a new build and deploy.
 
 ### Create from template
 
@@ -24,7 +25,9 @@ these steps:
     * `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3. Create a new project in your IDE. Proceed to below steps from within your project README.dev.md.
 
-### Project specific setup
+### Child project specific setup
+
+Any project created from the amplify-react-app template should follow these steps:
 
 1. Update the git remotes for your new project to include a remote named `upstream` for the base repo ([amplify-react-app](https://github.com/MattThommes/amplify-react-app)) so future changes can be pulled in:
     * `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
@@ -64,7 +67,7 @@ these steps:
     1. `git checkout -b staging`
     2. `git push origin staging`
 
-## Amplify CLI setup
+## Amplify app setup
 
 1. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
     1. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.

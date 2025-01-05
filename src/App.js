@@ -20,11 +20,13 @@ import {
 const SiteName = "Amplify React App";
 const ApiName = process.env.REACT_APP_ENV_API_NAME;
 
-function fetchBackend(path) {
+function fetchBackend(path)
+{
     return API.get(ApiName, '/backend/' + path);
 }
 
-function App() {
+function App()
+{
     const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
 
@@ -110,7 +112,8 @@ function App() {
     );
 }
 
-function Content(pageOutput, backendResponse) {
+function Content(pageOutput, backendResponse)
+{
     return (
         <>
             <div className="content">
@@ -121,7 +124,8 @@ function Content(pageOutput, backendResponse) {
     );
 }
 
-function HomeContent({ backendResponse }) {
+function HomeContent({ backendResponse })
+{
     return Content(
         <>
             <h2>Home</h2>
@@ -130,7 +134,8 @@ function HomeContent({ backendResponse }) {
     );
 }
 
-function Page1Content({ backendResponse }) {
+function Page1Content({ backendResponse })
+{
     return Content(
         <>
             <h2>Page 1</h2>
@@ -139,7 +144,8 @@ function Page1Content({ backendResponse }) {
     );
 }
 
-function Page2Content({ backendResponse }) {
+function Page2Content({ backendResponse })
+{
     return Content(
         <>
             <h2>Page 2</h2>
@@ -148,7 +154,8 @@ function Page2Content({ backendResponse }) {
     );
 }
 
-function BuiltWith() {
+function BuiltWith()
+{
     return (
         <>
             <div className="built-with">
@@ -159,7 +166,8 @@ function BuiltWith() {
     );
 }
 
-function Footer() {
+function Footer()
+{
     return (
         <div className="footer">
             <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
