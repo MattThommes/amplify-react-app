@@ -5,6 +5,7 @@
 	font-family: 'Varela Round', serif;
 	margin: 0;
 	text-align: center;
+	width: -webkit-fill-available;
 
 	a {
 		&:link {
@@ -37,7 +38,8 @@
 
 			.header-brand {
 				background-color: white;
-				margin: -10px -8px -20px 0;
+				margin: -5px 0 0 0;
+				padding: inherit;
 
 				.navbar-brand {
 					margin: auto;
@@ -48,12 +50,13 @@
 			
 			.header-sub {
 				background-color: #f9f9f9;
-				background-image: repeating-linear-gradient(135deg, #99f3ea 0, #99f3ea 1px, #f9f9f9 0, #f9f9f9 50%);
+				/* Background diagonal patterned lines */
+				background-image: linear-gradient(45deg, #d3faad 25%, transparent 25%, transparent 75%, #d6b283 75%, #da8d3a), linear-gradient(45deg, #c0d1ff 25%, transparent 25%, transparent 75%, #f9f9f9 75%, #f9f9f9);
 				background-size: 10px 10px;
 				opacity: 0.8;
 				font-size: 16px;
 				margin: 0;
-				padding: 14px 0 10px 0;
+				padding: 10px 0 10px 0;
 
 				.row >.col, .row>[class^=col-] {
 					border: none;
@@ -61,8 +64,8 @@
 			}
 
 			.sidebar {
-				background-color: #f9f9f9;
-				background-image: repeating-linear-gradient(45deg, #99f3ea 0, #99f3ea 1px, #f9f9f9 0, #f9f9f9 50%);
+				background-color: #d3faad;
+
 				background-size: 10px 10px;
 				opacity: 0.8;
 
@@ -103,6 +106,7 @@
 		}
 
 		.content {
+			font-size: 13px;
 			padding: 20px 0;
 			text-align: left;
 		}
@@ -115,6 +119,7 @@
 
 			.established {
 				font-size: 0.9em;
+				font-style: italic;
 			}
 
 			.built-with {
