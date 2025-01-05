@@ -49,14 +49,21 @@
 			}
 			
 			.header-sub {
-				background: repeating-radial-gradient(
-					circle,
-					#8ac157,
-					#fde3c0 10px,
-					#a3b8f8 10px,
-					#fde3c0 20px
-				);
-				background-size: 10px 10px;
+				background:
+					/* On "top" */
+					repeating-linear-gradient(
+						45deg,
+						transparent,
+						transparent 10px,
+						#a2c180 10px,
+						#d3faad 20px
+					),
+					/* on "bottom" */
+					linear-gradient(
+						to bottom,
+						#c9ec9e,
+						#c0d1ff
+					);
 				opacity: 0.8;
 				font-size: 16px;
 				margin: 0;
