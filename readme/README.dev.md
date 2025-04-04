@@ -71,32 +71,33 @@ Any project created from the amplify-react-app template should follow these step
 ## Amplify app setup
 
 1. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
-    1. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
-    2. Enter `n` (No) for `Initialize the project with the above configuration?`
-    3. Enter `dev` for name of the environment (or hit Enter to use the default).
-    4. Choose `Visual Studio Code` or `None` for your default editor.
-    5. Choose `javascript` for the type of app that you’re building.
-    6. Choose `react` for javascript framework.
-    7. Source Directory Path: `src`
-    8. Distribution Directory Path: `build`
-    9. Build Command: `npm run build`
-    10. Start Command: `npm start`
-    11. If you ran `amplify init` for a fresh Amplify app, continue to the next step. If you ran `amplify pull --appId ...` to pull down an existing Amplify app, continue to step 16.
-    12. Select the profile you want to use (typically it is `amplify-feb2021-b`).
-        * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
-    13. Decide for yourself for this question:
-        * `✔ Help improve Amplify CLI by sharing non sensitive configurations on failures (y/N)`
-    14. Once it finishes setting up your local and cloud environment, you should see a message similar to:
-        * `Deployment state saved successfully.`
-        * `✔ Initialized provider successfully.`
-        * `✅ Initialized your environment successfully.`
-        * `Your project has been successfully initialized and connected to the cloud!`
-        * `Some next steps:`
-    15. You should see a new amplify directory appear in your project files.
-        * Commit these files since they are configuration.
-        * Remember you are probably on staging branch locally.
-    16. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
-        * ![Amplify new app created](images/amplify_new_app_created.png)
+   * As of April 2025, I had better luck creating the app in Amplify console first, then pull it down locally.
+2. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
+3. Enter `n` (No) for `Initialize the project with the above configuration?`
+4. Enter `dev` for name of the environment (or hit Enter to use the default).
+5. Choose `Visual Studio Code` or `None` for your default editor.
+6. Choose `javascript` for the type of app that you’re building.
+7. Choose `react` for javascript framework.
+8. Source Directory Path: `src`
+9. Distribution Directory Path: `build`
+10. Build Command: `npm run build`
+11. Start Command: `npm start`
+12. If you ran `amplify init` for a fresh Amplify app, continue to the next step. If you ran `amplify pull --appId ...` to pull down an existing Amplify app, continue to step 16.
+13. Select the profile you want to use (typically it is `amplify-feb2021-b`).
+    * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
+14. Decide for yourself for this question:
+    * `✔ Help improve Amplify CLI by sharing non sensitive configurations on failures (y/N)`
+15. Once it finishes setting up your local and cloud environment, you should see a message similar to:
+    * `Deployment state saved successfully.`
+    * `✔ Initialized provider successfully.`
+    * `✅ Initialized your environment successfully.`
+    * `Your project has been successfully initialized and connected to the cloud!`
+    * `Some next steps:`
+16. You should see a new amplify directory appear in your project files.
+    * Commit these files since they are configuration.
+    * Remember you are probably on staging branch locally.
+17. Visit the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/home?region=us-east-1#/) to verify the app was created:
+    * ![Amplify new app created](images/amplify_new_app_created.png)
 
 ## Amplify console setup
 
