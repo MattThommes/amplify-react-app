@@ -22,7 +22,7 @@ brew install nvm
 source ~/.nvm/nvm.sh
 
 echo "-> Setting up Node..."
-nvm install v17.3.0
+nvm install v20
 nvm use
 nvm list
 
