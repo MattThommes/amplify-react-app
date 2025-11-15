@@ -18,7 +18,7 @@ import {
 } from "react-router-dom";
 
 const SiteName = "Amplify React App";
-const ApiName = process.env.REACT_APP_ENV_API_NAME;
+const ApiName = import.meta.env.VITE_APP_ENV_API_NAME;
 
 function fetchBackend(path)
 {
