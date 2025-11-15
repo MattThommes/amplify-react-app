@@ -37,7 +37,7 @@ function App()
     }, [location]);
 
     useEffect(() => {
-        if (ApiName !== '') {
+        if (ApiName) {
             let ignore = false;
             setBackendResponse(null);
             fetchBackend(backendPath).then(response => {
@@ -118,7 +118,7 @@ function Content(pageOutput, backendResponse)
         <>
             <div className="content">
                 {pageOutput}
-                {backendResponse}
+                {backendResponse && <pre>{JSON.stringify(backendResponse, null, 2)}</pre>}
             </div>
         </>
     );
