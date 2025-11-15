@@ -22,18 +22,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "node-version-check": "node check_node_version.js",
+    "node-version-check": "node check_node_version.cjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "postinstall": "npm run node-version-check",
     "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
