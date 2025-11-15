@@ -2,11 +2,8 @@
   "name": "amplify-react-app",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "engineStrict": true,
-  "engines": {
-    "node": ">=20 <21",
-    "npm": ">=10 <11"
-  },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.3.8",
     "@testing-library/jest-dom": "^5.16.4",
@@ -19,21 +16,16 @@
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
     "react-twitter-widgets": "^1.11.0",
     "sass": "^1.58.3",
     "semver": "^7.3.7",
     "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "@aws-amplify/cli": "^12.5.1"
-  },
   "scripts": {
     "node-version-check": "node check_node_version.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "postinstall": "npm run node-version-check",
     "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read"
   },
@@ -54,5 +46,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@aws-amplify/cli": "^12.5.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.3.5"
+  },
+  "engines": {
+    "node": ">=20 <21",
+    "npm": ">=10 <11"
   }
 }

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Amplify React App is generated from [Create React App](https://create-react-app.dev/). Once created, the app is updated via the `react-scripts` development dependency (see [Updating to New Releases](https://create-react-app.dev/docs/updating-to-new-releases) and [changelog](https://github.com/facebook/create-react-app/blob/main/CHANGELOG.md)).
+Amplify React App is built using Vite and React. It serves as a modern, fast template for building single-page applications (SPAs) on AWS Amplify.
 
 ## Local project setup
 
@@ -12,7 +12,7 @@ If you just need to make a quick update to the website content, you can follow
 these steps:
 
 1. Load the right Node version: `source ~/.nvm/nvm.sh && nvm use`
-2. Run `npm start` to start the local development server.
+2. Run `npm run dev` to start the local development server.
 3. Make your changes to the website content.
 4. For new images, run `npm run image-sync` (see [Images](images/README.md)).
 5. Commit your changes and push to Github which should trigger a new build and deploy.
@@ -20,7 +20,7 @@ these steps:
 ### Create from template
 
 1. Create a new Github repo for your new project from the amplify-react-app template:
-    * ![Create new repo from template](images/repo_from_template.png) 
+    * ![Create new repo from template](images/repo_from_template.png)
 2. Clone your new repo locally, example:
     * `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3. Create a new project in your IDE. Proceed to below steps from within your project README.dev.md.
@@ -50,7 +50,7 @@ Any project created from the amplify-react-app template should follow these step
 5. Check Amplify version to verify it is installed globally:
     * `amplify --version`
 6. Run `npm install`. Add and commit package-lock.json again: `git commit -m "Dependency updates"`
-7. Run `npm start` and confirm build works and default React site appears at http://localhost:3000
+7. Run `npm run dev` and confirm build works and default React site appears at http://localhost:3000
 8. Proceed to Amplify CLI setup steps, then come back here.
 9. If you haven’t already, commit and push any changes. Initial changes should look similar to:
     * `modified:   .gitignore`
@@ -71,7 +71,7 @@ Any project created from the amplify-react-app template should follow these step
 ## Amplify app setup
 
 1. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
-   * As of April 2025, I had better luck creating the app in Amplify console first, then pull it down locally.
+    * As of April 2025, I had better luck creating the app in Amplify console first, then pull it down locally.
 2. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
 3. Enter `n` (No) for `Initialize the project with the above configuration?`
 4. Enter `dev` for name of the environment (or hit Enter to use the default).
@@ -79,9 +79,9 @@ Any project created from the amplify-react-app template should follow these step
 6. Choose `javascript` for the type of app that you’re building.
 7. Choose `react` for javascript framework.
 8. Source Directory Path: `src`
-9. Distribution Directory Path: `build`
+9. Distribution Directory Path: `dist`
 10. Build Command: `npm run build`
-11. Start Command: `npm start`
+11. Start Command: `npm run dev`
 12. If you ran `amplify init` for a fresh Amplify app, continue to the next step. If you ran `amplify pull --appId ...` to pull down an existing Amplify app, continue to step 16.
 13. Select the profile you want to use (typically it is `amplify-feb2021-b`).
     * If you don’t see the correct profile, edit ~/.aws/config and ~/.aws/credentials to ensure it is present in both files.
