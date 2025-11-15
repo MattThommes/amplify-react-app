@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,15 +20,14 @@ import {
 const SiteName = "Amplify React App";
 const ApiName = import.meta.env.VITE_APP_ENV_API_NAME;
 
-function fetchBackend(path)
-{
-    return API.get(ApiName, '/backend/' + path);
-}
-
 function App()
 {
     const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
+
+    const fetchBackend = useCallback((path) => {
+        return API.get(ApiName, '/backend/' + path);
+    }, []);
 
     // Get URL path from React Router and call backend API
     let location = useLocation();
@@ -49,7 +48,7 @@ function App()
                 ignore = true;
             }
         }
-    }, [backendPath]);
+    }, [backendPath, fetchBackend]);
 
     // Monitor backend response changes
     useEffect(() => {
