@@ -3,14 +3,13 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo "-> Adjusting git remote..."
-# Adds a trailing underscore to avoid accidental pushes since I am used to using upstream in place of origin
-git remote rename origin upstream_
-
-echo "Please provide your repo SSH clone URI for your project (git@github.com:MattThommes/project.git):"
-read project_repo_uri
-echo "-> Configuring this git remote..."
-git remote add upstream $project_repo_uri
+echo "-> Configuring upstream git remote..."
+if ! git remote | grep -q '^upstream$'; then
+  echo "Adding 'upstream' remote for the template repository."
+  git remote add upstream https://github.com/MattThommes/amplify-react-app.git
+else
+  echo "'upstream' remote already exists."
+fi
 
 date=$(date +%m/%d/%Y)
 echo "-> Updating readme..."
@@ -26,19 +25,19 @@ nvm install v20
 nvm use
 nvm list
 
-echo "-> Setting correct AWS profile/credentials..."
-export AWS_PROFILE=amplify-feb2021-b
-
-echo "-> Checking Amplify version..."
-amplify_version=$(amplify --version)
-
-echo "  -> Amplify version found: ${amplify_version}"
+echo "-> Setting AWS profile for this session..."
+echo "Please enter the AWS profile to use for the Amplify Sandbox (e.g., amplify-feb2021-b):"
+read aws_profile_name
+export AWS_PROFILE=$aws_profile_name
+echo -e "AWS profile set to ${RED}$AWS_PROFILE${NC} for this terminal session."
 
 echo "-> Installing dependencies..."
 npm ci --prefer-offline --no-audit --progress=false
 
-echo "-> Initializing Amplify project..."
-amplify init
+echo "-> Initializing Amplify Gen 2 project..."
+npm create amplify@latest --yes
 
-echo "-> Starting local server to test that it's working..."
-npm start
+echo "-> Setup complete!"
+echo "You can now start the Amplify Sandbox to build your backend."
+echo "Run the following command:"
+echo -e "${RED}npx ampx sandbox --profile $AWS_PROFILE${NC}"
