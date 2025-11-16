@@ -70,8 +70,33 @@ Any project created from the amplify-react-app template should follow these step
 
 ## Amplify app setup
 
-1. Run `amplify init` to setup a new Amplify project. If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
-    * As of April 2025, I had better luck creating the app in Amplify console first, then pull it down locally.
+### Initialize new Amplify app
+
+If you already have Amplify configuration from a previous app, run:
+
+```
+rm src/amplifyconfiguration.json
+rm -rf amplify
+```
+
+Run `amplify init` to setup a new Amplify project.
+
+You should see:
+
+```
+⚠️ For new projects, we recommend starting with AWS Amplify Gen 2, our new code-first developer experience. Get started at https://docs.amplify.aws/react/start/quickstart/
+? Do you want to continue with Amplify Gen 1? (y/N) ›
+```
+
+
+### Use existing Amplify app
+
+If you are pulling down an existing Amplify project, the command will be something like this: `amplify pull --appId 12345`.
+
+As of April 2025, I had better luck creating the app in Amplify console first, then pull it down locally.
+
+--
+
 2. Enter a name for the project (or hit Enter to use the default): alpha only and <= 20 characters.
 3. Enter `n` (No) for `Initialize the project with the above configuration?`
 4. Enter `dev` for name of the environment (or hit Enter to use the default).
