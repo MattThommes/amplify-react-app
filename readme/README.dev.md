@@ -47,9 +47,10 @@ Any project created from the amplify-react-app template should follow these step
 For local development, Amplify Gen 2 provides a sandbox environment which is your own personal cloud backend that is updated as you change your code.
 
 1.  **Start the sandbox:**
-    *   `npx ampx sandbox`
+    *   `npx ampx sandbox --profile default`
+    *   For this project, you must specify the output directory for the frontend configuration file: `npx ampx sandbox --outputs-out-dir src --profile default`
 2.  This command watches for changes in your `amplify` directory. When you save changes to your backend code (e.g., `amplify/data/resource.ts`), it automatically deploys them to your personal cloud sandbox.
-3.  It will also create the `amplifyconfiguration.json` file in your `src` directory, which your frontend app uses to connect to the backend resources.
+3.  It will also create the `amplify_outputs.json` file in your `src` directory, which your frontend app uses to connect to the backend resources.
 4.  **Start the frontend:** In a separate terminal, start the Vite development server:
     *   `npm run dev`
 5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy) and will be connected to your sandbox backend.
