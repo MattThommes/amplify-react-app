@@ -8,7 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import HeaderImage from './images/header_image.png';
 import HeartIcon from './images/heart.svg';
 
-import { API } from "aws-amplify";
+import { get } from '@aws-amplify/api';
 
 import {
     Routes,
@@ -18,15 +18,22 @@ import {
 } from "react-router-dom";
 
 const SiteName = "Amplify React App";
-const ApiName = import.meta.env.VITE_APP_ENV_API_NAME;
+
+// In Gen 2, the API name is determined from amplify_outputs.json
+// We just need to know the name of the REST API resource we defined in the backend
+const restApiName = 'thommesfamvacaapi20230930';
 
 function App()
 {
     const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
 
-    const fetchBackend = useCallback((path) => {
-        return API.get(ApiName, '/backend/' + path);
+    const fetchBackend = useCallback(async (path) => {
+        const restOperation = get({
+            apiName: restApiName,
+            path: `/${path}`
+        });
+        return (await restOperation.response).body.json();
     }, []);
 
     // Get URL path from React Router and call backend API
@@ -36,17 +43,15 @@ function App()
     }, [location]);
 
     useEffect(() => {
-        if (ApiName) {
-            let ignore = false;
-            setBackendResponse(null);
-            fetchBackend(backendPath).then(response => {
-                if (!ignore) {
-                    setBackendResponse(response);
-                }
-            });
-            return () => {
-                ignore = true;
+        let ignore = false;
+        setBackendResponse(null);
+        fetchBackend(backendPath).then(response => {
+            if (!ignore) {
+                setBackendResponse(response);
             }
+        });
+        return () => {
+            ignore = true;
         }
     }, [backendPath, fetchBackend]);
 
