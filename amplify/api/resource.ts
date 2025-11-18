@@ -1,19 +1,20 @@
-import { Stack } from 'aws-cdk-lib';
-import {
-  LambdaIntegration,
-  RestApi,
-} from 'aws-cdk-lib/aws-apigateway';
-import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { defineBackend, defineFunction } from '@aws-amplify/backend';
+import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
 
-export const createRestApi = (stack: Stack) => {
-  const apiFunction = new Function(stack, 'ApiFunction', {
-    runtime: Runtime.NODEJS_20_X,
-    handler: 'handler.handler',
-    code: Code.fromAsset('./amplify/api'),
-  });
-  const restApi = new RestApi(stack, 'AmplifyReactAppApi');
-  restApi.root.addProxy({
-    defaultIntegration: new LambdaIntegration(apiFunction),
-  });
-  return restApi;
-};
+// define the Lambda function that will back the API
+const apiFunction = defineFunction({
+  // this will be the name of the function in the Amplify backend
+  name: 'api-function',
+  // this is the path to the handler file in your project
+  entry: './amplify/api/handler.ts',
+});
+
+export const backend = defineBackend({
+  // add the function to the backend
+  apiFunction,
+  // create the REST API and integrate the Lambda function
+  myRestApi: (stack) => {
+    const api = new RestApi(stack, 'myRestApi');
+    api.root.addProxy({ defaultIntegration: new LambdaIntegration(apiFunction.resources.lambda) });
+  },
+});
