@@ -1,20 +1,16 @@
-import { defineBackend, defineFunction } from '@aws-amplify/backend';
+import { ConstructFactory, ResourceProvider } from '@aws-amplify/plugin-types';
 import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Stack } from 'aws-cdk-lib';
+import { Function } from 'aws-cdk-lib/aws-lambda';
 
-// define the Lambda function that will back the API
-const apiFunction = defineFunction({
-  // this will be the name of the function in the Amplify backend
-  name: 'api-function',
-  // this is the path to the handler file in your project
-  entry: './amplify/api/handler.ts',
-});
-
-export const backend = defineBackend({
-  // add the function to the backend
-  apiFunction,
-  // create the REST API and integrate the Lambda function
-  myRestApi: (stack) => {
+export const createRestApi = (
+  apiFunction: ResourceProvider<Function>
+): ConstructFactory<RestApi> => ({
+  getInstance: ({ stack }) => {
     const api = new RestApi(stack, 'myRestApi');
-    api.root.addProxy({ defaultIntegration: new LambdaIntegration(apiFunction.resources.lambda) });
+    api.root.addProxy({
+      defaultIntegration: new LambdaIntegration(apiFunction.resources.lambda),
+    });
+    return api;
   },
 });
