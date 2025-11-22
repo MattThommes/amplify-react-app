@@ -1,16 +1,17 @@
-import { ConstructFactory, ResourceProvider } from '@aws-amplify/plugin-types';
+import { ConstructFactory, ResourceProvider, FunctionResources } from '@aws-amplify/plugin-types';
 import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
-import { Stack } from 'aws-cdk-lib';
-import { Function } from 'aws-cdk-lib/aws-lambda';
+import { IFunction } from 'aws-cdk-lib/aws-lambda';
+import { resolve } from '@aws-amplify/backend';
 
 export const createRestApi = (
-  apiFunction: ResourceProvider<Function>
-): ConstructFactory<RestApi> => ({
-  getInstance: ({ stack }) => {
+  apiFunction: ResourceProvider<FunctionResources>
+): ConstructFactory<ResourceProvider<{myRestApi: RestApi}>> => ({
+  getInstance: (props) => {
+    const { stack } = resolve.getInstance(props);
     const api = new RestApi(stack, 'myRestApi');
     api.root.addProxy({
       defaultIntegration: new LambdaIntegration(apiFunction.resources.lambda),
     });
-    return api;
+    return { resources: { myRestApi: api } };
   },
 });
