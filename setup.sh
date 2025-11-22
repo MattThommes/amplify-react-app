@@ -23,7 +23,7 @@ fi
 echo "-> Configuring upstream git remote..."
 if ! git remote | grep -q '^upstream$'; then
   echo "Adding 'upstream' remote for the template repository."
-  git remote add upstream https://github.com/MattThommes/amplify-react-app.git
+  git remote add upstream git@github.com:MattThommes/amplify-react-app.git
 else
   echo "'upstream' remote already exists."
 fi
