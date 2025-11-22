@@ -6,44 +6,26 @@ set -e
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo "-> Syncing with upstream..."
-git fetch upstream > /dev/null
+echo "-> Fetching latest changes from upstream..."
+git fetch upstream
 
-# Temporarily disable exit on error to handle merge conflicts
-set +e
-git merge upstream/master --allow-unrelated-histories --no-commit --no-ff
-MERGE_STATUS=$?
-set -e
+echo "-> Force-updating core template files..."
+# List of files to always overwrite with the upstream version.
+FILES_TO_OVERWRITE=(
+  "readme/README.dev.md"
+  "README.md"
+  "setup.sh"
+  "sync-upstream.sh"
+)
 
-if [ $MERGE_STATUS -ne 0 ]; then
-  echo "   - Merge conflicts detected. Attempting to auto-resolve..."
+for file in "${FILES_TO_OVERWRITE[@]}"; do
+  echo "     - Updating '${file}'"
+  git checkout upstream/master -- "${file}"
+done
 
-  # List of files to auto-resolve with "theirs" (upstream)
-  FILES_TO_RESOLVE=(
-    "readme/README.dev.md"
-    "README.md"
-    "setup.sh"
-    "sync-upstream.sh"
-  )
+echo "-> Merging remaining changes from upstream..."
+git merge upstream/master --allow-unrelated-histories --no-edit
 
-  for file in "${FILES_TO_RESOLVE[@]}"; do
-    if git status --porcelain | grep -q "UU ${file}"; then
-      echo "     - Resolving conflict for '${file}' by accepting the upstream version."
-      git rm --cached "${file}" > /dev/null 2>&1 || true
-      git checkout --theirs "${file}"
-      git add "${file}" > /dev/null 2>&1
-    fi
-  done
-
-  # Check if there are still unmerged files
-  if git status --porcelain | grep -q "^UU"; then
-    echo -e "${RED}   - Could not auto-resolve all conflicts. Please fix the following files manually and then commit:${NC}"
-    git status --porcelain | grep "^UU" | awk '{print "     - " $2}'
-    exit 1
-  else
-    echo "   - All conflicts resolved successfully."
-    git commit --no-edit
-  fi
-fi
-
-echo "-> Upstream sync complete!"
+echo -e "${NC}-> Upstream sync complete! Review the changes and commit them when ready.${NC}"
+echo "   - Use 'git status' to see the updated files."
+echo "   - Use 'git diff HEAD' to review the changes."
