@@ -40,7 +40,7 @@ Any project created from the amplify-react-app template should follow these step
     1.  `git checkout -b staging`
     2.  `git push origin staging`
 
-## Amplify Gen 2 Backend Setup
+## Amplify Gen 1 Backend Setup
 ### Initializing Amplify
 1.  **Install the Amplify CLI:** If you don't have it, install it globally:
     *   `npm install -g @aws-amplify/cli`
