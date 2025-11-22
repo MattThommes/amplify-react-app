@@ -11,6 +11,10 @@ else
   echo "'upstream' remote already exists."
 fi
 
+echo "-> Syncing with upstream..."
+git fetch upstream
+git merge upstream/master --allow-unrelated-histories
+
 date=$(date +%m/%d/%Y)
 echo "-> Updating readme..."
 > README.md
