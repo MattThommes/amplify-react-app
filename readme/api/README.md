@@ -2,162 +2,108 @@
 
 [Developer Guide home](../README.dev.md)
 
-## Cloud Resources: API’s
+## Cloud Resources: APIs
 
-Your frontend may eventually need to call a backend for accessing cloud resources. Here is how to create an initial generic endpoint to get started:
+In Amplify Gen 1, you use the Amplify CLI to create and configure backend resources like REST APIs backed by AWS Lambda.
 
-1. `amplify add api`
-2. Select from one of the below mentioned services: `REST`
-3. Provide friendly name, example: `amplifyreactappapi1`
-4. Provide a path: `/backend`
-    * _This is usually a more specific resource name but for example sake it is generic here. You can still add custom request endpoints using only one Lambda. Example: /backend/posts or /backend/books/whatever_
-5. Provide an AWS Lambda function name. Example: `amplifyreactapplambda1`
-6. Choose the runtime that you want to use.
-    * _I normally go with NodeJS but completely up to your skillset and level of comfort. The rest of these instructions assume you are using NodeJS._
-7. Choose the function template that you want to use.
-    * _Starting with “Hello World” is usually simplest._
-8. Do you want to configure advanced settings?
-    * _It is wise to review these settings even if you don’t change anything yet._
-9. Choose the package manager that you want to use to manage dependencies: `NPM`
-10. Do you want to edit the local lambda function now? You can choose `No` and then look for the file here (so you get familiar with where it lives): `/amplify/backend/function/amplifyreactapplambda1/src/index.js`.
-11. After creating the function locally you should see these next steps output (these are good to keep in mind as a reference):
-    * Check out sample function code generated in `<project-dir>/amplify/backend/function/amplifyreactapplambda1/src`.
-    * `amplify function build` builds all of your functions currently in the project.
-    * `amplify mock function <functionName>` runs your function locally.
-    * To access AWS resources outside of this Amplify app, edit the `/[...]/amplify-react-app/amplify/backend/function/amplifyreactapplambda1/custom-policies.json`.
-    * `amplify push` builds all of your local backend resources and provisions them in the cloud.
-    * `amplify publish` builds all of your local backend and front-end resources (if you added hosting category) and provisions them in the cloud.
-12. Restrict API access?
-    * _Choose no for now._
+Here is how to create a REST API with a Lambda function backend.
 
-### Run your API function locally
+### 1. Create the API and Lambda Function
 
-Your API will automatically hit the Lambda function you created. Locally you will want to test hitting the Lambda function as you build it out.
+1.  Run the `add api` command from your project root:
+    ```bash
+    amplify add api
+    ```
+2.  Follow the CLI prompts:
+    *   Please select from one of the below mentioned services: **REST**
+    *   Provide a friendly name for your resource to be used as a label for this category in the project: **(e.g., AmplifyReactAppApi)**
+    *   Provide a path: **(e.g., /items)**
+    *   Choose a Lambda source: **Create a new Lambda function**
+    *   Provide a friendly name for your Lambda function: **(e.g., AmplifyReactAppApiFunction)**
+    *   Choose the function runtime that you want to use: **NodeJS**
+    *   Choose the function template that you want to use: **Hello World**
+    *   Do you want to configure advanced settings? **No**
+    *   Do you want to edit the local lambda function now? **Yes**
 
-Example of how to test your function locally:
+3.  The CLI will open the new Lambda function's handler file. It will be located at `amplify/backend/function/[YOUR_FUNCTION_NAME]/src/index.js`.
 
-1. `amplify mock function amplifyreactapplambda1`
-    * Example output:
-        ```
-        ✔ Provide the path to the event JSON object relative to /[...]/amplify-react-app/amplify/backend/function/amplifyreactapplambda1
-        ```
-        * _Using the default_ `src/event.json` _is fine._
-    * In the function folder locally you should see an event.json file appear with a test event object:
-        ```
-        {
-            "key1": "value1",
-            "key2": "value2",
-            "key3": "value3"
-        }
-        ```
-        * Let’s change this to a more realistic event from an API request (an About page request):
-            ```
-            {
-                "resource": "/backend/{proxy+}",
-                "path": "/backend/about",
-                "httpMethod": "GET",
-                "queryStringParameters": null,
-                "multiValueQueryStringParameters": null,
-                "pathParameters": {
-                    "proxy": "about"
-                },
-                "body": null,
-                "isBase64Encoded": false
-            }
-            ```
-    * You can also edit the actual Lambda code: `../../amplify/backend/function/amplifyreactapplambda1/src/index.js` and save that, which will then be pushed up to the cloud AWS Lambda.
-        * Go ahead and edit the Lambda function file and paste in the [full example here](lambda_intro_index_1.js).
-        * Re-run the `amplify mock` command from above and you should see the custom output for the About page request:
-            ```
-            Starting execution...
-            EVENT: {"resource":"/about","path":"/about","httpMethod":"GET"}
-            ✅ Result:
-            {
-            "statusCode": 200,
-            "body": "\"\\\"Hello from Lambda! This is the About page.\\\"\""
-            }
-            Finished execution.
-            ```
+### 2. Edit the Lambda Function Handler
 
-### Deploying your function
+You can modify the boilerplate `index.js` file to add your own logic. Here is an example that returns a simple JSON message.
 
-Running the `amplify status` command should show you that the function is not deployed yet. The operation column should say `Create` for the function and the API:
+File: `amplify/backend/function/AmplifyReactAppApiFunction/src/index.js`
+```javascript
+exports.handler = async (event) => {
+    console.log('event', event);
+    const body = { message: 'Hello from the API!' };
 
-```
-┌──────────┬────────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name              │ Operation │ Provider plugin   │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactapplambda1     │ Create    │ awscloudformation │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappapi1        │ Create    │ awscloudformation │
-└──────────┴────────────────────────────┴───────────┴───────────────────┘
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify(body),
+    };
+    return response;
+};
 ```
 
-Update your `.env` file with your API resource name listed above:
+### 2. Define the API Gateway and Lambda Resources
 
-```
-REACT_APP_ENV_API_NAME=amplifyreactappapi1
-```
+Create a file to define the API Gateway and connect it to the Lambda function.
 
-To deploy these resources to the cloud run `amplify push` and then `amplify status` again to see the updated status:
+File: `amplify/api/resource.ts`
+```typescript
+import { defineBackend } from '@aws-amplify/backend';
+import { Stack } from 'aws-cdk-lib';
+import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 
-```
-┌──────────┬────────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name              │ Operation │ Provider plugin   │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactapplambda1     │ No Change │ awscloudformation │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappapi1        │ No Change │ awscloudformation │
-└──────────┴────────────────────────────┴───────────┴───────────────────┘
-```
+export const api = defineBackend({
+  myRestApi: (stack: Stack) => {
+    const apiFunction = new Function(stack, 'ApiFunction', {
+      runtime: Runtime.NODEJS_20_X,
+      handler: 'handler.handler',
+      code: Code.fromAsset('./amplify/api'),
+    });
 
-You should also see a new unique REST endpoint is provided to you. Example:
-
-```
-REST API endpoint: https://0s0wabuvr4.execute-api.us-east-1.amazonaws.com/dev
-```
-
-You can now use your unique endpoint to make requests to your Lambda function. Example browser request output:
-
-![API Lambda browser output](../images/api_lambda_browser_output.png)
-
-When you make changes to the [the actual Lambda code](../../amplify/backend/function/amplifyreactappaug20lambda/src/index.js) and save them, running `amplify status` will show that the function has changed and needs to be deployed again by running `amplify push`:
-
-```
-┌──────────┬────────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name              │ Operation │ Provider plugin   │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactapplambda1     │ Update    │ awscloudformation │
-├──────────┼────────────────────────────┼───────────┼───────────────────┤
-│ Api      │ amplifyreactappapi1        │ No Change │ awscloudformation │
-└──────────┴────────────────────────────┴───────────┴───────────────────┘
+    const restApi = new RestApi(stack, 'AmplifyReactAppApi');
+    restApi.root.addProxy({
+      defaultIntegration: new LambdaIntegration(apiFunction),
+    });
+  },
+});
 ```
 
-Lastly, update your environment variables in AWS Amplify console with the same API name as above.
+### 3. Register the API with Your Backend
 
-### Accessing your API from your frontend code
+Finally, add your new API definition to the main backend entry point.
 
-You can now access your API from your frontend code. There is already code in App.js to make requests once the environment variable `REACT_APP_ENV_API_NAME` is provided a value.
+File: `amplify/backend.ts`
+```typescript
+import { defineBackend } from '@aws-amplify/backend';
+import { auth } from './auth/resource';
+import { data } from './data/resource';
+import { api } from './api/resource';
 
-By default on page load an API request will run for whatever the URL path is.
-
-```
-setBackendPath(location.pathname.replace(/^\/+/, ''));
-```
-
-You can also trigger a backend request for any path by simply updating the state value:
-
-```
-setBackendPath('blog-posts');
+defineBackend({ auth, data, ...api.resources });
 ```
 
-### Securing your API endpoint
+### 4. Deploy and Test
 
-Initially your API endpoint can be requested without authorization which is fine for simple backend requests from your website. If you need a more standalone API, you might want to restrict access to only authenticated users. To do this you can run `amplify update api` and follow the prompts:
+Run `npx ampx sandbox` to deploy these resources to your personal cloud environment. The API endpoint will be automatically configured for your frontend in `src/amplify_outputs.json`.
 
-1. Select the API you want to update: `amplifyreactappaug20api1`
-2. Select the path: `/backend`
-3. Select the Lambda source: `amplifyreactappaug20lambda`
-4. Set Restrict API access: `yes`
-5. Who should have access? `Authenticated users only`
-6. What kind of access do you want for Authenticated users? `create, read, update, delete`
+### 5. Accessing your API from your frontend code
+
+You can now call your REST API using the `aws-amplify/api` library. The `App.jsx` file already contains code to do this. It uses the `get` method and dynamically calls the API based on the current page route.
+
+```javascript
+import { get } from '@aws-amplify/api';
+// ...
+const restOperation = get({
+    apiName: 'AmplifyReactAppApi', // This must match the name given in amplify/api/resource.ts
+    path: '/some-path'
+});
+const response = await restOperation.response;
+console.log('GET call succeeded: ', await response.body.json());

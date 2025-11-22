@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
-import App from './App';
+import App from './App.jsx';
 import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import { Amplify } from "aws-amplify";
-import amplifyconfig from './amplifyconfiguration.json';
+import outputs from './amplify_outputs.json';
 
-Amplify.configure(amplifyconfig);
+Amplify.configure(outputs);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
