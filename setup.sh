@@ -21,10 +21,15 @@ brew install nvm
 source ~/.nvm/nvm.sh
 
 echo "-> Setting up Node..."
-nvm install v20
+NODE_VERSION=$(cat .nvmrc)
+if ! nvm ls "v$NODE_VERSION" | grep -q "v$NODE_VERSION"; then
+  echo "Node.js v$NODE_VERSION is not installed. Installing..."
+  nvm install
+else
+  echo "Node.js v$NODE_VERSION is already installed."
+fi
 nvm use
 nvm list
-
 echo "-> Installing dependencies..."
 npm ci --prefer-offline --no-audit --progress=false
 

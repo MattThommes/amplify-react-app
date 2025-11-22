@@ -16,6 +16,10 @@ Amplify React App is built using Vite and React. It serves as a modern, fast tem
 
 ### Project specific setup
 
+After cloning the project, you can run the included setup script to automate most of the initial configuration. This script will install NVM (if not present), set up the correct Node.js version, install dependencies, and configure Git remotes.
+
+`./setup.sh`
+
 Any project created from the amplify-react-app template should follow these steps:
 
 1.  Update the git remotes for your new project to include a remote named `upstream` for the base repo (amplify-react-app) so future changes can be pulled in (run `git remote -v` to view existing remotes):
