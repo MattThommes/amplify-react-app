@@ -2,7 +2,7 @@
 
 ## Overview
 
-Amplify React App is built using Vite and React. It serves as a modern, fast template for building single-page applications (SPA’s) on AWS Amplify Gen 2.
+Amplify React App is built using Vite and React. It serves as a modern, fast template for building single-page applications (SPA’s) on AWS Amplify.
 
 ## Local project setup
 
@@ -41,41 +41,35 @@ Any project created from the amplify-react-app template should follow these step
     2.  `git push origin staging`
 
 ## Amplify Gen 2 Backend Setup
-
-### Local Development with Sandbox
-
-For local development, Amplify Gen 2 provides a sandbox environment which is your own personal cloud backend that is updated as you change your code.
-
-1.  **Start the sandbox:**
-    *   `npx ampx sandbox --profile default`
-    *   For this project, you must specify the output directory for the frontend configuration file: `npx ampx sandbox --outputs-out-dir src --profile default`
-2.  This command watches for changes in your `amplify` directory. When you save changes to your backend code (e.g., `amplify/data/resource.ts`), it automatically deploys them to your personal cloud sandbox.
-3.  It will also create the `amplify_outputs.json` file in your `src` directory, which your frontend app uses to connect to the backend resources.
+### Initializing Amplify
+1.  **Install the Amplify CLI:** If you don't have it, install it globally:
+    *   `npm install -g @aws-amplify/cli`
+2.  **Configure Amplify:** Configure the CLI with your AWS credentials.
+    *   `amplify configure`
+3.  **Initialize Amplify in the project:**
+    *   `amplify init`
+    *   Follow the prompts to set up your project. This will create a new `amplify` directory with your backend definition.
 4.  **Start the frontend:** In a separate terminal, start the Vite development server:
     *   `npm run dev`
-5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy) and will be connected to your sandbox backend.
+5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy).
 
-### Deploying to Staging & Production
-
-Deployment of the backend for shared environments like `staging` and `master` is handled by Amplify Hosting when you push your code to GitHub.
-
-1.  Commit your backend changes (the contents of the `amplify` directory) to git.
-2.  Push your changes to the desired branch (`staging` or `master`).
-3.  Amplify Hosting will detect the push, build your frontend, and deploy your backend changes using the commands in `amplify.yml`.
+### Deploying Backend Changes
+When you add or update backend resources (e.g., `amplify add auth`), you deploy them using the Amplify CLI.
+*   `amplify push`
+This command will provision the resources in your AWS account for the current environment.
 
 ## Amplify console setup
 
 1.  In the AWS Amplify Console, create a new app and connect your GitHub repository.
     *   !Amplify connect repo
 2.  Connect your `master` and `staging` branches.
+    *   Amplify will create backend environments for each branch (e.g., `staging`, `prod`).
     *   !Amplify connect branch
-3.  During the build settings configuration, Amplify will detect the `amplify.yml` file in your repository. Confirm the settings. The "Enable full-stack deploys" setting will be implicitly handled by the `backend` phase in your `amplify.yml`.
-    *   !Amplify CI/CD
+3.  During the build settings configuration, Amplify will detect the `amplify.yml` file in your repository. Confirm the settings. Check the box to "Allow AWS Amplify to automatically deploy all files hosted with Amplify".
 4.  Create or select a Service Role that gives Amplify permission to deploy resources on your behalf.
     *   !Amplify service role
 5.  Review your settings and click "Save and deploy".
 6.  Amplify will start the first deployment for the branch. You can monitor the progress in the console.
-    *   !Amplify build and deploy
 7.  **Rewrites and Redirects**: For single-page apps (SPAs), you need a rewrite rule to serve `index.html` for all routes that are not files. Add the following rule in the "Rewrites and redirects" section:
     *   **Source address:** `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|webmanifest)$).)*$/>`
     *   **Target address:** `/index.html`
@@ -83,7 +77,7 @@ Deployment of the backend for shared environments like `staging` and `master` is
     *   !Amplify rewrite
 8.  Once deployment is complete, click the app URL to verify that your application is live.
 
-### Adding a custom domain
+## Adding a custom domain
 
 1.  Go to Route 53 > Hosted zones > Create hosted zone for your domain.
     *   !Route 53 Create hosted zone
@@ -94,8 +88,8 @@ Deployment of the backend for shared environments like `staging` and `master` is
 
 ## Adding cloud resources
 
-To add or update backend resources like APIs, authentication, and databases, you modify the TypeScript files within the `amplify/` directory.
+To add or update backend resources like APIs, authentication, and databases, you use the Amplify CLI.
 
-*   API’s
-*   Images
-*   Databases
+*   `amplify add api`
+*   `amplify add auth`
+*   `amplify add storage`

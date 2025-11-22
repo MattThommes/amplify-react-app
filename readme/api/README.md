@@ -2,36 +2,50 @@
 
 [Developer Guide home](../README.dev.md)
 
-## Cloud Resources: API’s
+## Cloud Resources: APIs
 
-In Amplify Gen 2, you can create backend resources like REST APIs declaratively using TypeScript and the AWS CDK. This provides a more powerful and maintainable alternative to the `amplify add api` command from Gen 1.
+In Amplify Gen 1, you use the Amplify CLI to create and configure backend resources like REST APIs backed by AWS Lambda.
 
 Here is how to create a REST API with a Lambda function backend.
 
-### 1. Define the Lambda Function Handler
+### 1. Create the API and Lambda Function
 
-Create a file for your Lambda function's code. This example includes simple routing logic based on the URL path.
+1.  Run the `add api` command from your project root:
+    ```bash
+    amplify add api
+    ```
+2.  Follow the CLI prompts:
+    *   Please select from one of the below mentioned services: **REST**
+    *   Provide a friendly name for your resource to be used as a label for this category in the project: **(e.g., AmplifyReactAppApi)**
+    *   Provide a path: **(e.g., /items)**
+    *   Choose a Lambda source: **Create a new Lambda function**
+    *   Provide a friendly name for your Lambda function: **(e.g., AmplifyReactAppApiFunction)**
+    *   Choose the function runtime that you want to use: **NodeJS**
+    *   Choose the function template that you want to use: **Hello World**
+    *   Do you want to configure advanced settings? **No**
+    *   Do you want to edit the local lambda function now? **Yes**
 
-File: `amplify/api/handler.ts`
-```typescript
-import type { APIGatewayProxyHandler } from 'aws-lambda';
+3.  The CLI will open the new Lambda function's handler file. It will be located at `amplify/backend/function/[YOUR_FUNCTION_NAME]/src/index.js`.
 
-export const handler: APIGatewayProxyHandler = async (event) => {
-  console.log('event', event);
-  const path = event.path.split('/').pop() || 'index';
-  let body = {};
+### 2. Edit the Lambda Function Handler
 
-  if (path === 'home' || path === 'index' || path === '') {
-    body = { message: 'Hello from the Home route!' };
-  } else {
-    body = { message: `You have hit the ${path} route.` };
-  }
+You can modify the boilerplate `index.js` file to add your own logic. Here is an example that returns a simple JSON message.
 
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  };
+File: `amplify/backend/function/AmplifyReactAppApiFunction/src/index.js`
+```javascript
+exports.handler = async (event) => {
+    console.log('event', event);
+    const body = { message: 'Hello from the API!' };
+
+    const response = {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify(body),
+    };
+    return response;
 };
 ```
 
