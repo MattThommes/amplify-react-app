@@ -21,8 +21,13 @@ echo "-> Updating readme..."
 echo "# Custom Amplify React App - $date" > README.md
 
 echo "-> Setting up Node version manager..."
-brew install nvm
-source ~/.nvm/nvm.sh
+if ! command -v nvm &> /dev/null; then
+  echo "nvm is not installed. Installing via Homebrew..."
+  brew install nvm
+else
+  echo "nvm is already installed."
+fi
+source "$(brew --prefix nvm)/nvm.sh"
 
 echo "-> Setting up Node..."
 NODE_VERSION=$(cat .nvmrc)
