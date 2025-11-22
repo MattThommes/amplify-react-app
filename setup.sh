@@ -29,8 +29,32 @@ else
 fi
 
 echo "-> Syncing with upstream..."
-git fetch upstream
-git merge upstream/master --allow-unrelated-histories
+git fetch upstream > /dev/null
+
+# Temporarily disable exit on error to handle merge conflicts
+set +e
+git merge upstream/master --allow-unrelated-histories --no-commit --no-ff
+MERGE_STATUS=$?
+set -e
+
+if [ $MERGE_STATUS -ne 0 ]; then
+  echo "   - Merge conflicts detected. Attempting to auto-resolve..."
+  
+  # List of files to auto-resolve with "theirs" (upstream)
+  FILES_TO_RESOLVE=(
+    "readme/README.dev.md"
+    "README.md"
+    "setup.sh"
+  )
+
+  for file in "${FILES_TO_RESOLVE[@]}"; do
+    if git status --porcelain | grep -q "UU ${file}"; then
+      echo "     - Resolving conflict for '${file}' by accepting the upstream version."
+      git checkout --theirs "${file}"
+      git add "${file}"
+    fi
+  done
+fi
 
 date=$(date +%m/%d/%Y)
 echo "-> Updating readme..."
