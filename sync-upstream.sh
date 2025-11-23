@@ -23,6 +23,12 @@ for file in "${FILES_TO_OVERWRITE[@]}"; do
   git checkout upstream/master -- "${file}"
 done
 
+# Commit the updated template files if there are any changes
+if ! git diff --cached --quiet; then
+  echo "-> Committing updated core template files..."
+  git commit -m "Sync: Update core template files from upstream"
+fi
+
 echo "-> Merging remaining changes from upstream..."
 git merge upstream/master --allow-unrelated-histories --no-edit
 
