@@ -6,13 +6,17 @@ Amplify React App is built using Vite and React. It serves as a modern, fast tem
 
 ## Local project setup
 
-### Create from template
+### Create / sync from template
 
 1.  Create a new Github repo for your new project from the amplify-react-app template:
     *   ![Create new repo from template](images/repo_from_template.png)
 2.  Clone your new repo locally, example:
     *   `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3.  Open the cloned project in your IDE and follow the setup steps below.
+
+To pull down the latest changes from the upstream repo, run this script:
+
+`./sync-upstream.sh`
 
 ### Project specific setup
 
