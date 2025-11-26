@@ -16,33 +16,31 @@ Amplify React App is built using Vite and React. It serves as a modern, fast tem
 
 ### Project specific setup
 
-After cloning the project, you can run the included setup script to automate most of the initial configuration. This script will install NVM (if not present), set up the correct Node.js version, install dependencies, and configure Git remotes.
+After cloning the project, you can run the included setup script to automate most of the initial configuration.
 
 `./setup.sh`
 
-Any project created from the amplify-react-app template should follow these steps:
+Set permissions if needed:
 
-1.  Update the git remotes for your new project to include a remote named `upstream` for the base repo (amplify-react-app) so future changes can be pulled in (run `git remote -v` to view existing remotes):
-    *   `git remote add upstream git@github.com:MattThommes/amplify-react-app.git`
-2.  To sync with updates from the template repo, run the following commands:
-    1.  `git fetch upstream`
-    2.  `git merge upstream/master --allow-unrelated-histories`
-    3.  Resolve any merge conflicts.
-    4.  `git push origin master`
-3.  Update these files to include your specific project related information:
-    1.  README.md (keep README.dev.md for following along or future debugging)
-    2.  package.json (name and description)
-    3.  public/index.html (`<title>` and `<meta name="description"`)
-    4.  public/manifest.json (`short_name` and `name`)
-4.  Load the correct Node.js version and install dependencies:
-    *   `source ~/.nvm/nvm.sh && nvm use`
-    *   `npm install`
-5.  Commit your project-specific updates:
-    *   `git add .`
-    *   `git commit -m "Project specific updates"`
-6.  To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
-    1.  `git checkout -b staging`
-    2.  `git push origin staging`
+`chmod +x setup.sh`
+
+Update these files to include your specific project related information:
+1.  README.md (keep README.dev.md for upstream changes)
+2.  package.json (name and description)
+3.  public/index.html (`<title>` and `<meta name="description"`)
+4.  public/manifest.json (`short_name` and `name`)
+
+Load the correct Node.js version and install dependencies:
+*   `source ~/.nvm/nvm.sh && nvm use`
+*   `npm install`
+
+Commit your project-specific updates:
+*   `git add .`
+*   `git commit -m "Project specific updates"`
+
+To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+1.  `git checkout -b staging`
+2.  `git push origin staging`
 
 ## Amplify Gen 1 Backend Setup
 ### Initializing Amplify
