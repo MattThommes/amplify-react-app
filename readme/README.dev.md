@@ -20,30 +20,31 @@ After cloning the project, you can run the included setup script to automate mos
 
 `./setup.sh`
 
-Set permissions if needed:
+Set permissions first, if needed:
 
-`chmod +x setup.sh`
+`chmod 755 setup.sh`
 
 Update these files to include your specific project related information:
-1.  README.md (keep README.dev.md for upstream changes)
-2.  package.json (name and description)
-3.  public/index.html (`<title>` and `<meta name="description"`)
-4.  public/manifest.json (`short_name` and `name`)
 
-Load the correct Node.js version and install dependencies:
-*   `source ~/.nvm/nvm.sh && nvm use`
-*   `npm install`
+1.  [README.md](README.md) (keep this file - [README.dev.md](README.dev.md) for upstream changes)
+2.  [package.json](../package.json) (name and description)
+3.  [public/index.html](../index.html) (`<title>` and `<meta name="description"`)
+4.  [public/manifest.json](../public/manifest.json) (`short_name` and `name`)
 
 Commit your project-specific updates:
+
 *   `git add .`
 *   `git commit -m "Project specific updates"`
 
 To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+
 1.  `git checkout -b staging`
 2.  `git push origin staging`
 
 ## Amplify Gen 1 Backend Setup
+
 ### Initializing Amplify
+
 1.  **Install the Amplify CLI:** If you don't have it, install it globally:
     *   `npm install -g @aws-amplify/cli`
 2.  **Configure Amplify:** Configure the CLI with your AWS credentials.
@@ -56,6 +57,7 @@ To aid Amplify with creating a staging environment, create a `staging` branch (f
 5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy).
 
 ### Deploying Backend Changes
+
 When you add or update backend resources (e.g., `amplify add auth`), you deploy them using the Amplify CLI.
 *   `amplify push`
 This command will provision the resources in your AWS account for the current environment.

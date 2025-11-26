@@ -1,5 +1,6 @@
 {
   "name": "amplify-react-app",
+  "description": "Amplify React App",
   "version": "1.0.0",
   "private": true,
   "type": "module",

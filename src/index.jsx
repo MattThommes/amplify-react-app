@@ -7,9 +7,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import { Amplify } from "aws-amplify";
-import outputs from './amplify_outputs.json';
+//import outputs from './amplify_outputs.json';
 
-Amplify.configure(outputs);
+//Amplify.configure(outputs);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
