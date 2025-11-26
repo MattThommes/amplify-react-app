@@ -28,10 +28,16 @@ else
   echo "'upstream' remote already exists."
 fi
 
-date=$(date +%m/%d/%Y)
-echo "-> Updating readme..."
-> README.md
-echo "# Custom Amplify React App - $date" > README.md
+echo "-> Checking README.md header..."
+ORIGINAL_HEADER="# ⛅️ ⚛︎ Amplify React App"
+if grep -qFx "$ORIGINAL_HEADER" README.md; then
+  echo "   - Updating default README header..."
+  date=$(date +%m/%d/%Y)
+  NEW_HEADER="# Custom Amplify React App - $date"
+  sed -i.bak "1s|.*|$NEW_HEADER|" README.md && rm README.md.bak
+else
+  echo "   - README header already customized. Skipping."
+fi
 
 echo "-> Setting up Node version manager..."
 if ! command -v nvm &> /dev/null; then
