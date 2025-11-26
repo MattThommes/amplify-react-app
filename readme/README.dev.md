@@ -36,10 +36,9 @@ Commit your project-specific updates:
 *   `git add .`
 *   `git commit -m "Project specific updates"`
 
-To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+Start the app locally:
 
-1.  `git checkout -b staging`
-2.  `git push origin staging`
+*   `npm run dev`
 
 ## Amplify Gen 1 Backend Setup
 
@@ -55,6 +54,11 @@ To aid Amplify with creating a staging environment, create a `staging` branch (f
 4.  **Start the frontend:** In a separate terminal, start the Vite development server:
     *   `npm run dev`
 5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy).
+
+To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+
+1.  `git checkout -b staging`
+2.  `git push origin staging`
 
 ### Deploying Backend Changes
 
