@@ -42,14 +42,15 @@ Commit your project-specific updates:
 
 Start the app locally:
 
-*   `npm run dev`
+*   `./run.sh`
 
 ## Amplify Gen 1 Backend Setup
 
 ### Initializing Amplify
-
+ 
 1.  **Install the Amplify CLI:** If you don't have it, install it globally:
     *   `npm install -g @aws-amplify/cli`
+    *   *(Note: The CLI is installed globally to provide access to the `amplify` command from anywhere on your system. It is used to manage backend resources and is a one-time setup for your development machine.)*
 2.  **Configure Amplify:** Configure the CLI with your AWS credentials.
     *   `amplify configure`
 3.  **Initialize Amplify in the project:**
