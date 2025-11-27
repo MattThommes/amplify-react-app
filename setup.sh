@@ -39,14 +39,20 @@ else
   echo "   - README header already customized. Skipping."
 fi
 
+# Load nvm if it's installed
+if [ -s "$(brew --prefix nvm)/nvm.sh" ]; then
+  echo "-> Sourcing nvm..."
+  source "$(brew --prefix nvm)/nvm.sh"
+fi
+
 echo "-> Setting up Node version manager..."
 if ! command -v nvm &> /dev/null; then
-  echo "nvm is not installed. Installing via Homebrew..."
+  echo "   - nvm is not installed. Installing via Homebrew..."
   brew install nvm
+  source "$(brew --prefix nvm)/nvm.sh" # Source it after installation
 else
-  echo "nvm is already installed."
+  echo "   - nvm is already installed."
 fi
-source "$(brew --prefix nvm)/nvm.sh"
 
 echo "-> Setting up Node..."
 NODE_VERSION=$(cat .nvmrc)
@@ -70,6 +76,3 @@ else
 fi
 
 echo "-> Setup complete!"
-echo "You can now initialize your Amplify backend."
-echo "Run the following command:"
-echo -e "${RED}amplify init${NC}"
