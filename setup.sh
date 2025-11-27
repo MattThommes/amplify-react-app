@@ -72,7 +72,8 @@ if ! command -v amplify &> /dev/null; then
   echo "   - Amplify CLI not found. Installing globally..."
   npm install -g @aws-amplify/cli
 else
-  echo "   - Amplify CLI is already installed."
+  echo "   - Amplify CLI is already installed. Upgrading to the latest version..."
+  amplify upgrade
 fi
 
 echo "-> Setup complete!"
