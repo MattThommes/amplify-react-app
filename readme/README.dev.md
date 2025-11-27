@@ -68,6 +68,76 @@ You should see this warning:
 
 Respond with 'y' to continue with Gen 1.
 
+Next you might see:
+
+```
+? Why would you like to use Amplify Gen 1? …  (Use arrow keys or type to filter)
+  I am a current Gen 1 user
+  Gen 2 is missing features I need from Gen 1
+❯ I find the Gen 1 CLI easier to use
+  Prefer not to answer
+```
+
+Pick anything; it does not matter.
+
+Next, pick No for the confirmation:
+
+```
+? Enter a name for the project test20251122
+The following configuration will be applied:
+
+Project information
+| Name: test20251122
+| Environment: dev
+| Default editor: Visual Studio Code
+| App type: javascript
+| Javascript framework: react
+| Source Directory Path: src
+| Distribution Directory Path: build
+| Build Command: npm run-script build
+| Start Command: npm run-script start
+
+? Initialize the project with the above configuration? (Y/n) n
+```
+
+Instead, use these values:
+
+```
+? Enter a name for the environment dev
+? Choose your default editor: None
+✔ Choose the type of app that you're building · javascript
+Please tell us about your project
+? What javascript framework are you using react
+? Source Directory Path:  src
+? Distribution Directory Path: dist
+? Build Command:  npm run build
+? Start Command: npm run dev
+```
+
+Next, authentication method:
+
+```
+Using default provider  awscloudformation
+? Select the authentication method you want to use: (Use arrow keys)
+❯ AWS profile
+AWS access keys
+```
+
+Choose `AWS profile`. Then pick the local profile:
+
+```
+For more information on AWS Profiles, see:
+https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+
+? Please choose the profile you want to use
+❯ amplify-feb2021-b
+default
+```
+
+If you get an error such as “Failed to get profile credentials,” try configuring it again:
+
+`aws configure --profile [profile_name]`
+
 To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
 
 1.  `git checkout -b staging`
