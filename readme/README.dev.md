@@ -57,6 +57,17 @@ Initialize Amplify in the project:
     *   `amplify init`
     *   Follow the prompts to set up your project. This will create a new `amplify` directory with your backend definition.
 
+As of November 2025, the CLI recommends Gen 2, but amplify-react-app does not support that yet, and still requires Gen 1. Gen 2 is a complete rewrite and different approach and it does not seem very intuitive to use.
+
+You should see this warning:
+
+```
+⚠️ For new projects, we recommend starting with AWS Amplify Gen 2, our new code-first developer experience. Get started at https://docs.amplify.aws/react/start/quickstart/
+? Do you want to continue with Amplify Gen 1? (y/N) ›
+```
+
+Respond with 'y' to continue with Gen 1.
+
 To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
 
 1.  `git checkout -b staging`
