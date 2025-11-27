@@ -46,9 +46,11 @@ Start the app locally:
 
 ## AWS Amplify Gen 1 setup
 
-Configure the CLI with your AWS credentials.
+Before initializing Amplify, ensure your AWS credentials are set up on your local machine. The Amplify CLI uses the same credential provider chain as the AWS CLI and other SDK’s, looking for credentials in environment variables or your AWS credentials file (commonly `~/.aws/credentials`).
 
-    *   `amplify configure`
+If you haven’t configured credentials, you can run `aws configure` to create a profile.
+
+When you run `amplify init`, you will be prompted to select the AWS profile you wish to use for the project.
 
 Initialize Amplify in the project:
 
