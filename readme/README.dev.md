@@ -44,21 +44,16 @@ Start the app locally:
 
 *   `./run.sh`
 
-## Amplify Gen 1 Backend Setup
+## AWS Amplify Gen 1 setup
 
-### Initializing Amplify
- 
-1.  **Install the Amplify CLI:** If you don't have it, install it globally:
-    *   `npm install -g @aws-amplify/cli`
-    *   *(Note: The CLI is installed globally to provide access to the `amplify` command from anywhere on your system. It is used to manage backend resources and is a one-time setup for your development machine.)*
-2.  **Configure Amplify:** Configure the CLI with your AWS credentials.
+Configure the CLI with your AWS credentials.
+
     *   `amplify configure`
-3.  **Initialize Amplify in the project:**
+
+Initialize Amplify in the project:
+
     *   `amplify init`
     *   Follow the prompts to set up your project. This will create a new `amplify` directory with your backend definition.
-4.  **Start the frontend:** In a separate terminal, start the Vite development server:
-    *   `npm run dev`
-5.  Your React app will be running at `http://localhost:5173` (or another port if 5173 is busy).
 
 To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
 
