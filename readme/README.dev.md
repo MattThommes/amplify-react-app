@@ -60,7 +60,7 @@ To aid Amplify with creating a staging environment, create a `staging` branch (f
 1.  `git checkout -b staging`
 2.  `git push origin staging`
 
-### Deploying Backend Changes
+### Deploying backend changes
 
 When you add or update backend resources (e.g., `amplify add auth`), you deploy them using the Amplify CLI.
 *   `amplify push`
