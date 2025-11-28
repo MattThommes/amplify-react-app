@@ -190,12 +190,29 @@ For single-page apps (SPA’s), you need a rewrite rule to serve `index.html` fo
 
 ## Adding a custom domain
 
-1.  Go to Route 53 > Hosted zones > Create hosted zone for your domain.
-    *   !Route 53 Create hosted zone
-2.  In the Amplify Console, go to "Domain management" and click "Add domain".
-3.  Select your domain from the dropdown and click "Configure domain".
-4.  You can configure subdomains and redirects. I personally uncheck the www redirect.
-5.  Amplify will provide instructions for creating the necessary CNAME records in Route 53 to verify domain ownership and route traffic. Follow the steps to complete the setup.
+To connect a custom domain to your Amplify application, you'll first need to have a registered domain. If you don't have one, you can register one through Amazon Route 53 or any other domain registrar.
+
+### 1. Ensure a Hosted Zone in Route 53
+
+For Amplify to automatically configure your DNS records, your domain must be managed in an Amazon Route 53 public hosted zone.
+
+*   If your domain is registered with Route 53, a hosted zone is typically created for you automatically.
+*   If your domain is with another registrar, you'll need to create a hosted zone in Route 53 for your domain. Then, update the name server (NS) records at your registrar to point to the name servers assigned by Route 53.
+
+### 2. Add the domain in AWS Amplify
+
+1.  In the AWS Amplify console for your app, navigate to **Hosting > Custom domains** (or **Domain management** in the older UI) and click **Add domain**.
+2.  Select your domain from the dropdown list (Amplify will detect domains in your Route 53 account) and click **Configure domain**.
+
+### 3. Configure subdomains and redirects
+
+1.  On the configuration screen, you can set up subdomains. A common practice is to use the root domain (e.g., `example.com`) for one branch (like `main`/`prod`) and a subdomain (e.g., `staging.example.com`) for another branch (like `staging`).
+2.  You can also configure a redirect from `www` to the root domain (or vice-versa). You can choose to disable this if it doesn't fit your needs.
+3.  Click **Save**.
+
+### 4. Wait for SSL/TLS and DNS propagation
+
+Amplify will now provision an SSL/TLS certificate for your domain and create the necessary DNS records (A, AAAA, CNAME) in your Route 53 hosted zone. This process can take anywhere from a few minutes to a couple of hours. You can monitor the status in the Amplify console. Once complete, your application will be available at your custom domain.
 
 ## Adding cloud resources
 
