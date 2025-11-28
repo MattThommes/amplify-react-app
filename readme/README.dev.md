@@ -138,12 +138,52 @@ If you get an error such as “Failed to get profile credentials,” try configu
 
 `aws configure --profile [profile_name]`
 
-To aid Amplify with creating a staging environment, create a `staging` branch (from `master` branch) locally then push:
+You should then see this happening:
+
+```
+? Please choose the profile you want to use amplify-feb2021-b
+Adding backend environment dev to AWS Amplify app: d2k7m5h8n9xdhq
+
+Deploying resources into dev environment. This will take a few minutes. ⠸
+Deploying root stack test20251122 [ ---------------------------------------- ] 0/4
+```
+
+Eventually (few seconds):
+
+```
+Deployment completed.
+Deploying root stack test20251122 [ ==========------------------------------ ] 1/4
+        amplify-test20251122-dev-ea8a9 AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Thu Nov 27 
+        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Thu Nov 27 
+        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Thu Nov 27 
+        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Thu Nov 27
+```
+
+You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
+
+Commit and push all changes to `master` / `main`.
+
+To have Amplify automatically create a staging environment, create a `staging` branch (from `master` or `main` branch) locally then push again:
 
 1.  `git checkout -b staging`
 2.  `git push origin staging`
 
-### Deploying backend changes
+Then go into the Amplify console and connect to the repository. Connect the `staging` branch, and `master` / `main` branch for prod.
+
+Ensure the “Frontend build command” and “Build output directory” values are correct.
+
+Choose an existing service role if you have one.
+
+“Save and deploy.”
+
+
+
+
+
+
+
+
+### Deploying backend resource changes
 
 When you add or update backend resources (e.g., `amplify add auth`), you deploy them using the Amplify CLI.
 *   `amplify push`
