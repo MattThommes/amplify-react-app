@@ -176,37 +176,17 @@ Choose an existing service role if you have one.
 
 “Save and deploy.”
 
+For single-page apps (SPA’s), you need a rewrite rule to serve `index.html` for all client-side routes. In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
 
-
-
-
-
-
-
-### Deploying backend resource changes
-
-When you add or update backend resources (e.g., `amplify add auth`), you deploy them using the Amplify CLI.
-*   `amplify push`
-This command will provision the resources in your AWS account for the current environment.
-
-## Amplify console setup
-
-1.  In the AWS Amplify Console, create a new app and connect your GitHub repository.
-    *   !Amplify connect repo
-2.  Connect your `master` and `staging` branches.
-    *   Amplify will create backend environments for each branch (e.g., `staging`, `prod`).
-    *   !Amplify connect branch
-3.  During the build settings configuration, Amplify will detect the `amplify.yml` file in your repository. Confirm the settings. Check the box to "Allow AWS Amplify to automatically deploy all files hosted with Amplify".
-4.  Create or select a Service Role that gives Amplify permission to deploy resources on your behalf.
-    *   !Amplify service role
-5.  Review your settings and click "Save and deploy".
-6.  Amplify will start the first deployment for the branch. You can monitor the progress in the console.
-7.  **Rewrites and Redirects**: For single-page apps (SPAs), you need a rewrite rule to serve `index.html` for all routes that are not files. Add the following rule in the "Rewrites and redirects" section:
-    *   **Source address:** `</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|webmanifest)$).)*$/>`
-    *   **Target address:** `/index.html`
-    *   **Type:** `200 (Rewrite)`
-    *   !Amplify rewrite
-8.  Once deployment is complete, click the app URL to verify that your application is live.
+```json
+[
+  {
+    "source": "/<*>",
+    "status": "404-200",
+    "target": "/index.html"
+  }
+]
+```
 
 ## Adding a custom domain
 
