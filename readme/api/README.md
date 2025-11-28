@@ -2,7 +2,7 @@
 
 [Developer Guide home](../README.dev.md)
 
-## Cloud Resources: APIs
+## Cloud Resources: API’s
 
 In Amplify Gen 1, you use the Amplify CLI to create and configure backend resources like REST APIs backed by AWS Lambda.
 
@@ -17,9 +17,8 @@ Here is how to create a REST API with a Lambda function backend.
 2.  Follow the CLI prompts:
     *   Please select from one of the below mentioned services: **REST**
     *   Provide a friendly name for your resource to be used as a label for this category in the project: **(e.g., AmplifyReactAppApi)**
-    *   Provide a path: **(e.g., /items)**
-    *   Choose a Lambda source: **Create a new Lambda function**
-    *   Provide a friendly name for your Lambda function: **(e.g., AmplifyReactAppApiFunction)**
+    *   Provide a path: **(e.g., /items)** /backend
+    *   Provide an AWS Lambda function name: AmplifyReactAppApiFunction
     *   Choose the function runtime that you want to use: **NodeJS**
     *   Choose the function template that you want to use: **Hello World**
     *   Do you want to configure advanced settings? **No**
