@@ -57,4 +57,14 @@ This will start a local server that emulates your API. When your frontend applic
 
 ### 4. Deploy to the cloud
 
-Once you are satisfied with your local testing, you can deploy your API to your AWS environment: `amplify push`
+When you run `amplify status` after creating a new API + Lambda, you should see:
+
+┌──────────┬──────────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name                │ Operation │ Provider plugin   │
+├──────────┼──────────────────────────────┼───────────┼───────────────────┤
+│ Function │ testtemplate2025112973c868f0 │ Create    │ awscloudformation │
+├──────────┼──────────────────────────────┼───────────┼───────────────────┤
+│ Api      │ testapi20251129b             │ Create    │ awscloudformation │
+└──────────┴──────────────────────────────┴───────────┴───────────────────┘
+
+Once you are satisfied with your local testing and would like to create the cloud resources, you can deploy your API to your AWS environment: `amplify push`
