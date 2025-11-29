@@ -219,7 +219,7 @@ To add or update backend resources like APIs, authentication, and databases, you
 *   [API’s](../readme/api/README.md)
 *   [Storage](../readme/images/README.md)
 
-## Deleting your Amplify app
+## Deleting your Amplify app and cleaning up resources
 
 ### Step 1: Delete the cloud backend environment
 
