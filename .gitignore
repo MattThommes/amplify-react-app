@@ -3,6 +3,20 @@
 /images/
 node_modules
 
+awsconfiguration.json
+amplifyconfiguration.dart
+amplify-build-config.json
+amplify-gradle-config.json
+amplifytools.xcconfig
+.secret-*
+**.sample
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+.idea/
+.vscode/
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -14,8 +28,9 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-
+aws-exports.js
 awsconfiguration.json
+amplifyconfiguration.json
 amplifyconfiguration.dart
 amplify-build-config.json
 amplify-gradle-config.json
@@ -23,10 +38,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-# amplify
-.amplify
-amplify_outputs*
-amplifyconfiguration*
-.idea/
-.vscode/
