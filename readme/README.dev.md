@@ -216,6 +216,43 @@ Amplify will now provision an SSL/TLS certificate for your domain and create the
 
 To add or update backend resources like APIs, authentication, and databases, you use the Amplify CLI.
 
-*   `amplify add api`
-*   `amplify add auth`
-*   `amplify add storage`
+*   [API’s](../readme/api/README.md)
+*   [Storage](../readme/images/README.md)
+
+## Deleting your Amplify app
+
+### Step 1: Delete the cloud backend environment
+
+The most effective way to delete all the associated backend resources from the cloud is by using the Amplify CLI from the root of your project.
+
+`amplify delete`
+
+### Step 2: Delete the app from the AWS Amplify console
+
+After the backend resources have been successfully deleted, you should also remove the application from the AWS Amplify Console.
+
+1. Open the AWS Amplify console.
+2. In the list of applications, choose the name of the app you want to delete.
+3. On the app's page, find the Actions dropdown menu and select Delete app.
+4. You will be prompted to confirm the deletion
+
+### Step 3: Clean up your local project
+
+To complete the reset, you need to remove the Amplify-related files and directories from your local project.
+
+1.  `rm -rf amplify/`
+2.  `rm amplify.yml`
+3.  `rm aws-exports.js`
+
+### Troubleshooting deletion issues
+
+Sometimes, amplify delete can fail if AWS CloudFormation encounters an issue while deleting the resources. If this happens, you may need to manually delete the resources.
+
+1. Go to the AWS CloudFormation Console: Find the root stack for your Amplify project. The name is typically in the format `amplify-<application-name>-<backend-environment-name>-<random-number>`
+
+2. Delete the CloudFormation Stack: Attempt to delete the root stack. If it has nested stacks, you might need to delete them first.
+
+3. Delete the S3 Bucket: Amplify creates an S3 bucket for deployments. Its name usually follows the pattern `amplify-<application-name>-<backend-environment-name>-<random-number>-deployment`. Find and delete this bucket in the S3 console.
+
+4. Retry Deleting the App: Once the CloudFormation stack and S3 bucket are removed, return to the AWS Amplify console and try deleting the app again.
+After following these steps, your project will be completely free of its previous Amplify configuration, allowing you to start fresh.
