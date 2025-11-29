@@ -63,10 +63,8 @@ You should see this warning:
 
 ```
 ⚠️ For new projects, we recommend starting with AWS Amplify Gen 2, our new code-first developer experience. Get started at https://docs.amplify.aws/react/start/quickstart/
-? Do you want to continue with Amplify Gen 1? (y/N) ›
+? Do you want to continue with Amplify Gen 1? (y/N) › y
 ```
-
-Respond with 'y' to continue with Gen 1.
 
 Next you might see:
 
@@ -74,8 +72,8 @@ Next you might see:
 ? Why would you like to use Amplify Gen 1? …  (Use arrow keys or type to filter)
   I am a current Gen 1 user
   Gen 2 is missing features I need from Gen 1
-❯ I find the Gen 1 CLI easier to use
-  Prefer not to answer
+  I find the Gen 1 CLI easier to use
+❯ Prefer not to answer
 ```
 
 Pick anything; it does not matter.
