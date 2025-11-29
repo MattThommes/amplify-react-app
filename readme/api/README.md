@@ -31,6 +31,7 @@ Here is how to create a REST API with a Lambda function backend.
 You can modify the boilerplate `index.js` file to add your own logic. Here is an example that returns a simple JSON message.
 
 File: `amplify/backend/function/AmplifyReactAppApiFunction/src/index.js`
+
 ```javascript
 exports.handler = async (event) => {
     console.log('event', event);
@@ -53,6 +54,7 @@ exports.handler = async (event) => {
 Create a file to define the API Gateway and connect it to the Lambda function.
 
 File: `amplify/api/resource.ts`
+
 ```typescript
 import { defineBackend } from '@aws-amplify/backend';
 import { Stack } from 'aws-cdk-lib';
@@ -80,6 +82,7 @@ export const api = defineBackend({
 Finally, add your new API definition to the main backend entry point.
 
 File: `amplify/backend.ts`
+
 ```typescript
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
@@ -106,3 +109,4 @@ const restOperation = get({
 });
 const response = await restOperation.response;
 console.log('GET call succeeded: ', await response.body.json());
+```
