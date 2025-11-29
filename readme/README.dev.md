@@ -242,7 +242,7 @@ To complete the reset, you need to remove the Amplify-related files and director
 
 1.  `rm -rf amplify/`
 2.  `rm amplify.yml`
-3.  `rm aws-exports.js`
+3.  `rm src/aws-exports.js`
 
 ### Troubleshooting deletion issues
 
