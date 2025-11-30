@@ -67,6 +67,11 @@ body {
 				.row >.col, .row>[class^=col-] {
 					border: none;
 				}
+
+				// Reduce font size on smaller screens
+				@include media-breakpoint-down(sm) {
+					font-size: 14px;
+				}
 			}
 
 			.sidebar {
