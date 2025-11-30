@@ -18,6 +18,16 @@ Before you begin, ensure you have the following tools installed on your local ma
     > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt you to use Gen 2. Always select 'No' to continue with Gen 1 as outlined in the setup guide.
 
 *   **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
+    
+    > **macOS Note**: After installing with Homebrew, you must add the JDK to your shell's environment variables. The method is the same for both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
+    >
+    > 1.  Add the following lines to your shell configuration file (e.g., `~/.zshrc` or `~/.bash_profile`). This correctly sets the `JAVA_HOME` and updates your `PATH`.
+    >     ```sh
+    >     echo 'export JAVA_HOME="$(brew --prefix openjdk@17)"' >> ~/.zshrc
+    >     echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >> ~/.zshrc
+    >     ```
+    > 2.  Reload your shell configuration (`source ~/.zshrc`) or open a new terminal.
+    > 3.  Verify the installation by running `java -version`.
 
 ## Local project setup
 
