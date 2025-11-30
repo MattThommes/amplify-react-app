@@ -4,6 +4,21 @@
 
 Amplify React App is built using Vite and React. It serves as a modern, fast template for building single-page applications (SPA’s) on AWS Amplify.
 
+## Prerequisites
+
+Before you begin, ensure you have the following tools installed on your local machine:
+
+*   **Node.js and npm**: (e.g., v18 or later). You can download them from [nodejs.org](https://nodejs.org/).
+*   **Git**: For version control. You can download it from [git-scm.com](https://git-scm.com/).
+*   **AWS CLI**: For configuring your AWS credentials. Follow the [official installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
+*   **AWS Amplify CLI (Gen 1)**: The command-line tool for managing your Amplify backend.
+    ```sh
+    npm install -g @aws-amplify/cli
+    ```
+    > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt you to use Gen 2. Always select 'No' to continue with Gen 1 as outlined in the setup guide.
+
+*   **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
+
 ## Local project setup
 
 ### Create / sync from template
@@ -56,7 +71,7 @@ Initialize Amplify in the project:
 
 *   `amplify init`
 *   Since the backend definition is already included in this template, Amplify will detect it and ask if you want to use it.
-*   Follow the prompts to connect to your AWS account and set up a new environment (e.g., `dev`). This will generate a new `amplify/team-provider-info.json` file (which is git-ignored) that links the backend to *your* AWS account.
+*   Follow the prompts to connect to your AWS account and set up a new environment (e.g., `dev`). This will generate a new `amplify/team-provider-info.json` file (which is git-ignored) that links the backend to *your* AWS account and Amplify app.
 
 As of November 2025, the CLI may recommend Gen 2. This template requires **Gen 1**.
 

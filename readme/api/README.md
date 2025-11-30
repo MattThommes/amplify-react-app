@@ -51,7 +51,7 @@ exports.handler = async (event) => {
 
 Before deploying to the cloud, you can test your new API and Lambda function locally. The Amplify CLI provides a way to run a local mock server for your backend resources.
 
-To test your API locally, run: `amplify mock api` 
+To test your API locally, run: `amplify mock api`
 
 This will start a local server that emulates your API. When your frontend application is running locally (with `./run.sh`), it will automatically connect to this mock endpoint. This allows you to test your API calls and the associated Lambda function without needing to run amplify push.
 
