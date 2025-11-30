@@ -1,8 +1,12 @@
 @import "bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
 
 .App {
-	font-family: 'Varela Round', serif;
 	margin: 0;
 	text-align: center;
 	width: -webkit-fill-available;
@@ -32,6 +36,11 @@
 		}
 
 		.header-row {
+			// On smaller screens where columns stack, remove row margins to prevent horizontal scroll
+			@include media-breakpoint-down(sm) {
+				margin-right: 0;
+				margin-left: 0;
+			}
 			.header-col {
 				padding: 0;
 			}
@@ -49,24 +58,8 @@
 			}
 			
 			.header-sub {
-				background:
-					/* On "top" */
-					repeating-linear-gradient(
-						45deg,
-						transparent,
-						transparent 10px,
-						#a2c180 10px,
-						#d3faad 20px
-					),
-					/* on "bottom" */
-					linear-gradient(
-						to bottom,
-						#c9ec9e,
-						#8bd1c9
-					);
-
-				color: darkslategrey;
-				opacity: 0.8;
+				background-color: #e9ecef; // A light, clean gray
+				color: #495057; // A darker gray for good contrast
 				font-size: 16px;
 				margin: 0;
 				padding: 10px 0 10px 0;
@@ -77,40 +70,34 @@
 			}
 
 			.sidebar {
-				background:
-					/* On "top" */
-					repeating-linear-gradient(
-						45deg,
-						transparent,
-						transparent 10px,
-						#f7d3ff 10px,
-						#f7d3ff 20px
-					),
-					/* on "bottom" */
-					linear-gradient(
-						to bottom,
-						#38e3f6,
-						#38e3f6
-					);
-
-				/*background-size: 10px 10px;*/
-				opacity: 0.8;
+				background-color: #fff;
+				border-left: 1px solid #dee2e6; // A subtle border for separation
+				// Vertically center the navigation
+				display: flex;
+				align-items: center;
+				justify-content: center;
 
 				ul {
 					list-style: none none;
 					margin: 0;
 					padding: 0;
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem; // Add space between nav items
 
 					li {
-						display: inline-table;
+						display: block;
 						margin: 0;
-						padding: 0;
-						text-align: left;
+						padding: 0; // Reset padding
+						text-align: right;
 					}
 				}
 
 				a {
-					display: inline-table;
+					display: block;
+					padding: 0.5rem 1rem;
+					border-radius: 6px;
+					transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
 					&:link {
 						color: teal;
@@ -121,7 +108,8 @@
 					}
 	
 					&:hover {
-						color: black;
+						color: #000;
+						background-color: #e9ecef;
 					}
 	
 					&:active {
@@ -134,12 +122,14 @@
 		.content {
 			font-size: 13px;
 			padding: 20px 0;
+			padding-top: 2rem;
 			text-align: left;
 		}
 
 		.footer {
 			border: 1px dashed green;
 			border-width: 1px 0 0 0;
+			padding-bottom: 2rem;
 			font-size: 14px;
 			margin: 25px 0;
 			padding: 10px 0;
