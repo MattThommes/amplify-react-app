@@ -54,10 +54,11 @@ When you run `amplify init`, you will be prompted to select the AWS profile you 
 
 Initialize Amplify in the project:
 
-    *   `amplify init`
-    *   Follow the prompts to set up your project. This will create a new `amplify` directory with your backend definition.
+*   `amplify init`
+*   Since the backend definition is already included in this template, Amplify will detect it and ask if you want to use it.
+*   Follow the prompts to connect to your AWS account and set up a new environment (e.g., `dev`). This will generate a new `amplify/team-provider-info.json` file (which is git-ignored) that links the backend to *your* AWS account.
 
-As of November 2025, the CLI recommends Gen 2, but amplify-react-app does not support that yet, and still requires Gen 1. Gen 2 is a complete rewrite and different approach and it does not seem very intuitive to use.
+As of November 2025, the CLI may recommend Gen 2. This template requires **Gen 1**.
 
 You should see this warning:
 
@@ -136,7 +137,7 @@ If you get an error such as “Failed to get profile credentials,” try configu
 
 `aws configure --profile [profile_name]`
 
-You should then see this happening:
+You should then see Amplify creating the new backend environment in your account:
 
 ```
 ? Please choose the profile you want to use amplify-feb2021-b
