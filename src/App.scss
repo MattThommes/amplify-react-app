@@ -146,10 +146,13 @@ body {
 
 			.built-with {
 				background-color: azure;
+				/* rounded corner border */
+				border: 1px solid #dee2e6;
+				border-radius: 10px;
 				color: gray;
 				font-family: 'Varela Round', serif;
-				font-size: 0.6em;
-				margin-top: 25px;
+				font-size: 0.7em;
+				margin-top: 30px;
 				padding: 2px;
 			}
 		}
