@@ -7,6 +7,27 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/": {
+      "name": "/",
+      "lambdaFunction": "amplifyreactappapirest1",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/page-1": {
+      "name": "/page-1",
+      "lambdaFunction": "amplifyreactappapirest1",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/page-2": {
+      "name": "/page-2",
+      "lambdaFunction": "amplifyreactappapirest1",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

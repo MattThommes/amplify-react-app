@@ -18,3 +18,6 @@ api:
 
 build:
 	npm run build
+
+amplify-status:
+	amplify status
