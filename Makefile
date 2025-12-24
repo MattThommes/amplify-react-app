@@ -1,23 +1,24 @@
-.PHONY: help install dev build api
+.PHONY: help install dev build api run setup sync-upstream
 
 help:
 	@echo "Available commands:"
-	@echo "  make install  - Install dependencies"
-	@echo "  make dev      - Start the frontend development server"
-	@echo "  make api      - Start the local API mock server"
-	@echo "  make build    - Build the frontend for production"
+	@echo "  make setup            - Get local setup with dependencies"
+	@echo "  make sync-upstream    - Sync (pull down) upstream repo changes"
+	@echo "  make run-dev          - Run the application locally for development"
+	@echo "  make start-local-api  - Start the local API mock server"
+	@echo "  make amplify-status   - Check the status of Amplify resources"
 
-install:
-	npm install
+setup:
+	./setup.sh
 
-dev:
-	npm run dev
+sync-upstream:
+	./sync-upstream.sh
 
-api:
+run-dev:
+	./run.sh
+
+start-local-api:
 	npm run start:api
-
-build:
-	npm run build
 
 amplify-status:
 	amplify status
