@@ -28,7 +28,7 @@ Here is how to create a REST API with a Lambda function backend.
 
 You can modify the boilerplate `index.js` file to add your own logic. Here is an example that returns a simple JSON message.
 
-File: `amplify/backend/function/AmplifyReactAppApiFunction/src/index.js`
+File: `amplify/backend/function/amplifyreactappapirest1/src/index.js`
 
 ```javascript
 exports.handler = async (event) => {
@@ -49,11 +49,58 @@ exports.handler = async (event) => {
 
 ### 3. Test locally
 
-Before deploying to the cloud, you can test your new API and Lambda function locally. The Amplify CLI provides a way to run a local mock server for your backend resources.
+Before deploying to the cloud, you can test your new API and Lambda function locally.
 
-To test your API locally, run: `amplify mock api`
+#### CLI testing
 
-This will start a local server that emulates your API. When your frontend application is running locally (with `./run.sh`), it will automatically connect to this mock endpoint. This allows you to test your API calls and the associated Lambda function without needing to run amplify push.
+The Amplify CLI provides a way to run a local mock server for your backend resources.
+
+To test your API locally in the CLI, run: `amplify mock function amplifyreactappapirest1`
+
+This will use the mock event in amplify/backend/function/amplifyreactappapirest1/src/event.json.
+
+Example output:
+
+```
+% amplify mock function amplifyreactappapirest1
+✔ Provide the path to the event JSON object relative to /Users/mattthommes/Documents/dev/amplify-react-app/amplify/backend/function/amplifyreactappapirest1 · src/event.json
+
+Ensuring latest function changes are built...
+Starting execution...
+(node:95524) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `amplify --trace-deprecation ...` to show where the warning was created)
+EVENT: {"httpMethod":"GET","path":"/amplifyreactappapirest1","queryStringParameters":{"limit":"10"},"headers":{"Content-Type":"application/json"},"body":null}
+✅ Result:
+{
+  "statusCode": 200,
+  "body": "\"Hello from Lambda!\""
+}
+Finished execution.
+```
+
+Note: For a GraphQL API, the command would be `amplify mock api` instead.
+
+#### Local server testing
+
+To develop using a completely local API without needing to push API and Lambda resources to the cloud, you can use the custom Express server script `_localApiServer.cjs`.
+
+This script wraps your Lambda handler in a lightweight Express server, mimicking API Gateway's event structure.
+
+**How to use:**
+
+1.  **Start the local API server:**
+    ```bash
+    npm run start:api
+    ```
+    This runs the server on `http://localhost:3001`.
+
+2.  **Run your frontend:**
+    ```bash
+    npm run dev
+    ```
+    The application is configured (in `src/App.jsx`) to point to `localhost:3001` when running in development mode.
+
+This setup allows you to modify `amplify/backend/function/amplifyreactappapirest1/src/index.js` and see changes instantly in your app without deploying.
 
 ### 4. Deploy to the cloud
 
