@@ -28,6 +28,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "start:api": "node _localApiServer.cjs",
     "postinstall": "npm run node-version-check",
     "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read"
   },
@@ -49,7 +50,9 @@
     "@vitejs/plugin-react": "^4.3.1",
     "aws-cdk-lib": "2.189.1",
     "constructs": "10.3.0",
+    "cors": "^2.8.5",
     "esbuild": "^0.20.2",
+    "express": "^5.2.0",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5",
     "vite": "^5.3.5"
