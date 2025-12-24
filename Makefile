@@ -1,4 +1,4 @@
-.PHONY: help install dev build api run setup sync-upstream
+.PHONY: help setup sync-upstream run-dev start-local-api amplify-status
 
 help:
 	@echo "Available commands:"
