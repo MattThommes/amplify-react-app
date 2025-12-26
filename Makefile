@@ -21,8 +21,8 @@ start-local-api:
 	npm run start:api
 
 amplify-status:
-	@if [ -f amplify/backend/tags.json ] && [ ! -f amplify/backend/amplify-meta.json ]; then \
-		echo "Removing amplify/backend/tags.json to avoid 'Tag Changes Detected' error..."; \
-		rm amplify/backend/tags.json; \
+	@if [ ! -f amplify/backend/amplify-meta.json ]; then \
+		echo "Creating empty amplify/backend/amplify-meta.json to avoid 'File does not exist' error..."; \
+		echo "{}" > amplify/backend/amplify-meta.json; \
 	fi
 	amplify status
