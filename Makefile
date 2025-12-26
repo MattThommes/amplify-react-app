@@ -25,4 +25,9 @@ amplify-status:
 		echo "Creating empty amplify/backend/amplify-meta.json to avoid 'File does not exist' error..."; \
 		echo "{}" > amplify/backend/amplify-meta.json; \
 	fi
+	@if [ ! -f "amplify/#current-cloud-backend/amplify-meta.json" ]; then \
+		echo "Creating empty amplify/#current-cloud-backend/amplify-meta.json to avoid 'File does not exist' error..."; \
+		mkdir -p "amplify/#current-cloud-backend"; \
+		echo "{}" > "amplify/#current-cloud-backend/amplify-meta.json"; \
+	fi
 	amplify status
