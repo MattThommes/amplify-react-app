@@ -39,7 +39,7 @@ Before you begin, ensure you have the following tools installed on your local ma
     *   `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3.  Open the cloned project in your IDE and follow the setup steps below.
 
-To pull down the latest changes from the upstream repo, run this script:
+**After running setup**, to pull down the latest changes from the upstream repo, run this script:
 
 `make sync-upstream`
 
