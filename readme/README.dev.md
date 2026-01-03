@@ -49,10 +49,6 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make setup`
 
-Set permissions first, if needed:
-
-`chmod 755 setup.sh`
-
 Update these files to include your specific project related information:
 
 1.  [README.md](README.md) (keep this file - [README.dev.md](README.dev.md) for upstream changes)
