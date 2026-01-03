@@ -63,7 +63,7 @@ Commit your project-specific updates:
 
 Start the app locally:
 
-*   `./run.sh`
+*   `make run-dev`
 
 ## AWS Amplify Gen 1 setup
 
