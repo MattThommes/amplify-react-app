@@ -51,7 +51,7 @@ After cloning the project, you can run the included setup script to automate mos
 
 Update these files to include your specific project related information:
 
-1.  [README.md](README.md) (keep this file - [README.dev.md](README.dev.md) for upstream changes)
+1.  [README.md](../README.md) (keep this file: [README.dev.md](README.dev.md) for upstream changes)
 2.  [package.json](../package.json) (name and description)
 3.  [public/index.html](../index.html) (`<title>` and `<meta name="description"`)
 4.  [public/manifest.json](../public/manifest.json) (`short_name` and `name`)
