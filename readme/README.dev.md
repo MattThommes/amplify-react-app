@@ -41,13 +41,13 @@ Before you begin, ensure you have the following tools installed on your local ma
 
 To pull down the latest changes from the upstream repo, run this script:
 
-`./sync-upstream.sh`
+`make sync-upstream`
 
 ### Project specific setup
 
 After cloning the project, you can run the included setup script to automate most of the initial configuration.
 
-`./setup.sh`
+`make setup`
 
 Set permissions first, if needed:
 
