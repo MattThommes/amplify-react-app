@@ -78,65 +78,25 @@ When you run `amplify init`, you will be prompted to select the AWS profile you 
 Initialize Amplify in the project:
 
 *   `amplify init`
-*   Since the backend definition is already included in this template, Amplify will detect it and ask if you want to use it.
-*   Follow the prompts to connect to your AWS account and set up a new environment (e.g., `dev`). This will generate a new `amplify/team-provider-info.json` file (which is git-ignored) that links the backend to *your* AWS account and Amplify app.
+*   Since the backend definition is already included in this template, Amplify will detect it and use it without requiring the complete setup from scratch.
 
-As of November 2025, the CLI may recommend Gen 2. This template requires **Gen 1**.
-
-You should see this warning:
+You should see output like this. It should ask for the AWS profile then proceed to start creating the initial cloud resources:
 
 ```
-⚠️ For new projects, we recommend starting with AWS Amplify Gen 2, our new code-first developer experience. Get started at https://docs.amplify.aws/react/start/quickstart/
-? Do you want to continue with Amplify Gen 1? (y/N) › y
-```
-
-Next you might see:
-
-```
-? Why would you like to use Amplify Gen 1? …  (Use arrow keys or type to filter)
-  I am a current Gen 1 user
-  Gen 2 is missing features I need from Gen 1
-  I find the Gen 1 CLI easier to use
-❯ Prefer not to answer
-```
-
-Pick anything; it does not matter.
-
-Next, pick No for the confirmation:
-
-```
-? Enter a name for the project test20251122
-The following configuration will be applied:
-
-Project information
-| Name: test20251122
-| Environment: dev
-| Default editor: Visual Studio Code
-| App type: javascript
-| Javascript framework: react
-| Source Directory Path: src
-| Distribution Directory Path: build
-| Build Command: npm run-script build
-| Start Command: npm run-script start
-
-? Initialize the project with the above configuration? (Y/n) n
-```
-
-Instead, use these values:
-
-```
+Note: It is recommended to run this command from the root of your app directory
 ? Enter a name for the environment dev
 ? Choose your default editor: None
-✔ Choose the type of app that you're building · javascript
-Please tell us about your project
-? What javascript framework are you using react
-? Source Directory Path:  src
-? Distribution Directory Path: dist
-? Build Command:  npm run build
-? Start Command: npm run dev
+Using default provider  awscloudformation
+? Select the authentication method you want to use: AWS profile
+
+For more information on AWS Profiles, see:
+https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+
+? Please choose the profile you want to use amplify-feb2021-b
+Adding backend environment dev to AWS Amplify app: dnunt7wm0ayl
 ```
 
-Next, authentication method:
+Authentication method breakdown:
 
 ```
 Using default provider  awscloudformation
@@ -145,7 +105,7 @@ Using default provider  awscloudformation
 AWS access keys
 ```
 
-Choose `AWS profile`. Then pick the local profile:
+Choose `AWS profile`. Then pick a local profile:
 
 ```
 For more information on AWS Profiles, see:
@@ -174,11 +134,17 @@ Eventually (few seconds):
 
 ```
 Deployment completed.
-Deploying root stack test20251122 [ ==========------------------------------ ] 1/4
-        amplify-test20251122-dev-ea8a9 AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Thu Nov 27 
-        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Thu Nov 27 
-        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Thu Nov 27 
-        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Thu Nov 27
+Deploying root stack templatetest20251130 [ ==========------------------------------ ] 1/4
+        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Fri Jan 09 
+        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Fri Jan 09 
+        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Fri Jan 09 
+        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Fri Jan 09 
+
+Deployment state saved successfully.
+✔ Initialized provider successfully.
+✅ Initialized your environment successfully.
+✅ Your project has been successfully initialized and connected to the cloud!
+Some next steps:
 ```
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
