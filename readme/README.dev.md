@@ -149,7 +149,7 @@ Some next steps:
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
-Commit and push all changes to `master` / `main`.
+Commit and push all changes to `master` / `main` if you have not already.
 
 To have Amplify automatically create a staging environment, create a `staging` branch (from `master` or `main` branch) locally then push again:
 

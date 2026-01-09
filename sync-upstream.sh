@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 echo "-> Fetching latest changes from upstream..."
 git fetch upstream
 
-echo "-> Force-updating core template files..."
+echo "-> Force-updating for core repo files..."
 # List of files to always overwrite with the upstream version.
 FILES_TO_OVERWRITE=(
   "readme/README.dev.md"
