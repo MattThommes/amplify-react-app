@@ -17,7 +17,7 @@ import {
 const SiteName = "Amplify React App";
 
 // Define the API name as a constant to avoid magic strings.
-const API_NAME = 'amplifyreactappapirest1';
+const API_NAME = 'apirest1';
 
 function App()
 {
