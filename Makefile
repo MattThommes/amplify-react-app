@@ -21,7 +21,7 @@ run-dev:
 	./run.sh
 
 amplify-init:
-	amplify-init
+	amplify init
 
 amplify-status:
 	@if [ ! -f amplify/backend/amplify-meta.json ]; then \
