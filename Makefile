@@ -20,6 +20,9 @@ start-local-api:
 run-dev:
 	./run.sh
 
+amplify-init:
+	amplify-init
+
 amplify-status:
 	@if [ ! -f amplify/backend/amplify-meta.json ]; then \
 		echo "Creating empty amplify/backend/amplify-meta.json to avoid 'File does not exist' error..."; \

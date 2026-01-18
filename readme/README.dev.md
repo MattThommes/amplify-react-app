@@ -89,7 +89,7 @@ Update [amplify/.config/project-config.json](../amplify/.config/project-config.j
 
 Change `projectName` to your unique project name.
 
-Run `amplify init`
+Run `make amplify-init`
 
 ```
 % amplify init
