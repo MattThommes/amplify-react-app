@@ -85,7 +85,7 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ### Initialize new Amplify app
 
-Update [amplify/.config/project-config.json](../amplify/.config/project-config.json)
+Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json)
 
 Change `projectName` to your unique project name.
 
@@ -165,7 +165,7 @@ Some next steps:
 
 ### Amplify environment setup
 
-Run `amplify env list`, and you should see:
+Run `make amplify-envs`, and you should see:
 
 ```
 | Environments |
@@ -175,7 +175,7 @@ Run `amplify env list`, and you should see:
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
-Run `amplify env add prod`
+Run `make amplify-envs-add-prod`
 
 Choose the same local AWS profile as earlier.
 

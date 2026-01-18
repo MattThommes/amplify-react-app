@@ -37,3 +37,6 @@ amplify-status:
 
 amplify-envs:
 	amplify env list
+
+amplify-envs-add-prod:
+	amplify env add prod
