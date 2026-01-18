@@ -63,37 +63,42 @@ Commit your project-specific updates:
 *   `git add .`
 *   `git commit -m "Project specific updates"`
 
-Start the app locally:
+Start the local API server:
+
+*   `make start-local-api`
+
+Start the app locally and see it in the browser:
 
 *   `make run-dev`
 
-## AWS Amplify Gen 1 setup
+## Amplify setup
+
+### AWS CLI access
 
 Before initializing Amplify, ensure your AWS credentials are set up on your local machine. The Amplify CLI uses the same credential provider chain as the AWS CLI and other SDK’s, looking for credentials in environment variables or your AWS credentials file (commonly `~/.aws/credentials`).
 
 If you haven’t configured credentials, you can run `aws configure` to create a profile.
 
-When you run `amplify init`, you will be prompted to select the AWS profile you wish to use for the project.
+### Initialize new Amplify app
 
-Initialize Amplify in the project:
+Update [amplify/.config/project-config.json](../amplify/.config/project-config.json)
 
-*   `amplify init`
-*   Since the backend definition is already included in this template, Amplify will detect it and use it without requiring the complete setup from scratch.
+Change `projectName` to your unique project name.
 
-You should see output like this. It should ask for the AWS profile then proceed to start creating the initial cloud resources:
+Run `amplify init`
 
 ```
+% amplify init
 Note: It is recommended to run this command from the root of your app directory
-? Enter a name for the environment dev
+? Enter a name for the environment (dev) 
+```
+
+Enter “staging” for the environment. This will be our first environment. We will also create “prod.”
+
+Default editor – it does not matter what you pick:
+
+```
 ? Choose your default editor: None
-Using default provider  awscloudformation
-? Select the authentication method you want to use: AWS profile
-
-For more information on AWS Profiles, see:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
-
-? Please choose the profile you want to use amplify-feb2021-b
-Adding backend environment dev to AWS Amplify app: dnunt7wm0ayl
 ```
 
 Authentication method breakdown:
@@ -123,11 +128,14 @@ If you get an error such as “Failed to get profile credentials,” try configu
 You should then see Amplify creating the new backend environment in your account:
 
 ```
-? Please choose the profile you want to use amplify-feb2021-b
-Adding backend environment dev to AWS Amplify app: d2k7m5h8n9xdhq
+Adding backend environment staging to AWS Amplify app: d1j6aypbzelxhd
 
-Deploying resources into dev environment. This will take a few minutes. ⠸
-Deploying root stack test20251122 [ ---------------------------------------- ] 0/4
+Deploying resources into staging environment. This will take a few minutes. ⠇
+Deploying root stack templatetest20251130 [ ---------------------------------------- ] 0/4
+        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sun Jan 18 
+        DeploymentBucket               AWS::S3::Bucket                CREATE_IN_PROGRESS             Sun Jan 18 
+        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
+        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
 ```
 
 Eventually (few seconds):
@@ -135,36 +143,67 @@ Eventually (few seconds):
 ```
 Deployment completed.
 Deploying root stack templatetest20251130 [ ==========------------------------------ ] 1/4
-        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Fri Jan 09 
-        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Fri Jan 09 
-        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Fri Jan 09 
-        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Fri Jan 09 
+        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sun Jan 18 
+        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Sun Jan 18 
+        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
+        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
 
 Deployment state saved successfully.
 ✔ Initialized provider successfully.
+Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
 ✅ Initialized your environment successfully.
 ✅ Your project has been successfully initialized and connected to the cloud!
 Some next steps:
+...
+```
+
+### Amplify environment setup
+
+Run `amplify env list`, and you should see:
+
+```
+| Environments |
+| ------------ |
+| *staging     |
 ```
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
-Commit and push all changes to `master` / `main` if you have not already.
+Run `amplify env add prod`
 
-To have Amplify automatically create a staging environment, create a `staging` branch (from `master` or `main` branch) locally then push again:
+Choose the same local AWS profile as earlier.
 
-1.  `git checkout -b staging`
-2.  `git push origin staging`
+It should begin deploying the “prod” environment without any further prompts.
 
-Then go into the Amplify console and connect to the repository. Connect the `staging` branch, and `master` / `main` branch for prod.
+Under “Backend Environments” in the Amplify console for the app, you should see Prod and Staging.
 
-Ensure the “Frontend build command” and “Build output directory” values are correct.
+Under “Branches” you should not see anything yet.
 
-Choose an existing service role if you have one.
+### Amplify branch setup
 
-“Save and deploy.”
+Connect your first branch. Choose the repo and “master” branch.
 
-For single-page apps (SPA’s), you need a rewrite rule to serve `index.html` for all client-side routes. In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
+Under “Auto-detected frameworks,” ignore this showing: “Amplify Gen 2.” It will use Gen 1 since that is what the code is setup for.
+
+Under “Service role,” Select “Use an existing service role.”
+
+Pick “amplifyconsole-backend-role.”
+
+Click Next, “Save and deploy.”
+
+You should now see “master” branch appearing under Branches, and it should be deploying.
+
+Set up staging next. Locally, run `git checkout -b staging` then `git push origin staging`.
+
+Add the staging branch to Amplify. That should also appear under Branches, and start deploying.
+
+### Rewrite rule
+
+For single-page apps (SPA’s), you need a rewrite rule to serve `/index.html` for all client-side routes. This also helps avoid a trailing slash at the end of the path in the URL and API requests, example: https://master.d1j6aypbzelxhd.amplifyapp.com/about/
+
+In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
 
 ```json
 [
@@ -175,6 +214,44 @@ For single-page apps (SPA’s), you need a rewrite rule to serve `index.html` fo
   }
 ]
 ```
+
+This one is not there by default, and is good to add to avoid the trailing slash issue:
+
+```
+</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>
+```
+
+Target `/index.html` as well.
+
+### Check Amplify status locally
+
+Run `amplify status`
+
+You should see the current environment you are on. Example:
+
+```
+% amplify status
+
+    Current Environment: prod
+    
+┌──────────┬─────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name           │ Operation │ Provider plugin   │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Api      │ apirest1                │ Create    │ awscloudformation │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
+└──────────┴─────────────────────────┴───────────┴───────────────────┘
+```
+
+To switch environments locally, run `amplify env checkout staging`
+
+### Configuring the API
+
+You will notice the `amplify status` output has default API and function created from the template repo. These are not deployed yet.
+
+
+## 
+
 
 ## Adding a custom domain
 

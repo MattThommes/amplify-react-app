@@ -31,3 +31,6 @@ amplify-status:
 		echo "{}" > "amplify/#current-cloud-backend/amplify-meta.json"; \
 	fi
 	amplify status
+
+amplify-envs:
+	amplify env list
