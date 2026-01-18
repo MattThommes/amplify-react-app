@@ -49,6 +49,10 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make sync-upstream`
 
+Cleanup as a good practice for npm taking up a lot of disk space:
+
+`npm cache clean --force`
+
 Update these files to include your specific project related information:
 
 1.  [README.md](../README.md)
