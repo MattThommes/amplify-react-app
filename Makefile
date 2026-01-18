@@ -8,11 +8,11 @@ help:
 	@echo "  make start-local-api  - Start the local API mock server"
 	@echo "  make amplify-status   - Check the status of Amplify resources"
 
-sync-upstream:
-	./sync-upstream.sh
-
 setup:
 	./setup.sh
+
+sync-upstream:
+	./sync-upstream.sh
 
 run-dev:
 	./run.sh

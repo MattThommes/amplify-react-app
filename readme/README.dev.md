@@ -15,9 +15,9 @@ Before you begin, ensure you have the following tools installed on your local ma
     ```sh
     npm install -g @aws-amplify/cli
     ```
-    > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt you to use Gen 2. Always select 'No' to continue with Gen 1 as outlined in the setup guide.
+    > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt or default you to Gen 2. Try to continue with Gen 1 as outlined in the setup guide.
 
-*   **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
+*   [Lower priority] **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
     
     > **macOS Note**: After installing with Homebrew, you must add the JDK to your shell's environment variables. The method is the same for both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
     >
@@ -39,15 +39,15 @@ Before you begin, ensure you have the following tools installed on your local ma
     *   `git clone git@github.com:[GITHUB_USERNAME]/amplify-react-app-test1.git`
 3.  Open the cloned project in your IDE and follow the setup steps below.
 
-**After running setup**, to pull down the latest changes from the upstream repo, run this script:
-
-`make sync-upstream`
-
 ### Project specific setup
 
 After cloning the project, you can run the included setup script to automate most of the initial configuration. This is safe to run repeatedly.
 
 `make setup`
+
+**After running setup**, to pull down the latest changes from the upstream repo, run this script:
+
+`make sync-upstream`
 
 Update these files to include your specific project related information:
 
