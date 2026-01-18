@@ -14,11 +14,11 @@ setup:
 sync-upstream:
 	./sync-upstream.sh
 
-run-dev:
-	./run.sh
-
 start-local-api:
 	npm run start:api
+
+run-dev:
+	./run.sh
 
 amplify-status:
 	@if [ ! -f amplify/backend/amplify-meta.json ]; then \

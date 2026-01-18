@@ -53,7 +53,7 @@ Cleanup as a good practice for npm taking up a lot of disk space:
 
 `npm cache clean --force`
 
-Update these files to include your specific project related information:
+Optional but good to do early for new projects: update these files to include your specific project related information:
 
 1.  [README.md](../README.md)
     1. The setup script will adjust the header automatically.
