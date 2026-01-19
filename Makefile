@@ -46,3 +46,6 @@ amplify-env-switch-prod:
 
 amplify-env-switch-staging:
 	amplify env checkout staging
+
+amplify-push:
+	amplify push

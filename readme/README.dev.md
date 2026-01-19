@@ -259,6 +259,23 @@ To switch environments locally, run `make amplify-env-switch-prod` or `make ampl
 
 You will notice the `amplify status` output has default API and function created from the template repo. These are not deployed yet.
 
+`make amplify-status`
+
+```
+% amplify status
+
+    Current Environment: prod
+    
+┌──────────┬─────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name           │ Operation │ Provider plugin   │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Api      │ apirest1                │ Create    │ awscloudformation │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
+└──────────┴─────────────────────────┴───────────┴───────────────────┘
+```
+
+Run `make amplify-push` to setup these resources in the cloud.
 
 ## Adding a custom domain
 
