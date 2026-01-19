@@ -39,13 +39,19 @@ amplify-envs:
 	amplify env list
 
 amplify-envs-add-prod:
-	amplify env add prod
+	amplify env add master
 
 amplify-env-switch-prod:
-	amplify env checkout prod
+	amplify env checkout master
 
 amplify-env-switch-staging:
 	amplify env checkout staging
+
+amplify-env-delete-prod:
+	amplify env remove master
+
+amplify-env-delete-staging:
+	amplify env remove staging
 
 amplify-push:
 	amplify push

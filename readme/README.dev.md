@@ -175,7 +175,7 @@ Run `make amplify-envs`, and you should see:
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
-If you do not see the “prod” environment, run `make amplify-envs-add-prod`.
+If you do not see the “master” environment, run `make amplify-envs-add-prod`.
 
 Choose the same local AWS profile as earlier.
 
@@ -185,7 +185,7 @@ Under “Backend Environments” in the Amplify console for the app, you should 
 
 Under S3 you should see new buckets created today named something like:
 
-`amplify-matt-test-20260118b-prod-a5889-deployment`
+`amplify-matt-test-20260118b-master-a5889-deployment`
 
 `amplify-matt-test-20260118b-staging-704e7-deployment`
 
@@ -255,9 +255,9 @@ You should see the current environment you are on. Example:
 
 To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`.
 
-### Configuring the API
+### Configuring the API & function
 
-You will notice the `amplify status` output has default API and function created from the template repo. These are not deployed yet.
+You will notice the `amplify status` output has default API and function created from the template repo. This is inaccurate. Once we connected branches, the API should have been auto-created (see API Gateway). But this is showing the API and function in Create state still:
 
 `make amplify-status`
 
@@ -275,7 +275,66 @@ You will notice the `amplify status` output has default API and function created
 └──────────┴─────────────────────────┴───────────┴───────────────────┘
 ```
 
-Run `make amplify-push` to setup these resources in the cloud.
+To get things in sync, pull down the environments from the cloud.
+
+Example steps:
+
+1. Get off of staging env: `make amplify-env-switch-prod`
+2. Pull down staging from cloud: `amplify pull --appId d2w7e377ms01iu --envName staging`
+3. Pull down prod/master from cloud: `amplify pull --appId d2w7e377ms01iu --envName master`
+
+You should now see the REST endpoint locally, and the resources are no longer in Create state:
+
+```
+% amplify status                                      
+
+    Current Environment: master
+    
+┌──────────┬─────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name           │ Operation │ Provider plugin   │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappapirest1 │ Update    │ awscloudformation │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Api      │ apirest1                │ No Change │ awscloudformation │
+└──────────┴─────────────────────────┴───────────┴───────────────────┘
+
+REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
+```
+
+Verify in AWS Lambda that you see two functions (one for prod, one for staging):
+
+1. `amplifyreactappapirest1-master`
+2. `amplifyreactappapirest1-staging`
+
+Finally, run `make amplify-push` to push up the function change **for both master and staging envs**. You should see:
+
+```
+Deployment completed.
+Deploying root stack matt [ ===========================------------- ] 2/3
+        amplify-matt-test-20260118b-m… AWS::CloudFormation::Stack     UPDATE_COMPLETE_CLEANUP_IN_PR… Mon Jan 19 
+        functionamplifyreactappapires… AWS::CloudFormation::Stack     UPDATE_COMPLETE                Mon Jan 19 
+        apiapirest1                    AWS::CloudFormation::Stack     UPDATE_COMPLETE                Mon Jan 19 
+Deployed function amplifyreactappapirest1 [ ======================================== ] 3/3
+        LambdaExecutionRole            AWS::IAM::Role                 UPDATE_IN_PROGRESS             Mon Jan 19 
+
+Deployment state saved successfully.
+```
+
+Run `make amplify-status` again and make sure the output has No Change appearing for the resources, **under both envs**:
+
+```
+    Current Environment: master
+    
+┌──────────┬─────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name           │ Operation │ Provider plugin   │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Api      │ apirest1                │ No Change │ awscloudformation │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappapirest1 │ No Change │ awscloudformation │
+└──────────┴─────────────────────────┴───────────┴───────────────────┘
+
+REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
+```
 
 ## Adding a custom domain
 
