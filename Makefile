@@ -40,3 +40,9 @@ amplify-envs:
 
 amplify-envs-add-prod:
 	amplify env add prod
+
+amplify-env-switch-prod:
+	amplify env checkout prod
+
+amplify-env-switch-staging:
+	amplify env checkout staging

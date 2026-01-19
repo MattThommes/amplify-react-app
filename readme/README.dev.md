@@ -175,33 +175,39 @@ Run `make amplify-envs`, and you should see:
 
 You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
-Run `make amplify-envs-add-prod`
+If you do not see the “prod” environment, run `make amplify-envs-add-prod`.
 
 Choose the same local AWS profile as earlier.
 
 It should begin deploying the “prod” environment without any further prompts.
 
-Under “Backend Environments” in the Amplify console for the app, you should see Prod and Staging.
+Under “Backend Environments” in the Amplify console for the app, you should see prod and staging.
 
-Under “Branches” you should not see anything yet.
+Under S3 you should see new buckets created today named something like:
+
+`amplify-matt-test-20260118b-prod-a5889-deployment`
+
+`amplify-matt-test-20260118b-staging-704e7-deployment`
+
+Under “Branches” you should _not_ see anything yet.
 
 ### Amplify branch setup
 
-Connect your first branch. Choose the repo and “master” branch.
+Connect your first branch. Choose the repo and master or main branch.
 
-Under “Auto-detected frameworks,” ignore this showing: “Amplify Gen 2.” It will use Gen 1 since that is what the code is setup for.
+Under “Auto-detected frameworks,” ignore this showing: “Amplify Gen 2.” It will still use Gen 1 since that is what the code is setup for.
 
 Under “Service role,” Select “Use an existing service role.”
 
 Pick “amplifyconsole-backend-role.”
 
-Click Next, “Save and deploy.”
+Click Next, then “Save and deploy.”
 
 You should now see “master” branch appearing under Branches, and it should be deploying.
 
-Set up staging next. Locally, run `git checkout -b staging` then `git push origin staging`.
+Set up staging next. If you have not yet locally, run `git checkout -b staging` then `git push origin staging`. Wait a minute or so for Amplify to see the new branch.
 
-Add the staging branch to Amplify. That should also appear under Branches, and start deploying.
+Connect the staging branch to Amplify the same way you did for prod/master/main. Staging should then also appear under Branches, and start deploying.
 
 ### Rewrite rule
 
@@ -229,7 +235,7 @@ Target `/index.html` as well.
 
 ### Check Amplify status locally
 
-Run `amplify status`
+Run `make amplify-status`
 
 You should see the current environment you are on. Example:
 
@@ -247,14 +253,11 @@ You should see the current environment you are on. Example:
 └──────────┴─────────────────────────┴───────────┴───────────────────┘
 ```
 
-To switch environments locally, run `amplify env checkout staging`
+To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`.
 
 ### Configuring the API
 
 You will notice the `amplify status` output has default API and function created from the template repo. These are not deployed yet.
-
-
-## 
 
 
 ## Adding a custom domain
