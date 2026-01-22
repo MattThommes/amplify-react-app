@@ -2,11 +2,18 @@
 
 help:
 	@echo "Available commands:"
-	@echo "  make setup            - Get local setup with dependencies"
-	@echo "  make sync-upstream    - Sync (pull down) upstream repo changes"
-	@echo "  make run-dev          - Run the application locally for development"
-	@echo "  make start-local-api  - Start the local API mock server"
-	@echo "  make amplify-status   - Check the status of Amplify resources"
+	@echo "  make setup                       - Run local setup script"
+	@echo "  make cleanup                     - Cleanup after running setup"
+	@echo "  make sync-upstream               - Sync (pull down) upstream repo changes"
+	@echo "  make start-local-api             - Start the local API mock server"
+	@echo "  make run-dev                     - Run the application locally for development"
+	@echo "  make amplify-init                - Initialize Amplify app locally and in cloud"
+	@echo "  make amplify-status              - Check the status of Amplify resources"
+	@echo "  make amplify-envs                - List Amplify environments"
+	@echo "  make amplify-envs-add-prod       - Add prod environment"
+	@echo "  make amplify-env-switch-prod     - Switch to prod environment locally"
+	@echo "  make amplify-env-switch-staging  - Switch to staging environment locally"
+	@echo "  make amplify-push                - Deploy resources to Amplify"
 
 setup:
 	./setup.sh

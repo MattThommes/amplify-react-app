@@ -87,7 +87,7 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ### Initialize new Amplify app
 
-🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created.
+🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created. If you do this, it will also delete the amplify directory locally, so you will have to re-sync your code with git origin/remote.
 
 ⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
 
@@ -211,31 +211,7 @@ You should now see “master” branch appearing under Branches, and it should b
 
 Set up staging next. If you have not yet locally, run `git checkout -b staging` then `git push origin staging`. Wait a minute or so for Amplify to see the new branch.
 
-Connect the staging branch to Amplify the same way you did for prod/master/main. Staging should then also appear under Branches, and start deploying.
-
-### Rewrite rule
-
-For single-page apps (SPA’s), you need a rewrite rule to serve `/index.html` for all client-side routes. This also helps avoid a trailing slash at the end of the path in the URL and API requests, example: https://master.d1j6aypbzelxhd.amplifyapp.com/about/
-
-In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
-
-```json
-[
-  {
-    "source": "/<*>",
-    "status": "404-200",
-    "target": "/index.html"
-  }
-]
-```
-
-This one is not there by default, and is good to add to avoid the trailing slash issue:
-
-```
-</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>
-```
-
-Target `/index.html` as well.
+Connect the staging branch to Amplify the same way you did for master. Staging should then also appear under Branches, and start deploying.
 
 ### Check Amplify status locally
 
@@ -339,6 +315,30 @@ Run `make amplify-status` again and make sure the output has No Change appearing
 
 REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
 ```
+
+### Rewrite rule
+
+For single-page apps (SPA’s), you need a rewrite rule to serve `/index.html` for all client-side routes. This also helps avoid a trailing slash at the end of the path in the URL and API requests, example: https://master.d1j6aypbzelxhd.amplifyapp.com/about/
+
+In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
+
+```json
+[
+  {
+    "source": "/<*>",
+    "status": "404-200",
+    "target": "/index.html"
+  }
+]
+```
+
+This one is not there by default, and is good to add to avoid the trailing slash issue:
+
+```
+</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>
+```
+
+Target `/index.html` as well.
 
 ## Adding a custom domain
 
