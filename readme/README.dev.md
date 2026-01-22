@@ -45,13 +45,13 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make setup`
 
-**After running setup**, to pull down the latest changes from the upstream repo, run this script:
+Does not need to be done right now, but anytime **after running setup**, you can pull down the latest changes from the upstream repo by running this script:
 
 `make sync-upstream`
 
 Cleanup as a good practice for npm taking up a lot of disk space:
 
-`npm cache clean --force`
+`make cleanup`
 
 Optional but good to do early for new projects: update these files to include your specific project related information:
 
@@ -66,6 +66,8 @@ Commit your project-specific updates:
 
 *   `git add .`
 *   `git commit -m "Project specific updates"`
+
+Stop any other apps running locally on ports 3000 or 3001, otherwise the next commands will conflict.
 
 Start the local API server:
 
@@ -85,7 +87,9 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ### Initialize new Amplify app
 
-Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json)
+🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created.
+
+⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
 
 Change `projectName` to your unique project name.
 

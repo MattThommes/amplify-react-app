@@ -11,6 +11,9 @@ help:
 setup:
 	./setup.sh
 
+cleanup:
+	npm cache clean --force
+
 sync-upstream:
 	./sync-upstream.sh
 
