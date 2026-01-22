@@ -13,7 +13,7 @@ help:
 	@echo "  make amplify-envs-add-prod       - Add prod environment"
 	@echo "  make amplify-env-switch-prod     - Switch to prod environment locally"
 	@echo "  make amplify-env-switch-staging  - Switch to staging environment locally"
-	@echo "  make amplify-push                - Deploy resources to Amplify"
+	@echo "  make amplify-push                - Deploy resources via Amplify / CloudFormation"
 
 setup:
 	./setup.sh
