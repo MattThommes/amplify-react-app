@@ -220,9 +220,10 @@ Run `make amplify-status`
 You should see the current environment you are on. Example:
 
 ```
-% amplify status
+% make amplify-status
+amplify status
 
-    Current Environment: prod
+    Current Environment: master
     
 ┌──────────┬─────────────────────────┬───────────┬───────────────────┐
 │ Category │ Resource name           │ Operation │ Provider plugin   │
@@ -233,19 +234,28 @@ You should see the current environment you are on. Example:
 └──────────┴─────────────────────────┴───────────┴───────────────────┘
 ```
 
-To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`.
+To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`. You should see the same status output for staging:
+
+```
+% make amplify-status
+amplify status
+
+    Current Environment: staging
+    
+┌──────────┬─────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name           │ Operation │ Provider plugin   │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Api      │ apirest1                │ Create    │ awscloudformation │
+├──────────┼─────────────────────────┼───────────┼───────────────────┤
+│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
+└──────────┴─────────────────────────┴───────────┴───────────────────┘
+```
 
 ### Configuring the API & function
 
-You will notice the `amplify status` output has default API and function created from the template repo. This is inaccurate. Once we connected branches, the API should have been auto-created (see API Gateway). But this is showing the API and function in Create state still:
-
-`make amplify-status`
+You will notice the `amplify status` output has default API and function created from the template repo. This might be inaccurate.
 
 ```
-% amplify status
-
-    Current Environment: prod
-    
 ┌──────────┬─────────────────────────┬───────────┬───────────────────┐
 │ Category │ Resource name           │ Operation │ Provider plugin   │
 ├──────────┼─────────────────────────┼───────────┼───────────────────┤
@@ -254,6 +264,12 @@ You will notice the `amplify status` output has default API and function created
 │ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
 └──────────┴─────────────────────────┴───────────┴───────────────────┘
 ```
+
+**NEEDS FURTHER UPDATING / TESTING:**
+
+When we connected the branches in Amplify UI, the API might have been auto-created (see API Gateway). Verify if you see a new API (should be two) created, and same for Lambda functions.
+
+If you do not see new API’s and Lambda’s, it is probably because the names are exactly the same.
 
 To get things in sync, pull down the environments from the cloud.
 

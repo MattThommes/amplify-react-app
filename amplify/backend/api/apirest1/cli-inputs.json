@@ -1,13 +1,6 @@
 {
   "version": 1,
   "paths": {
-    "/apirest1": {
-      "name": "/apirest1",
-      "lambdaFunction": "amplifyreactappapirest1",
-      "permissions": {
-        "setting": "open"
-      }
-    },
     "/": {
       "name": "/",
       "lambdaFunction": "amplifyreactappapirest1",
