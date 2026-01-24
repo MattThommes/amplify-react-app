@@ -27,8 +27,13 @@ function App()
     // This effect runs once on component mount to configure the API
     // to use the local mock server when in development.
     useEffect(() => {
+        // Check for development environment (supports both Vite and standard Node envs)
+        const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) || process.env.NODE_ENV === 'development';
+        console.log("Environment: " + (isDev ? 'development' : 'production'));
+
         // In development mode, and when a mock endpoint is running
-        if (process.env.NODE_ENV === 'development') {
+        if (isDev) {
+            console.log("Configuring local API at http://localhost:3001");
             // The name must match your API name in backend-config.json
             const localApiConfig = {
                 endpoints: [{
