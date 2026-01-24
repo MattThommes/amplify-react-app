@@ -16,7 +16,8 @@ Before you begin, ensure you have the following tools installed on your local ma
     npm install -g @aws-amplify/cli
     ```
     > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt or default you to Gen 2. Try to continue with Gen 1 as outlined in the setup guide.
-
+*   **Check Amplify version**: `amplify version`
+    * 14.2.4 (as of January 23, 2026)
 *   [Lower priority] **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
     
     > **macOS Note**: After installing with Homebrew, you must add the JDK to your shell's environment variables. The method is the same for both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
@@ -45,6 +46,15 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make setup`
 
+Start the app locally to see it in the browser:
+
+`make run-dev`
+
+You will notice API calls will fail. We will setup the API shortly.
+
+* http://localhost:3001/
+* `(failed)net::ERR_CONNECTION_REFUSED`
+
 Does not need to be done right now, but anytime **after running setup**, you can pull down the latest changes from the upstream repo by running this script:
 
 `make sync-upstream`
@@ -68,14 +78,6 @@ Commit your project-specific updates:
 *   `git commit -m "Project specific updates"`
 
 Stop any other apps running locally on ports 3000 or 3001, otherwise the next commands will conflict.
-
-Start the local API server:
-
-*   `make start-local-api`
-
-Start the app locally and see it in the browser:
-
-*   `make run-dev`
 
 ## Amplify setup
 
@@ -167,6 +169,21 @@ Some next steps:
 ...
 ```
 
+You should now see:
+
+```
+% make amplify-status
+amplify status
+
+    Current Environment: staging
+    
+┌──────────┬───────────────┬───────────┬─────────────────┐
+│ Category │ Resource name │ Operation │ Provider plugin │
+└──────────┴───────────────┴───────────┴─────────────────┘
+```
+
+In Amplify you should see “staging” under Backend Environments, no branches yet, no functions, and no API’s.
+
 ### Amplify environment setup
 
 Run `make amplify-envs`, and you should see:
@@ -177,7 +194,7 @@ Run `make amplify-envs`, and you should see:
 | *staging     |
 ```
 
-You should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
+As mentioned, you should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
 
 If you do not see the “master” environment, run `make amplify-envs-add-prod`.
 
@@ -185,15 +202,33 @@ Choose the same local AWS profile as earlier.
 
 It should begin deploying the “prod” environment without any further prompts.
 
-Under “Backend Environments” in the Amplify console for the app, you should see prod and staging.
+Under “Backend Environments” in the Amplify console for the app, you should see “master” and “staging.”
 
 Under S3 you should see new buckets created today named something like:
 
-`amplify-matt-test-20260118b-master-a5889-deployment`
+`amplify-matt-test-20260118-master-a5889-deployment`
 
-`amplify-matt-test-20260118b-staging-704e7-deployment`
+`amplify-matt-test-20260118-staging-704e7-deployment`
 
-Under “Branches” you should _not_ see anything yet.
+Under “Branches” you should still not see anything yet.
+
+To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`.
+
+⚠️ Keep an eye out for misaligned environments with Amplify and git. This may not cause any issues, but something I saw and to keep in mind. Example:
+
+```
+% git branch                                
+master
+* staging
+
+% make amplify-envs
+  amplify env list
+
+| Environments |
+| ------------ |
+| staging      |
+| *master      |
+```
 
 ### Amplify branch setup
 
@@ -213,124 +248,139 @@ Set up staging next. If you have not yet locally, run `git checkout -b staging` 
 
 Connect the staging branch to Amplify the same way you did for master. Staging should then also appear under Branches, and start deploying.
 
-### Check Amplify status locally
-
-Run `make amplify-status`
-
-You should see the current environment you are on. Example:
-
-```
-% make amplify-status
-amplify status
-
-    Current Environment: master
-    
-┌──────────┬─────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name           │ Operation │ Provider plugin   │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Api      │ apirest1                │ Create    │ awscloudformation │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
-└──────────┴─────────────────────────┴───────────┴───────────────────┘
-```
-
-To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`. You should see the same status output for staging:
-
-```
-% make amplify-status
-amplify status
-
-    Current Environment: staging
-    
-┌──────────┬─────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name           │ Operation │ Provider plugin   │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Api      │ apirest1                │ Create    │ awscloudformation │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
-└──────────┴─────────────────────────┴───────────┴───────────────────┘
-```
-
 ### Configuring the API & function
 
-You will notice the `amplify status` output has default API and function created from the template repo. This might be inaccurate.
+You will notice:
 
 ```
-┌──────────┬─────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name           │ Operation │ Provider plugin   │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Api      │ apirest1                │ Create    │ awscloudformation │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappapirest1 │ Create    │ awscloudformation │
-└──────────┴─────────────────────────┴───────────┴───────────────────┘
-```
-
-**NEEDS FURTHER UPDATING / TESTING:**
-
-When we connected the branches in Amplify UI, the API might have been auto-created (see API Gateway). Verify if you see a new API (should be two) created, and same for Lambda functions.
-
-If you do not see new API’s and Lambda’s, it is probably because the names are exactly the same.
-
-To get things in sync, pull down the environments from the cloud.
-
-Example steps:
-
-1. Get off of staging env: `make amplify-env-switch-prod`
-2. Pull down staging from cloud: `amplify pull --appId d2w7e377ms01iu --envName staging`
-3. Pull down prod/master from cloud: `amplify pull --appId d2w7e377ms01iu --envName master`
-
-You should now see the REST endpoint locally, and the resources are no longer in Create state:
-
-```
-% amplify status                                      
+% make amplify-status                       
+amplify status
 
     Current Environment: master
     
-┌──────────┬─────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name           │ Operation │ Provider plugin   │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappapirest1 │ Update    │ awscloudformation │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Api      │ apirest1                │ No Change │ awscloudformation │
-└──────────┴─────────────────────────┴───────────┴───────────────────┘
+┌──────────┬───────────────┬───────────┬─────────────────┐
+│ Category │ Resource name │ Operation │ Provider plugin │
+└──────────┴───────────────┴───────────┴─────────────────┘
+```
+
+Now we need to add the API and function to get API/Ajax requests working.
+
+Run `make amplify-api-add`.
+
+```
+% amplify api add
+? Select from one of the below mentioned services: 
+  GraphQL 
+❯ REST 
+
+? Select from one of the below mentioned services: REST
+✔ Provide a friendly name for your resource to be used as a label for this category in the project: · matttest20260122
+
+✔ Provide a path (e.g., /book/{isbn}): · /
+
+Only one option for [Choose a Lambda source]. Selecting [Create a new Lambda function].
+? Provide an AWS Lambda function name: matttest202601228c62084b
+? Choose the runtime that you want to use: NodeJS
+
+? Choose the function template that you want to use: (Use arrow keys)
+  AppSync - GraphQL API request (with IAM) 
+  CRUD function for DynamoDB (Integration with API Gateway) 
+  GraphQL Lambda Authorizer 
+❯ Hello World 
+
+? Do you want to configure advanced settings? (y/N) n
+? Do you want to edit the local lambda function now? (Y/n) n
+
+...
+
+isions them in the cloud
+✅ Succesfully added the Lambda function locally
+✔ Restrict API access? (Y/n) · no
+
+✔ Do you want to add another path? (y/N) · no
+✅ Successfully added resource matttest20260122 locally
+```
+
+You should now see:
+
+```
+% make amplify-status
+amplify status
+
+    Current Environment: master
+    
+┌──────────┬──────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name            │ Operation │ Provider plugin   │
+├──────────┼──────────────────────────┼───────────┼───────────────────┤
+│ Api      │ matttest20260122         │ Create    │ awscloudformation │
+├──────────┼──────────────────────────┼───────────┼───────────────────┤
+│ Function │ matttest202601228c62084b │ Create    │ awscloudformation │
+└──────────┴──────────────────────────┴───────────┴───────────────────┘
+```
+
+Run `make amplify-push` to push up the function change **for both master and staging environments**. You should see deployments happening:
+
+```
+Deploying resources into master environment. This will take a few minutes. ⠴
+Deploying root stack matt [ ---------------------------------------- ] 0/3
+        amplify-matt-test-20260122-ma… AWS::CloudFormation::Stack     UPDATE_IN_PROGRESS             Sat Jan 24 
+        functionmatttest202601228c620… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sat Jan 24 
+Deploying api matttest20260122 [ ---------------------------------------- ] 0/5
+Deploying function matttest202601228c62084b [ ---------------------------------------- ] 0/3
+        LambdaExecutionRole            AWS::IAM::Role                 CREATE_IN_PROGRESS             Sat Jan 24
+```
+
+⚠️ Remember – this needs to be done for both master and staging Amplify environments!
+
+`make amplify-env-switch-staging && make amplify-push`
+
+⚠️ Verify in AWS Lambda and API Gateway that the new resources appear. 
+
+Run `make amplify-status` again and make sure the output has No Change appearing for the resources, **under both environments**:
+
+```
+    Current Environment: master
+    
+┌──────────┬──────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name            │ Operation │ Provider plugin   │
+├──────────┼──────────────────────────┼───────────┼───────────────────┤
+│ Api      │ matttest20260122         │ No Change │ awscloudformation │
+├──────────┼──────────────────────────┼───────────┼───────────────────┤
+│ Function │ matttest202601228c62084b │ No Change │ awscloudformation │
+└──────────┴──────────────────────────┴───────────┴───────────────────┘
 
 REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
 ```
 
-Verify in AWS Lambda that you see two functions (one for prod, one for staging):
-
-1. `amplifyreactappapirest1-master`
-2. `amplifyreactappapirest1-staging`
-
-Finally, run `make amplify-push` to push up the function change **for both master and staging envs**. You should see:
+Update the local API server script to reference the function name:
 
 ```
-Deployment completed.
-Deploying root stack matt [ ===========================------------- ] 2/3
-        amplify-matt-test-20260118b-m… AWS::CloudFormation::Stack     UPDATE_COMPLETE_CLEANUP_IN_PR… Mon Jan 19 
-        functionamplifyreactappapires… AWS::CloudFormation::Stack     UPDATE_COMPLETE                Mon Jan 19 
-        apiapirest1                    AWS::CloudFormation::Stack     UPDATE_COMPLETE                Mon Jan 19 
-Deployed function amplifyreactappapirest1 [ ======================================== ] 3/3
-        LambdaExecutionRole            AWS::IAM::Role                 UPDATE_IN_PROGRESS             Mon Jan 19 
-
-Deployment state saved successfully.
+// Import the handler function from your Lambda's index.js
+const { handler } = require('./amplify/backend/function/matttest202601228c62084b/src/index');
 ```
 
-Run `make amplify-status` again and make sure the output has No Change appearing for the resources, **under both envs**:
+Update the App.jsx constant for the API:
 
 ```
-    Current Environment: master
-    
-┌──────────┬─────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name           │ Operation │ Provider plugin   │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Api      │ apirest1                │ No Change │ awscloudformation │
-├──────────┼─────────────────────────┼───────────┼───────────────────┤
-│ Function │ amplifyreactappapirest1 │ No Change │ awscloudformation │
-└──────────┴─────────────────────────┴───────────┴───────────────────┘
-
-REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
+// Define the API name as a constant to avoid magic strings.
+const API_NAME = 'matttest20260122';
 ```
+
+In the function index file, enable CORS requests: 
+
+```
+    //  Uncomment below to enable CORS requests
+    //  headers: {
+    //      "Access-Control-Allow-Origin": "*",
+    //      "Access-Control-Allow-Headers": "*"
+    //  },
+```
+
+Push up changes so they can redeploy.
+
+Start the local API server:
+
+`make start-local-api`
 
 ### Rewrite rule
 

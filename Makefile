@@ -63,5 +63,8 @@ amplify-env-delete-prod:
 amplify-env-delete-staging:
 	amplify env remove staging
 
+amplify-api-add:
+	amplify api add
+
 amplify-push:
 	amplify push
