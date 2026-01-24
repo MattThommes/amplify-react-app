@@ -42,6 +42,8 @@ Before you begin, ensure you have the following tools installed on your local ma
 
 ### Project specific setup
 
+Open [Makefile](Makefile).
+
 After cloning the project, you can run the included setup script to automate most of the initial configuration. This is safe to run repeatedly.
 
 `make setup`
@@ -381,6 +383,8 @@ Push up changes so they can redeploy.
 Start the local API server:
 
 `make start-local-api`
+
+Ensure API/Ajax requests are returning 200.
 
 ### Rewrite rule
 
