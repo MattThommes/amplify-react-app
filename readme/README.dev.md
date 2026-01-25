@@ -354,14 +354,14 @@ Run `make amplify-status` again and make sure the output has No Change appearing
 REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
 ```
 
-Update the local API server script to reference the function name:
+Update the [local API server script](../_localApiServer.cjs) to reference your new function name path:
 
 ```
 // Import the handler function from your Lambda's index.js
 const { handler } = require('./amplify/backend/function/matttest202601228c62084b/src/index');
 ```
 
-Update the App.jsx constant for the API:
+Update the [App.jsx](../src/App.jsx) constant for the API:
 
 ```
 // Define the API name as a constant to avoid magic strings.
@@ -378,7 +378,7 @@ In the function index file, enable CORS requests:
     //  },
 ```
 
-Push up changes so they can redeploy.
+Push up changes (with git) so they can redeploy.
 
 Start the local API server:
 
