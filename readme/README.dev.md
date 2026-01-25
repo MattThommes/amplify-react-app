@@ -48,7 +48,7 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make setup`
 
-⚠️ Stop other apps running on port 3000/3001.
+⚠️ Stop other local apps running on port 3000/3001 so there is no conflict.
 
 Start the app locally to see it in the browser:
 
