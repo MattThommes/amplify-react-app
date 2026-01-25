@@ -24,27 +24,6 @@ function App()
     const [backendPath, setBackendPath] = useState('');
     const [backendResponse, setBackendResponse] = useState(null);
 
-    // This effect runs once on component mount to configure the API
-    // to use the local mock server when in development.
-    useEffect(() => {
-        // Check for development environment (supports both Vite and standard Node envs)
-        const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) || process.env.NODE_ENV === 'development';
-        console.log("Environment: " + (isDev ? 'development' : 'production'));
-
-        // In development mode, and when a mock endpoint is running
-        if (isDev) {
-            console.log("Configuring local API at http://localhost:3001");
-            // The name must match your API name in backend-config.json
-            const localApiConfig = {
-                endpoints: [{
-                    name: API_NAME,
-                    endpoint: 'http://localhost:3001' // This is the port from `amplify mock`
-                }]
-            };
-            API.configure(localApiConfig);
-        }
-    }, []);
-
     const fetchBackend = useCallback(async (path) => {
         const apiPath = `/${path}`;
         try {

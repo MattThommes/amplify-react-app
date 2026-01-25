@@ -361,11 +361,10 @@ Update the [local API server script](../_localApiServer.cjs) to reference your n
 const { handler } = require('./amplify/backend/function/matttest202601228c62084b/src/index');
 ```
 
-Update the [App.jsx](../src/App.jsx) constant for the API:
+Update the [index.jsx](../src/index.jsx) constant for the local API:
 
 ```
-// Define the API name as a constant to avoid magic strings.
-const API_NAME = 'matttest20260122';
+const API_NAME = 'apirest1';
 ```
 
 In the function index file, enable CORS requests: 
