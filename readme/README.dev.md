@@ -48,6 +48,8 @@ After cloning the project, you can run the included setup script to automate mos
 
 `make setup`
 
+⚠️ Stop other apps running on port 3000/3001.
+
 Start the app locally to see it in the browser:
 
 `make run-dev`
@@ -90,8 +92,6 @@ Before initializing Amplify, ensure your AWS credentials are set up on your loca
 If you haven’t configured credentials, you can run `aws configure` to create a profile.
 
 ### Initialize new Amplify app
-
-🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created. If you do this, it will also delete the amplify directory locally, so you will have to re-sync your code with git origin/remote.
 
 ⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
 
@@ -447,6 +447,8 @@ To add or update backend resources like APIs, authentication, and databases, you
 
 ## Deleting your Amplify app and cleaning up resources
 
+🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created. If you do this, it will also delete the amplify directory locally, so you will have to re-sync your code with git origin/remote.
+
 ### Step 1: Delete the cloud backend environment
 
 The most effective way to delete all the associated backend resources from the cloud is by using the Amplify CLI from the root of your project.
@@ -472,7 +474,7 @@ To complete the reset, you need to remove the Amplify-related files and director
 
 ### Troubleshooting deletion issues
 
-Sometimes, amplify delete can fail if AWS CloudFormation encounters an issue while deleting the resources. If this happens, you may need to manually delete the resources.
+Sometimes, `amplify delete` can fail if AWS CloudFormation encounters an issue while deleting the resources. If this happens, you may need to manually delete the resources.
 
 1. Go to the AWS CloudFormation Console: Find the root stack for your Amplify project. The name is typically in the format `amplify-<application-name>-<backend-environment-name>-<random-number>`
 
