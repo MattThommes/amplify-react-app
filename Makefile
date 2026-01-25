@@ -57,10 +57,10 @@ amplify-env-switch-prod:
 amplify-env-switch-staging:
 	amplify env checkout staging
 
-amplify-env-delete-prod:
+amplify-env-remove-prod:
 	amplify env remove master
 
-amplify-env-delete-staging:
+amplify-env-remove-staging:
 	amplify env remove staging
 
 amplify-api-add:
@@ -68,3 +68,6 @@ amplify-api-add:
 
 amplify-push:
 	amplify push
+
+amplify-delete:
+	amplify delete

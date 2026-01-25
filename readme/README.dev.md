@@ -361,7 +361,7 @@ Update the [local API server script](../_localApiServer.cjs) to reference your n
 const { handler } = require('./amplify/backend/function/matttest202601228c62084b/src/index');
 ```
 
-Update the [index.jsx](../src/index.jsx) constant for the local API:
+Update these two files: [index.jsx](../src/index.jsx) and [App.jsx](../src/App.jsx) constant for the local API to the new API name for your app:
 
 ```
 const API_NAME = 'apirest1';
@@ -382,6 +382,8 @@ Push up changes (with git) so they can redeploy.
 Start the local API server:
 
 `make start-local-api`
+
+(Ensure `make run-dev` is also running.)
 
 Ensure API/Ajax requests to http://localhost:3001/ are returning 200.
 
