@@ -105,7 +105,7 @@ Note: It is recommended to run this command from the root of your app directory
 ? Enter a name for the environment (dev) 
 ```
 
-Enter “staging” for the environment. This will be our first environment. We will also create “prod.”
+Enter “staging” for the environment. This will be our first environment. We will also create “master” for production.
 
 Default editor – it does not matter what you pick:
 
