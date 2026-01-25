@@ -405,10 +405,12 @@ In the “Rewrites and redirects” section, Amplify often creates a default rul
 This one is not there by default, and is good to add to avoid the trailing slash issue:
 
 ```
-</^((?!\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>
+{
+    "source": "</^((?!\\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>",
+    "status": "200",
+    "target": "/index.html"
+}
 ```
-
-Target `/index.html` as well.
 
 ## Adding a custom domain
 
