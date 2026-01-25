@@ -42,7 +42,7 @@ Before you begin, ensure you have the following tools installed on your local ma
 
 ### Project specific setup
 
-Open [Makefile](Makefile).
+Open [Makefile](../Makefile).
 
 After cloning the project, you can run the included setup script to automate most of the initial configuration. This is safe to run repeatedly.
 
