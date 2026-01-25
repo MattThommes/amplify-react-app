@@ -384,7 +384,7 @@ Start the local API server:
 
 `make start-local-api`
 
-Ensure API/Ajax requests are returning 200.
+Ensure API/Ajax requests to http://localhost:3001/ are returning 200.
 
 ### Rewrite rule
 
