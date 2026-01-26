@@ -429,6 +429,8 @@ For Amplify to automatically configure your DNS records, your domain must be man
 1.  In the AWS Amplify console for your app, navigate to **Hosting > Custom domains** (or **Domain management** in the older UI) and click **Add domain**.
 2.  Select your domain from the dropdown list (Amplify will detect domains in your Route 53 account) and click **Configure domain**.
 
+Example: ![Amplify custom domain](images/amplify_custom_domain.png)
+
 ### 3. Configure subdomains and redirects
 
 1.  On the configuration screen, you can set up subdomains. A common practice is to use the root domain (e.g., `example.com`) for one branch (like `main`/`prod`) and a subdomain (e.g., `staging.example.com`) for another branch (like `staging`).
