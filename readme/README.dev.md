@@ -234,7 +234,7 @@ master
 
 ### Amplify branch setup
 
-Connect your first branch. Choose the repo and master or main branch.
+Connect your first branch in the Amplify portal. Choose the repo and master or main branch.
 
 Under “Auto-detected frameworks,” ignore this showing: “Amplify Gen 2.” It will still use Gen 1 since that is what the code is setup for.
 

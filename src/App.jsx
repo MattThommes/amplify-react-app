@@ -162,8 +162,7 @@ function BuiltWith()
     return (
         <>
             <div className="built-with">
-                Website hand-crafted with <img src={HeartIcon} width="20" alt="" /> using
-                &nbsp;<a href="https://github.com/MattThommes/amplify-react-app">Amplify React App</a>
+                Hand-crafted with <img src={HeartIcon} width="20" alt="love" /> by HyperText Craft
             </div>
         </>
     );
