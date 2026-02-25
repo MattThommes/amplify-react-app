@@ -162,7 +162,8 @@ function BuiltWith()
     return (
         <>
             <div className="built-with">
-                Hand-crafted with <img src={HeartIcon} width="20" alt="love" /> by HyperText Craft
+                Hand-crafted with <img src={HeartIcon} width="20" alt="love" /> by
+                <a href="https://hypertextcraft.com" target="_blank">HyperText Craft</a>
             </div>
         </>
     );
