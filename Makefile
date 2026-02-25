@@ -18,6 +18,9 @@ help:
 setup:
 	./setup.sh
 
+reset:
+	./setup.sh --reset
+
 cleanup:
 	npm cache clean --force
 

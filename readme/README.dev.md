@@ -95,7 +95,7 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
 
-Change `projectName` to your unique project name.
+Change `projectName` to your unique project name. **ONLY alphanumeric! - no dashes allowed.**
 
 Run `make amplify-init`
 
