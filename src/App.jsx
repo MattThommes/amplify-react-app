@@ -6,13 +6,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import HeaderImage from './images/header_image.png';
-import HeartIcon from './images/heart.svg';
 
 import { API } from 'aws-amplify';
 
 import {
     Routes, Route, Link, useLocation
 } from "react-router-dom";
+import BuiltWith from './BuiltWith';
 
 const SiteName = "Amplify React App";
 const API_NAME = 'apirest1';
@@ -154,18 +154,6 @@ function Page2Content({ backendResponse })
             <h2>Page 2</h2>
         </>,
         backendResponse
-    );
-}
-
-function BuiltWith()
-{
-    return (
-        <>
-            <div className="built-with">
-                Hand-crafted with <img src={HeartIcon} width="20" alt="love" /> by
-                <a href="https://hypertextcraft.com" target="_blank">HyperText Craft</a>
-            </div>
-        </>
     );
 }
 

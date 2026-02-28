@@ -144,43 +144,6 @@ body {
 				font-style: italic;
 				margin-top: 5px;
 			}
-
-			.built-with {
-				background-color: #fff2dc;
-				background-image: url("data:image/svg+xml,%3Csvg width='500' height='60' viewBox='0 0 500 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232f610a' fill-opacity='0.1'%3E%3Cpath d='M20 60 L30 35 L40 60 Z' /%3E%3Cpath d='M140 60 L155 30 L170 60 Z' /%3E%3Cpath d='M280 60 L295 25 L310 60 Z' /%3E%3Cpath d='M360 60 L370 40 L380 60 Z' /%3E%3Cpath d='M460 60 L475 30 L490 60 Z' /%3E%3C/g%3E%3Cg fill='%232f610a' fill-opacity='0.25'%3E%3Cpath d='M0 60 Q250 55 500 60 Z' /%3E%3Cpath d='M50 60 L65 20 L80 60 Z' /%3E%3Cpath d='M100 60 L110 35 L120 60 Z' /%3E%3Cpath d='M220 60 L240 10 L260 60 Z' /%3E%3Cpath d='M250 60 L265 30 L280 60 Z' /%3E%3Cpath d='M400 60 L415 25 L430 60 Z' /%3E%3C/g%3E%3C/svg%3E"), linear-gradient(to bottom, #ffdcb0, #fff2dc);
-				background-repeat: no-repeat, no-repeat;
-				background-position: center bottom, center;
-				background-size: cover, cover;
-				border: 1px dotted #c;
-				border-radius: 20px;
-				color: #2f610a;
-				font-family: 'Montserrat', sans-serif;
-				font-size: 0.8em;
-				margin-top: 20px;
-				padding: 5px 15px;
-				display: inline-block;
-				box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-
-				a {
-					margin-left: 5px;
-
-					&:link {
-						color: #2f610a;
-					}
-
-					&:visited {
-						color: #2f610a;
-					}
-
-					&:hover {
-						color: #c0392b;
-					}
-
-					&:active {
-						color: #c0392b;
-					}
-				}
-			}
 		}
 	}
 }
