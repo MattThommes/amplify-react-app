@@ -13,6 +13,7 @@ import {
     Routes, Route, Link, useLocation
 } from "react-router-dom";
 import { BuiltWith } from '@hypertext-craft/built-with';
+import '@hypertext-craft/built-with/dist/style.css';
 
 const SiteName = "Amplify React App";
 const API_NAME = 'apirest1';
