@@ -12,7 +12,7 @@ import { API } from 'aws-amplify';
 import {
     Routes, Route, Link, useLocation
 } from "react-router-dom";
-import BuiltWith from './BuiltWith';
+import { BuiltWith } from '@hypertext-craft/built-with';
 
 const SiteName = "Amplify React App";
 const API_NAME = 'apirest1';
