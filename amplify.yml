@@ -9,6 +9,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - git config --global url."https://${GITHUB_ACCESS_TOKEN}@github.com/".insteadOf "https://github.com/"
         - nvm install v20
         - npm install -g npm@10
         - npm install --legacy-peer-deps
