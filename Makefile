@@ -18,20 +18,21 @@ help:
 setup:
 	./setup.sh
 
+# Careful; this does a lot
 reset:
 	./setup.sh --reset
-
-cleanup:
-	npm cache clean --force
 
 sync-upstream:
 	./sync-upstream.sh
 
+run-dev:
+	./run.sh
+
 start-local-api:
 	npm run start:api
 
-run-dev:
-	./run.sh
+cleanup:
+	npm cache clean --force
 
 amplify-init:
 	amplify init
