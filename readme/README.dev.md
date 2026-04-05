@@ -9,16 +9,20 @@ Amplify React App is built using Vite and React. It serves as a modern, fast tem
 Before you begin, ensure you have the following tools installed on your local machine:
 
 *   **Node.js and npm**: (e.g., v18 or later). You can download them from [nodejs.org](https://nodejs.org/).
+    *   **Verify installation**: `node -v` and `npm -v`
 *   **Git**: For version control. You can download it from [git-scm.com](https://git-scm.com/).
+    *   **Verify installation**: `git --version`
 *   **AWS CLI**: For configuring your AWS credentials. Follow the [official installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
+    *   **Verify installation**: `aws --version`
 *   **AWS Amplify CLI (Gen 1)**: The command-line tool for managing your Amplify backend.
     ```sh
     npm install -g @aws-amplify/cli
     ```
+    *   **Verify installation**: `amplify version` (e.g., 14.2.5 as of January 27, 2026)
+    
     > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt or default you to Gen 2. Try to continue with Gen 1 as outlined in the setup guide.
-*   **Check Amplify version**: `amplify version`
-    * 14.2.5 (as of January 27, 2026)
 *   [Lower priority] **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
+    *   **Verify installation**: `java -version`
     
     > **macOS Note**: After installing with Homebrew, you must add the JDK to your shell's environment variables. The method is the same for both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
     >
@@ -30,7 +34,7 @@ Before you begin, ensure you have the following tools installed on your local ma
     > 2.  Reload your shell configuration (`source ~/.zshrc`) or open a new terminal.
     > 3.  Verify the installation by running `java -version`.
 
-## Local project setup
+## New project setup
 
 ### Create / sync from template
 
