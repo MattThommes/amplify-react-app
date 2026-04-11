@@ -99,7 +99,7 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
 
-Change `projectName` to your unique project name. **ONLY alphanumeric! - no dashes allowed.**
+Change `projectName` to your unique project name. **ONLY alphanumeric! - no dashes allowed. Also keep it under 64 characters due to S3 bucket name limitations. Amplify will add extra characters onto the name, so it should be a lot less than 64 - try around 30 to be safe and leave room for Amplify to add it’s own characters on the end.**
 
 Run `make amplify-init`
 
