@@ -1,0 +1,45 @@
+name: Test Nightly Action
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 0 5 * * *
+
+jobs:
+  test-job:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH and test authentication
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HYPERTEXT_CRAFT_BUILT_WITH_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 0600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no -T git@github.com || true
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Force Git to use standard SSH
+        run: |
+          git config --global url."git@github.com:".insteadOf "ssh://git@github.com/"
+          git config --global url."git@github.com:".insteadOf "git+ssh://git@github.com/"
+
+      - name: Remove package-lock.json
+        run: rm -f package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm install --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
