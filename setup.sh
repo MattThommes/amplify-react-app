@@ -67,12 +67,12 @@ nvm list
 echo "-> Installing dependencies..."
 npm ci --prefer-offline --no-audit --progress=false
 
-echo "-> Checking for Amplify CLI..."
+echo "-> Checking for Amplify Gen 2 CLI..."
 if ! command -v amplify &> /dev/null; then
-  echo "   - Amplify CLI not found. Installing globally..."
-  npm install -g @aws-amplify/cli
+  echo "   - Amplify Gen 2 CLI not found. Installing globally..."
+  npm install -g @aws-amplify/backend-cli
 else
-  echo "   - Amplify CLI is already installed."
+  echo "   - Amplify Gen 2 CLI is already installed."
 fi
 
 echo "-> Setup complete!"
