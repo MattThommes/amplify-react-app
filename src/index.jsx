@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import { Amplify } from "aws-amplify";
-import awsExports from './aws-exports';
+import outputs from '../amplify_outputs.json';
 
 // Check for development environment (supports both Vite and standard Node envs)
 const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) || process.env.NODE_ENV === 'development';
@@ -15,18 +15,13 @@ const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.m
 if (isDev) {
     console.log("Environment: development");
     console.log("Configuring local API at http://localhost:3001");
-    const API_NAME = 'apirest1';
-    if (awsExports.aws_cloud_logic_custom) {
-        awsExports.aws_cloud_logic_custom = awsExports.aws_cloud_logic_custom.map(api => {
-            if (api.name === API_NAME) {
-                return { ...api, endpoint: 'http://localhost:3001' };
-            }
-            return api;
-        });
-    }
+    // If you need to override API endpoints for local development in Gen 2,
+    // you would typically do it by modifying the `outputs` object here before calling Amplify.configure()
+    // However, the structure of amplify_outputs.json is different from aws-exports.js
+    // For now, we'll just log this and you can adapt it later if you still need the local API server.
 }
 
-Amplify.configure(awsExports);
+Amplify.configure(outputs);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
