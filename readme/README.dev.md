@@ -8,31 +8,19 @@ Amplify React App is built using Vite and React. It serves as a modern, fast tem
 
 Before you begin, ensure you have the following tools installed on your local machine:
 
-*   **Node.js and npm**: (e.g., v18 or later). You can download them from [nodejs.org](https://nodejs.org/).
+*   **Node.js and npm**: (e.g., v20 or later). You can download them from [nodejs.org](https://nodejs.org/).
     *   **Verify installation**: `node -v` and `npm -v`
 *   **Git**: For version control. You can download it from [git-scm.com](https://git-scm.com/).
     *   **Verify installation**: `git --version`
 *   **AWS CLI**: For configuring your AWS credentials. Follow the [official installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
     *   **Verify installation**: `aws --version`
-*   **AWS Amplify CLI (Gen 1)**: The command-line tool for managing your Amplify backend.
+*   **AWS Amplify Gen 2 CLI**: The command-line tool for managing your Amplify backend.
     ```sh
-    npm install -g @aws-amplify/cli
+    npm install -g @aws-amplify/backend-cli
     ```
-    *   **Verify installation**: `amplify version` (e.g., 14.2.5 as of January 27, 2026)
+    *   **Verify installation**: `amplify version`
     
-    > **Note**: This template is built for Amplify **Gen 1**. If you have a newer version of the CLI, it may prompt or default you to Gen 2. Try to continue with Gen 1 as outlined in the setup guide.
-*   [Lower priority] **Java Development Kit (JDK)**: (e.g., OpenJDK 17 or later). This is required by the Amplify CLI to run local mocking for services like DynamoDB when using `amplify mock`. You can install it via tools like Homebrew (`brew install openjdk@17`) or Chocolatey (`choco install openjdk --version=17`).
-    *   **Verify installation**: `java -version`
-    
-    > **macOS Note**: After installing with Homebrew, you must add the JDK to your shell's environment variables. The method is the same for both Apple Silicon (M1/M2/M3/M4) and Intel Macs.
-    >
-    > 1.  Add the following lines to your shell configuration file (e.g., `~/.zshrc` or `~/.bash_profile`). This correctly sets the `JAVA_HOME` and updates your `PATH`.
-    >     ```sh
-    >     echo 'export JAVA_HOME="$(brew --prefix openjdk@17)"' >> ~/.zshrc
-    >     echo 'export PATH="${JAVA_HOME}/bin:${PATH}"' >> ~/.zshrc
-    >     ```
-    > 2.  Reload your shell configuration (`source ~/.zshrc`) or open a new terminal.
-    > 3.  Verify the installation by running `java -version`.
+    > **Note**: This template is built for Amplify **Gen 2**. If you have an older version of the CLI (`@aws-amplify/cli`), please upgrade to the Gen 2 CLI.
 
 ## New project setup
 
@@ -97,299 +85,43 @@ If you haven’t configured credentials, you can run `aws configure` to create a
 
 ### Initialize new Amplify app
 
-⚠️ Update file [amplify/.config/project-config.json](../amplify/.config/project-config.json). This is a critical first step to avoid using the template name (“templatetest20251130”) for the Amplify app.
+Gen 2 introduces a new code-first approach to building your backend. You define your backend resources (like authentication, database, storage) using TypeScript inside the `amplify/` directory.
 
-Change `projectName` to your unique project name. **ONLY alphanumeric! - no dashes allowed. Also keep it under 64 characters due to S3 bucket name limitations. Amplify will add extra characters onto the name, so it should be a lot less than 64 - try around 30 to be safe and leave room for Amplify to add it’s own characters on the end.**
+To initialize your backend sandbox environment for local development, run:
 
-Run `make amplify-init`
-
-```
-% amplify init
-Note: It is recommended to run this command from the root of your app directory
-? Enter a name for the environment (dev) 
+```sh
+npx ampx sandbox
 ```
 
-Enter “staging” for the environment. This will be our first environment. We will also create “master” for production.
+This command will deploy your backend to a personal cloud sandbox environment. Keep this process running in a terminal tab while you develop. It automatically syncs local changes in your `amplify/` directory to your cloud sandbox.
 
-Default editor – it does not matter what you pick:
+### Amplify environment and branch setup
 
+With Gen 2, Amplify Hosting handles environments and deployments based on your git branches.
+
+1. Commit your changes and push to your git repository.
+2. Go to the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
+3. Connect your repository and select your main branch.
+4. Amplify will automatically detect this as a Gen 2 project by looking for the `amplify/` folder and `amplify.yml`.
+5. It will run a fullstack deployment, provisioning your production backend and deploying your frontend.
+
+To set up a staging environment, simply create a new branch (e.g., `staging`), push it, and connect it in the Amplify Console. Amplify will create a separate isolated backend for that branch.
+
+### Configuring the API
+
+In Gen 2, APIs are defined in TypeScript. See the `amplify/backend.ts` file and other related files in the `amplify/` directory to configure your API and connected Lambda functions or DynamoDB tables.
+
+Once defined, your frontend code can access the API using the Gen 2 syntax:
+
+```javascript
+import { get } from 'aws-amplify/api';
+
+const restOperation = get({
+  apiName: 'yourApiName',
+  path: '/your/path'
+});
+const response = await restOperation.response;
 ```
-? Choose your default editor: None
-```
-
-Authentication method breakdown:
-
-```
-Using default provider  awscloudformation
-? Select the authentication method you want to use: (Use arrow keys)
-❯ AWS profile
-AWS access keys
-```
-
-Choose `AWS profile`. Then pick a local profile:
-
-```
-For more information on AWS Profiles, see:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
-
-? Please choose the profile you want to use
-❯ amplify-feb2021-b
-default
-```
-
-If you get an error such as “Failed to get profile credentials,” try configuring it again:
-
-`aws configure --profile [profile_name]`
-
-You should then see Amplify creating the new backend environment in your account:
-
-```
-Adding backend environment staging to AWS Amplify app: d1j6aypbzelxhd
-
-Deploying resources into staging environment. This will take a few minutes. ⠇
-Deploying root stack templatetest20251130 [ ---------------------------------------- ] 0/4
-        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sun Jan 18 
-        DeploymentBucket               AWS::S3::Bucket                CREATE_IN_PROGRESS             Sun Jan 18 
-        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
-        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
-```
-
-Eventually (few seconds):
-
-```
-Deployment completed.
-Deploying root stack templatetest20251130 [ ==========------------------------------ ] 1/4
-        amplify-templatetest20251130-… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sun Jan 18 
-        DeploymentBucket               AWS::S3::Bucket                CREATE_COMPLETE                Sun Jan 18 
-        UnauthRole                     AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
-        AuthRole                       AWS::IAM::Role                 CREATE_IN_PROGRESS             Sun Jan 18 
-
-Deployment state saved successfully.
-✔ Initialized provider successfully.
-Browserslist: browsers data (caniuse-lite) is 11 months old. Please run:
-  npx update-browserslist-db@latest
-  Why you should do it regularly: https://github.com/browserslist/update-db#readme
-✅ Initialized your environment successfully.
-✅ Your project has been successfully initialized and connected to the cloud!
-Some next steps:
-...
-```
-
-You should now see:
-
-```
-% make amplify-status
-amplify status
-
-    Current Environment: staging
-    
-┌──────────┬───────────────┬───────────┬─────────────────┐
-│ Category │ Resource name │ Operation │ Provider plugin │
-└──────────┴───────────────┴───────────┴─────────────────┘
-```
-
-In Amplify you should see “staging” under Backend Environments, no branches yet, no functions, and no API’s.
-
-### Amplify environment setup
-
-Run `make amplify-envs`, and you should see:
-
-```
-| Environments |
-| ------------ |
-| *staging     |
-```
-
-As mentioned, you should now see your app in the [AWS Amplify console](https://us-east-1.console.aws.amazon.com/amplify/apps).
-
-If you do not see the “master” environment, run `make amplify-envs-add-prod`.
-
-Choose the same local AWS profile as earlier.
-
-It should begin deploying the “prod” environment without any further prompts.
-
-Under “Backend Environments” in the Amplify console for the app, you should see “master” and “staging.”
-
-Under S3 you should see new buckets created today named something like:
-
-`amplify-matt-test-20260118-master-a5889-deployment`
-
-`amplify-matt-test-20260118-staging-704e7-deployment`
-
-Under “Branches” you should still not see anything yet.
-
-To switch environments locally, run `make amplify-env-switch-prod` or `make amplify-env-switch-staging`.
-
-⚠️ Keep an eye out for misaligned environments with Amplify and git. This may not cause any issues, but something I saw and to keep in mind. Example:
-
-```
-% git branch                                
-master
-* staging
-
-% make amplify-envs
-  amplify env list
-
-| Environments |
-| ------------ |
-| staging      |
-| *master      |
-```
-
-### Amplify branch setup
-
-Connect your first branch in the Amplify portal. Choose the repo and master or main branch.
-
-Under “Auto-detected frameworks,” ignore this showing: “Amplify Gen 2.” It will still use Gen 1 since that is what the code is setup for.
-
-Under “Service role,” Select “Use an existing service role.”
-
-Pick “amplifyconsole-backend-role.”
-
-Click Next, then “Save and deploy.”
-
-You should now see “master” branch appearing under Branches, and it should be deploying.
-
-Set up staging next. If you have not yet locally, run `git checkout -b staging` then `git push origin staging`. Wait a minute or so for Amplify to see the new branch.
-
-Connect the staging branch to Amplify the same way you did for master. Staging should then also appear under Branches, and start deploying.
-
-### Configuring the API & function
-
-You will notice:
-
-```
-% make amplify-status                       
-amplify status
-
-    Current Environment: master
-    
-┌──────────┬───────────────┬───────────┬─────────────────┐
-│ Category │ Resource name │ Operation │ Provider plugin │
-└──────────┴───────────────┴───────────┴─────────────────┘
-```
-
-Now we need to add the API and function to get API/Ajax requests working.
-
-Run `make amplify-api-add`.
-
-```
-% amplify api add
-? Select from one of the below mentioned services: 
-  GraphQL 
-❯ REST 
-
-? Select from one of the below mentioned services: REST
-✔ Provide a friendly name for your resource to be used as a label for this category in the project: · matttest20260122
-
-✔ Provide a path (e.g., /book/{isbn}): · /
-
-Only one option for [Choose a Lambda source]. Selecting [Create a new Lambda function].
-? Provide an AWS Lambda function name: matttest202601228c62084b
-? Choose the runtime that you want to use: NodeJS
-
-? Choose the function template that you want to use: (Use arrow keys)
-  AppSync - GraphQL API request (with IAM) 
-  CRUD function for DynamoDB (Integration with API Gateway) 
-  GraphQL Lambda Authorizer 
-❯ Hello World 
-
-? Do you want to configure advanced settings? (y/N) n
-? Do you want to edit the local lambda function now? (Y/n) n
-
-...
-
-isions them in the cloud
-✅ Succesfully added the Lambda function locally
-✔ Restrict API access? (Y/n) · no
-
-✔ Do you want to add another path? (y/N) · no
-✅ Successfully added resource matttest20260122 locally
-```
-
-You should now see:
-
-```
-% make amplify-status
-amplify status
-
-    Current Environment: master
-    
-┌──────────┬──────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name            │ Operation │ Provider plugin   │
-├──────────┼──────────────────────────┼───────────┼───────────────────┤
-│ Api      │ matttest20260122         │ Create    │ awscloudformation │
-├──────────┼──────────────────────────┼───────────┼───────────────────┤
-│ Function │ matttest202601228c62084b │ Create    │ awscloudformation │
-└──────────┴──────────────────────────┴───────────┴───────────────────┘
-```
-
-Run `make amplify-push` to push up the function change **for both master and staging environments**. You should see deployments happening:
-
-```
-Deploying resources into master environment. This will take a few minutes. ⠴
-Deploying root stack matt [ ---------------------------------------- ] 0/3
-        amplify-matt-test-20260122-ma… AWS::CloudFormation::Stack     UPDATE_IN_PROGRESS             Sat Jan 24 
-        functionmatttest202601228c620… AWS::CloudFormation::Stack     CREATE_IN_PROGRESS             Sat Jan 24 
-Deploying api matttest20260122 [ ---------------------------------------- ] 0/5
-Deploying function matttest202601228c62084b [ ---------------------------------------- ] 0/3
-        LambdaExecutionRole            AWS::IAM::Role                 CREATE_IN_PROGRESS             Sat Jan 24
-```
-
-⚠️ Remember – this needs to be done for both master and staging Amplify environments!
-
-`make amplify-env-switch-staging && make amplify-push`
-
-⚠️ Verify in AWS Lambda and API Gateway that the new resources appear. 
-
-Run `make amplify-status` again and make sure the output has No Change appearing for the resources, **under both environments**:
-
-```
-    Current Environment: master
-    
-┌──────────┬──────────────────────────┬───────────┬───────────────────┐
-│ Category │ Resource name            │ Operation │ Provider plugin   │
-├──────────┼──────────────────────────┼───────────┼───────────────────┤
-│ Api      │ matttest20260122         │ No Change │ awscloudformation │
-├──────────┼──────────────────────────┼───────────┼───────────────────┤
-│ Function │ matttest202601228c62084b │ No Change │ awscloudformation │
-└──────────┴──────────────────────────┴───────────┴───────────────────┘
-
-REST API endpoint: https://uqvnlcqpf9.execute-api.us-east-1.amazonaws.com/master
-```
-
-Update the [local API server script](../_localApiServer.cjs) to reference your new function name path:
-
-```
-// Import the handler function from your Lambda's index.js
-const { handler } = require('./amplify/backend/function/matttest202601228c62084b/src/index');
-```
-
-Update these two files: [index.jsx](../src/index.jsx) and [App.jsx](../src/App.jsx) constant for the local API to the new API name for your app:
-
-```
-const API_NAME = 'apirest1';
-```
-
-In the function index file, enable CORS requests: 
-
-```
-    //  Uncomment below to enable CORS requests
-    //  headers: {
-    //      "Access-Control-Allow-Origin": "*",
-    //      "Access-Control-Allow-Headers": "*"
-    //  },
-```
-
-Push up changes (with git) so they can redeploy.
-
-Start the local API server:
-
-`make start-local-api`
-
-(Ensure `make run-dev` is also running.)
-
-Ensure API/Ajax requests to http://localhost:3001/ are returning 200.
 
 ### Rewrite rule
 
@@ -447,47 +179,13 @@ Amplify will now provision an SSL/TLS certificate for your domain and create the
 
 ## Adding cloud resources
 
-To add or update backend resources like APIs, authentication, and databases, you use the Amplify CLI.
-
-*   [API’s](../readme/api/README.md)
-*   [Storage](../readme/images/README.md)
+To add or update backend resources like APIs, authentication, and databases, you define them using TypeScript in the `amplify/` directory. The Amplify Gen 2 documentation provides extensive examples for each service.
 
 ## Deleting your Amplify app and cleaning up resources
 
-🚨 If at anytime you think the Amplify setup is messed up, run `amplify delete` to delete the entire app. This will also remove any cloud resources it created. If you do this, it will also delete the amplify directory locally, so you will have to re-sync your code with git origin/remote.
-
-### Step 1: Delete the cloud backend environment
-
-The most effective way to delete all the associated backend resources from the cloud is by using the Amplify CLI from the root of your project.
-
-`amplify delete`
-
-### Step 2: Delete the app from the AWS Amplify console
-
-After the backend resources have been successfully deleted, you should also remove the application from the AWS Amplify Console.
+If you need to delete your app, you can do so from the AWS Amplify Console.
 
 1. Open the AWS Amplify console.
 2. In the list of applications, choose the name of the app you want to delete.
 3. On the app's page, find the Actions dropdown menu and select Delete app.
-4. You will be prompted to confirm the deletion
-
-### Step 3: Clean up your local project
-
-To complete the reset, you need to remove the Amplify-related files and directories from your local project.
-
-1.  `rm -rf amplify/`
-2.  `rm amplify.yml`
-3.  `rm src/aws-exports.js`
-
-### Troubleshooting deletion issues
-
-Sometimes, `amplify delete` can fail if AWS CloudFormation encounters an issue while deleting the resources. If this happens, you may need to manually delete the resources.
-
-1. Go to the AWS CloudFormation Console: Find the root stack for your Amplify project. The name is typically in the format `amplify-<application-name>-<backend-environment-name>-<random-number>`
-
-2. Delete the CloudFormation Stack: Attempt to delete the root stack. If it has nested stacks, you might need to delete them first.
-
-3. Delete the S3 Bucket: Amplify creates an S3 bucket for deployments. Its name usually follows the pattern `amplify-<application-name>-<backend-environment-name>-<random-number>-deployment`. Find and delete this bucket in the S3 console.
-
-4. Retry Deleting the App: Once the CloudFormation stack and S3 bucket are removed, return to the AWS Amplify console and try deleting the app again.
-After following these steps, your project will be completely free of its previous Amplify configuration, allowing you to start fresh.
+4. You will be prompted to confirm the deletion. This will delete both the frontend hosting environment and the associated backend resources.

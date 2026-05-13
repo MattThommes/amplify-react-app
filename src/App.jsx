@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import HeaderImage from './images/header_image.png';
 
-import { API } from 'aws-amplify';
+import { get } from 'aws-amplify/api';
 
 import {
     Routes, Route, Link, useLocation
@@ -26,10 +26,16 @@ function App()
     const fetchBackend = useCallback(async (path) => {
         const apiPath = `/${path}`;
         try {
-            const response = await API.get(API_NAME, apiPath, {});
+            const restOperation = get({
+              apiName: API_NAME,
+              path: apiPath
+            });
+            const response = await restOperation.response;
+            const body = await response.body.text();
+            
             // The actual business logic data is often in the `body` property and may be a JSON string.
             // This safely parses it. If it's not a string, it returns the response as is.
-            return typeof response === 'string' ? JSON.parse(response) : response;
+            return body ? JSON.parse(body) : body;
         } catch (error) {
             console.error("API call failed:", error);
             return { error: 'Failed to fetch data from the backend.' };
