@@ -12,16 +12,30 @@ import outputs from '../amplify_outputs.json';
 // Check for development environment (supports both Vite and standard Node envs)
 const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) || process.env.NODE_ENV === 'development';
 
+let amplifyConfig = { ...outputs };
+
 if (isDev) {
     console.log("Environment: development");
     console.log("Configuring local API at http://localhost:3001");
-    // If you need to override API endpoints for local development in Gen 2,
-    // you would typically do it by modifying the `outputs` object here before calling Amplify.configure()
-    // However, the structure of amplify_outputs.json is different from aws-exports.js
-    // For now, we'll just log this and you can adapt it later if you still need the local API server.
+    
+    const API_NAME = 'apirest1';
+
+    amplifyConfig = {
+      ...amplifyConfig,
+      API: {
+        ...amplifyConfig.API,
+        REST: {
+          ...amplifyConfig.API?.REST,
+          [API_NAME]: {
+            endpoint: "http://localhost:3001",
+            region: "us-east-1"
+          }
+        }
+      }
+    };
 }
 
-Amplify.configure(outputs);
+Amplify.configure(amplifyConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
