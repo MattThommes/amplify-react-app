@@ -78,7 +78,7 @@ body {
 				background-color: #cbecb2; // A light, clean gray
 				color: #495057; // A darker gray for good contrast
 				font-size: 16px;
-				margin: 0;
+				margin: 0 6px 0 6px;
 				padding: 10px 0 10px 0;
 				border-bottom-left-radius: 12px;
 				border-bottom-right-radius: 12px;
@@ -102,6 +102,10 @@ body {
 				justify-content: center;
 				overflow: hidden;
 
+				@include media-breakpoint-down(sm) {
+					margin-top: 1rem;
+				}
+
 				ul {
 					list-style: none none;
 					margin: 0;
@@ -110,11 +114,22 @@ body {
 					flex-direction: column;
 					gap: 0.5rem; // Add space between nav items
 
+					// Stack items inline on smaller screens
+					@include media-breakpoint-down(sm) {
+						flex-direction: row;
+						flex-wrap: wrap;
+						justify-content: center;
+					}
+
 					li {
 						display: block;
 						margin: 0;
 						padding: 0; // Reset padding
 						text-align: right;
+
+						@include media-breakpoint-down(sm) {
+							text-align: center;
+						}
 					}
 				}
 

@@ -72,7 +72,7 @@ function App()
         <div className="App">
                 <Container>
                     <Row className="header-row">
-                        <Col sm={8} className="header-col">
+                        <Col sm={9} className="header-col">
                             <Navbar className="header-brand">
                                 <Navbar.Brand as={Link} to="/">
                                     <img
@@ -91,7 +91,7 @@ function App()
                                 </Row>
                             </Container>
                         </Col>
-                        <Col sm={4} className="sidebar">
+                        <Col sm={3} className="sidebar">
                             <Navbar>
                                 <Nav>
                                     <ul>
