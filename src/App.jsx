@@ -6,6 +6,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import HeaderImage from './images/header_image.png';
+import FacebookIcon from './images/facebook-40x40.jpg';
+import LinkedInIcon from './images/linkedin-40x40.png';
+import XIcon from './images/x-40x40.png';
 
 import { get } from 'aws-amplify/api';
 
@@ -185,6 +188,11 @@ function Footer()
     return (
         <div className="footer">
             <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
+            <div className="social-links">
+                <a href="#facebook"><img src={FacebookIcon} alt="Facebook" /></a>
+                <a href="#x"><img src={XIcon} alt="X (formerly Twitter)" /></a>
+                <a href="#linkedin"><img src={LinkedInIcon} alt="LinkedIn" /></a>
+            </div>
             <div className='established'>Established {new Date().getFullYear()}</div>
             <BuiltWith />
         </div>

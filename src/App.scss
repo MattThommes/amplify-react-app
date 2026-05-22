@@ -193,6 +193,30 @@ body {
 			padding: 20px 0;
 			color: #7f8c8d;
 
+			.social-links {
+				margin: 1rem 0;
+				display: flex;
+				justify-content: center;
+				gap: 1rem;
+
+				a {
+					display: inline-block;
+					transition: opacity 0.2s ease-in-out;
+
+					&:hover {
+						opacity: 0.8;
+						background-color: transparent; // reset a link hover rule
+					}
+
+					img {
+						width: 32px;
+						height: 32px;
+						border-radius: 50%; // since facebook is a jpg and x is square
+						object-fit: cover;
+					}
+				}
+			}
+
 			.established {
 				font-size: 0.8em;
 				font-style: italic;
