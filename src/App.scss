@@ -1,16 +1,16 @@
 @import "bootstrap/scss/bootstrap";
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #fffffd; // A very light, cool green
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(216, 224, 216, 0.3),
-    rgba(216, 224, 216, 0.3) 1px,
-    transparent 1px,
-    transparent 20px
-  );
-  color: #212529;
+	font-family: 'Inter', sans-serif;
+	background-color: #fffffd; // A very light, cool green
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(216, 224, 216, 0.3),
+		rgba(216, 224, 216, 0.3) 1px,
+		transparent 1px,
+		transparent 20px
+	);
+	color: #212529;
 }
 
 .App {
@@ -21,8 +21,8 @@ body {
 
 	a {
 		&:link {
-		}
 			color: #004d40; // A deep pine green
+		}
 
 		&:visited {
 			color: #004d40;
@@ -38,9 +38,9 @@ body {
 	}
 
 	.container, div[class^=container-] {
-        /*border-radius: 12px;*/
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        overflow: hidden; // Ensures content respects the border-radius
+		/*border-radius: 12px;*/
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		overflow: hidden; // Ensures content respects the border-radius
 
 		.row >.col, .row>[class^=col-] {
 			/*border: 1px dashed teal;*/
@@ -52,6 +52,7 @@ body {
 				margin-right: 0;
 				margin-left: 0;
 			}
+
 			.header-col {
 				padding: 0;
 			}
@@ -67,11 +68,12 @@ body {
 					overflow: hidden;
 					border-top-left-radius: 12px;
 					line-height: 0;
+
 					img {
 					}
 				}
 			}
-			
+
 			.header-sub {
 				background-color: #cbecb2; // A light, clean gray
 				color: #495057; // A darker gray for good contrast
@@ -123,7 +125,7 @@ body {
 					&:link {
 						color: #004d40;
 					}
-	
+
 					&:visited {
 						color: #004d40;
 					}
