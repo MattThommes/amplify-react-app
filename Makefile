@@ -1,4 +1,4 @@
-.PHONY: help setup sync-upstream run-dev start-local-api
+.PHONY: help setup sync-upstream run-dev start-local-api clean-node
 
 help:
 	@echo "Available commands:"
@@ -7,6 +7,7 @@ help:
 	@echo "  make sync-upstream               - Sync (pull down) upstream repo changes"
 	@echo "  make start-local-api             - Start the local API mock server"
 	@echo "  make run-dev                     - Run the application locally for development"
+	@echo "  make clean-node                  - Remove the node_modules directory"
 
 setup:
 	./setup.sh
@@ -26,3 +27,6 @@ start-local-api:
 
 cleanup:
 	npm cache clean --force
+
+clean-node:
+	rm -rf node_modules
