@@ -94,11 +94,13 @@ body {
 			}
 
 			.sidebar {
-				background-color: #fff;
+				background-color: transparent;
+				border-radius: 0 20px 0 0;
 				// Vertically center the navigation
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				overflow: hidden;
 
 				ul {
 					list-style: none none;
