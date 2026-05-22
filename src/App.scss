@@ -2,34 +2,39 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
+  background-color: #fffffd; // A very light, cool green
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L0 20 Z M0 20 L20 40 L0 40 Z M40 20 L40 40 L20 40 Z' fill='rgba(216, 224, 216, 0.2)' /%3E%3C/svg%3E");
   color: #212529;
 }
 
 .App {
-	margin: 0;
+	margin: 2rem auto; // Give it some space
 	text-align: center;
 	width: -webkit-fill-available;
+	max-width: 1140px; // Corresponds to bootstrap's xl container
 
 	a {
 		&:link {
-			color: teal;
 		}
+			color: #004d40; // A deep pine green
 
 		&:visited {
-			color: teal;
+			color: #004d40;
 		}
 
 		&:hover {
-			color: black;
+			color: #00251a; // Darken on hover
 		}
 
 		&:active {
-			color: black;
+			color: #00251a;
 		}
 	}
 
 	.container, div[class^=container-] {
+        /*border-radius: 12px;*/
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden; // Ensures content respects the border-radius
 
 		.row >.col, .row>[class^=col-] {
 			/*border: 1px dashed teal;*/
@@ -52,17 +57,23 @@ body {
 
 				.navbar-brand {
 					margin: auto;
+					display: inline-block;
+					overflow: hidden;
+					border-top-left-radius: 12px;
+					line-height: 0;
 					img {
 					}
 				}
 			}
 			
 			.header-sub {
-				background-color: #e9ecef; // A light, clean gray
+				background-color: #cbecb2; // A light, clean gray
 				color: #495057; // A darker gray for good contrast
 				font-size: 16px;
 				margin: 0;
 				padding: 10px 0 10px 0;
+				border-bottom-left-radius: 12px;
+				border-bottom-right-radius: 12px;
 
 				.row >.col, .row>[class^=col-] {
 					border: none;
@@ -76,7 +87,6 @@ body {
 
 			.sidebar {
 				background-color: #fff;
-				border-left: 1px solid #dee2e6; // A subtle border for separation
 				// Vertically center the navigation
 				display: flex;
 				align-items: center;
@@ -105,18 +115,18 @@ body {
 					transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
 					&:link {
-						color: teal;
+						color: #004d40;
 					}
 	
 					&:visited {
-						color: teal;
+						color: #004d40;
 					}
-	
+
 					&:hover {
 						color: #000;
 						background-color: #e9ecef;
 					}
-	
+
 					&:active {
 						color: black;
 					}
@@ -124,11 +134,32 @@ body {
 			}
 		}
 
-		.content {
-			font-size: 13px;
-			padding: 20px 0;
-			padding-top: 2rem;
-			text-align: left;
+		.content-row {
+			margin: 10px 0 0 0;
+
+			// Override Bootstrap column padding to make content flush
+			& > .col, & > [class^=col-] {
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.content {
+				background-color: #fff6e0;
+				font-size: 14px;
+				padding: 20px;
+				text-align: left;
+				line-height: 1.6;
+
+				h2 {
+					margin-top: 0;
+					margin-bottom: 1.5rem;
+					color: #004d40;
+				}
+
+				p {
+					margin-bottom: 1rem;
+				}
+			}
 		}
 
 		.footer {

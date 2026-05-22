@@ -96,8 +96,9 @@ function App()
                                 <Nav>
                                     <ul>
                                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/about">About</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/pricing">Pricing</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/contact">Contact</Nav.Link></li>
                                     </ul>
                                 </Nav>
                             </Navbar>
@@ -106,9 +107,10 @@ function App()
                     <Row className="content-row">
                         <Col sm>
                             <Routes>
-                                <Route path="/"       element={<HomeContent backendResponse={backendResponse} />} />
-                                <Route path="/page-1" element={<Page1Content backendResponse={backendResponse} />} />
-                                <Route path="/page-2" element={<Page2Content backendResponse={backendResponse} />} />
+                                <Route path="/" element={<HomeContent backendResponse={backendResponse} />} />
+                                <Route path="/about" element={<AboutContent backendResponse={backendResponse} />} />
+                                <Route path="/pricing" element={<PricingContent backendResponse={backendResponse} />} />
+                                <Route path="/contact" element={<ContactContent backendResponse={backendResponse} />} />
                             </Routes>
                         </Col>
                     </Row>
@@ -139,26 +141,40 @@ function HomeContent({ backendResponse })
     return Content(
         <>
             <h2>Home</h2>
+            <p>Welcome to our website! We're glad you're here. Take a look around to learn more about what we do.</p>
         </>,
         backendResponse
     );
 }
 
-function Page1Content({ backendResponse })
+function AboutContent({ backendResponse })
 {
     return Content(
         <>
-            <h2>Page 1</h2>
+            <h2>About Us</h2>
+            <p>We are a company dedicated to providing the best services to our customers. Our team is passionate about technology and innovation.</p>
         </>,
         backendResponse
     );
 }
 
-function Page2Content({ backendResponse })
+function PricingContent({ backendResponse })
 {
     return Content(
         <>
-            <h2>Page 2</h2>
+            <h2>Pricing</h2>
+            <p>We offer a variety of plans to fit your needs. Please contact us for more information on our competitive pricing.</p>
+        </>,
+        backendResponse
+    );
+}
+
+function ContactContent({ backendResponse })
+{
+    return Content(
+        <>
+            <h2>Contact Us</h2>
+            <p>You can reach us by email at contact@example.com or by phone at 555-555-5555.</p>
         </>,
         backendResponse
     );
