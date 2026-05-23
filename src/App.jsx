@@ -79,7 +79,7 @@ function App()
                             <Navbar className="header-brand">
                                 <Navbar.Brand as={Link} to="/">
                                     <img
-                                        alt=""
+                                        alt="Amplify React App"
                                         src={HeaderImage}
                                         className="img-fluid"
                                     />{'  '}
@@ -187,11 +187,11 @@ function Footer()
 {
     return (
         <div className="footer">
-            <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
+            <Nav.Link as={Link} to="/">Home page for {SiteName}</Nav.Link>
             <div className="social-links">
-                <a href="#facebook"><img src={FacebookIcon} alt="Facebook" /></a>
-                <a href="#x"><img src={XIcon} alt="X (formerly Twitter)" /></a>
-                <a href="#linkedin"><img src={LinkedInIcon} alt="LinkedIn" /></a>
+                <a href="#facebook"><img src={FacebookIcon} alt="Visit our Facebook page" /></a>
+                <a href="#x"><img src={XIcon} alt="Visit our X page" /></a>
+                <a href="#linkedin"><img src={LinkedInIcon} alt="Visit our LinkedIn page" /></a>
             </div>
             <div className='established'>Established {new Date().getFullYear()}</div>
             <BuiltWith />
