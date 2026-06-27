@@ -21,12 +21,11 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Configure git for HTTPS access to private deps
+      - name: Configure git HTTPS auth for private deps
         run: |
-          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-          git config --global url."https://github.com/".insteadOf git@github.com:
-          echo "//github.com/:_authToken=${{ github.token }}" >> ~/.npmrc
           git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ github.token }}' | base64)"
+          echo "--- DEBUG: git global config ---"
+          git config --global --list | grep -i 'http\|url\|insteadof' || true
 
       - name: Remove package-lock.json
         run: rm -f package-lock.json
