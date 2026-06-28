@@ -23,6 +23,8 @@ jobs:
 
       - name: Configure git HTTPS auth for private deps
         run: |
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global url."https://github.com/".insteadOf git@github.com:
           git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ github.token }}' | base64)"
           echo "--- DEBUG: git global config ---"
           git config --global --list | grep -i 'http\|url\|insteadof' || true
@@ -32,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --legacy-peer-deps
+          GIT_SSH_COMMAND="echo ssh disabled" npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build
