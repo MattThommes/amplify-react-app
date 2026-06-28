@@ -16,6 +16,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Verify private repo access token
+        run: |
+          if [ -z "${{ secrets.GH_PRIVATE_REPO_TOKEN }}" ]; then
+            echo "::error::❌ GH_PRIVATE_REPO_TOKEN secret is not configured."
+            echo ""
+            echo "This repo depends on private GitHub packages (git+ssh dependencies)."
+            echo "To fix this, add a fine-grained PAT as a repository secret:"
+            echo ""
+            echo "  1. Create a PAT: https://github.com/settings/personal-access-tokens/new"
+            echo "     - Repository access: MattThommes/hypertext-craft-built-with"
+            echo "     - Permissions → Contents: Read-only"
+            echo "  2. Add it as a secret named GH_PRIVATE_REPO_TOKEN:"
+            echo "     Settings → Secrets and variables → Actions → New repository secret"
+            echo ""
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,17 +42,13 @@ jobs:
         run: |
           git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
           git config --global --add url."https://github.com/".insteadOf "git@github.com:"
-          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ github.token }}' | base64)"
-          echo "--- DEBUG: git global config ---"
-          git config --global --get-all url."https://github.com/".insteadOf || true
-          git config --global --list | grep -i 'http\|url\|insteadof' || true
+          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ secrets.GH_PRIVATE_REPO_TOKEN }}' | base64)"
 
       - name: Remove package-lock.json
         run: rm -f package-lock.json
 
       - name: Install dependencies
         env:
-          GIT_SSH_COMMAND: "echo ssh-blocked"
           GIT_TERMINAL_PROMPT: "0"
         run: |
           npm install --legacy-peer-deps
