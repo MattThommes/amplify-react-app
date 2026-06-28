@@ -23,18 +23,22 @@ jobs:
 
       - name: Configure git HTTPS auth for private deps
         run: |
-          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-          git config --global url."https://github.com/".insteadOf git@github.com:
+          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+          git config --global --add url."https://github.com/".insteadOf "git@github.com:"
           git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ github.token }}' | base64)"
           echo "--- DEBUG: git global config ---"
+          git config --global --get-all url."https://github.com/".insteadOf || true
           git config --global --list | grep -i 'http\|url\|insteadof' || true
 
       - name: Remove package-lock.json
         run: rm -f package-lock.json
 
       - name: Install dependencies
+        env:
+          GIT_SSH_COMMAND: "echo ssh-blocked"
+          GIT_TERMINAL_PROMPT: "0"
         run: |
-          GIT_SSH_COMMAND="echo ssh disabled" npm install --legacy-peer-deps
+          npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build
