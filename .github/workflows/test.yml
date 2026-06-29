@@ -44,7 +44,22 @@ jobs:
         run: |
           git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
           git config --global --add url."https://github.com/".insteadOf "git@github.com:"
-          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n 'x-access-token:${{ secrets.GH_PRIVATE_REPO_TOKEN }}' | base64)"
+          echo "machine github.com login x-access-token password ${{ secrets.GH_PRIVATE_REPO_TOKEN }}" > ~/.netrc
+          chmod 600 ~/.netrc
+
+      - name: Verify PAT access to private repo
+        run: |
+          echo "--- Testing PAT with GitHub API ---"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: token ${{ secrets.GH_PRIVATE_REPO_TOKEN }}" \
+            "https://api.github.com/repos/MattThommes/hypertext-craft-built-with")
+          echo "API response code: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::PAT cannot access MattThommes/hypertext-craft-built-with (HTTP $HTTP_CODE). Check PAT scopes."
+            exit 1
+          fi
+          echo "--- Testing git ls-remote ---"
+          git ls-remote https://github.com/MattThommes/hypertext-craft-built-with.git HEAD
 
       - name: Remove package-lock.json
         run: rm -f package-lock.json
