@@ -15,7 +15,20 @@ const express = require('express');
 const cors = require('cors');
 
 // Import the handler function from your Lambda's index.js
-const { handler } = require('./amplify/backend/function/amplifyreactappapirest1/src/index');
+// const { handler } = require('./amplify/backend/function/amplifyreactappapirest1/src/index');
+
+// Mock handler
+const handler = async (event) => {
+    console.log('Mock handler received event:', event);
+    return {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+        },
+        body: JSON.stringify({ message: 'Hello from your mock API!' }),
+    };
+};
 
 const app = express();
 const port = 3001;

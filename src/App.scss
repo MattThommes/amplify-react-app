@@ -1,35 +1,46 @@
 @import "bootstrap/scss/bootstrap";
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
+	font-family: 'Inter', sans-serif;
+	background-color: #fffffd; // A very light, cool green
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(216, 224, 216, 0.3),
+		rgba(216, 224, 216, 0.3) 1px,
+		transparent 1px,
+		transparent 20px
+	);
+	color: #212529;
 }
 
 .App {
-	margin: 0;
+	margin: 2rem auto; // Give it some space
 	text-align: center;
 	width: -webkit-fill-available;
+	max-width: 1140px; // Corresponds to bootstrap's xl container
 
 	a {
 		&:link {
-			color: teal;
+			color: #004d40; // A deep pine green
 		}
 
 		&:visited {
-			color: teal;
+			color: #004d40;
 		}
 
 		&:hover {
-			color: black;
+			color: #00251a; // Darken on hover
 		}
 
 		&:active {
-			color: black;
+			color: #00251a;
 		}
 	}
 
 	.container, div[class^=container-] {
+		/*border-radius: 12px;*/
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		overflow: hidden; // Ensures content respects the border-radius
 
 		.row >.col, .row>[class^=col-] {
 			/*border: 1px dashed teal;*/
@@ -41,6 +52,7 @@ body {
 				margin-right: 0;
 				margin-left: 0;
 			}
+
 			.header-col {
 				padding: 0;
 			}
@@ -52,17 +64,23 @@ body {
 
 				.navbar-brand {
 					margin: auto;
+					display: inline-block;
+					overflow: hidden;
+					border-top-left-radius: 12px;
+					line-height: 0;
+
 					img {
 					}
 				}
 			}
-			
+
 			.header-sub {
-				background-color: #e9ecef; // A light, clean gray
+				background-color: #cbecb2; // A light, clean gray
 				color: #495057; // A darker gray for good contrast
 				font-size: 16px;
-				margin: 0;
 				padding: 10px 0 10px 0;
+				border-bottom-left-radius: 12px;
+				border-bottom-right-radius: 12px;
 
 				.row >.col, .row>[class^=col-] {
 					border: none;
@@ -75,12 +93,17 @@ body {
 			}
 
 			.sidebar {
-				background-color: #fff;
-				border-left: 1px solid #dee2e6; // A subtle border for separation
+				background-color: transparent;
+				border-radius: 0 20px 0 0;
 				// Vertically center the navigation
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				overflow: hidden;
+
+				@include media-breakpoint-down(sm) {
+					margin-top: 1rem;
+				}
 
 				ul {
 					list-style: none none;
@@ -90,11 +113,22 @@ body {
 					flex-direction: column;
 					gap: 0.5rem; // Add space between nav items
 
+					// Stack items inline on smaller screens
+					@include media-breakpoint-down(sm) {
+						flex-direction: row;
+						flex-wrap: wrap;
+						justify-content: center;
+					}
+
 					li {
 						display: block;
 						margin: 0;
 						padding: 0; // Reset padding
 						text-align: right;
+
+						@include media-breakpoint-down(sm) {
+							text-align: center;
+						}
 					}
 				}
 
@@ -105,18 +139,18 @@ body {
 					transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
 					&:link {
-						color: teal;
+						color: #004d40;
 					}
-	
+
 					&:visited {
-						color: teal;
+						color: #004d40;
 					}
-	
+
 					&:hover {
 						color: #000;
 						background-color: #e9ecef;
 					}
-	
+
 					&:active {
 						color: black;
 					}
@@ -124,11 +158,32 @@ body {
 			}
 		}
 
-		.content {
-			font-size: 13px;
-			padding: 20px 0;
-			padding-top: 2rem;
-			text-align: left;
+		.content-row {
+			margin: 10px 0 0 0;
+
+			// Override Bootstrap column padding to make content flush
+			& > .col, & > [class^=col-] {
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.content {
+				background-color: #fff6e0;
+				font-size: 14px;
+				padding: 20px;
+				text-align: left;
+				line-height: 1.6;
+
+				h2 {
+					margin-top: 0;
+					margin-bottom: 1.5rem;
+					color: #004d40;
+				}
+
+				p {
+					margin-bottom: 1rem;
+				}
+			}
 		}
 
 		.footer {
@@ -137,6 +192,30 @@ body {
 			margin: 25px 0;
 			padding: 20px 0;
 			color: #7f8c8d;
+
+			.social-links {
+				margin: 1rem 0;
+				display: flex;
+				justify-content: center;
+				gap: 1rem;
+
+				a {
+					display: inline-block;
+					transition: opacity 0.2s ease-in-out;
+
+					&:hover {
+						opacity: 0.8;
+						background-color: transparent; // reset a link hover rule
+					}
+
+					img {
+						width: 32px;
+						height: 32px;
+						border-radius: 50%; // since facebook is a jpg and x is square
+						object-fit: cover;
+					}
+				}
+			}
 
 			.established {
 				font-size: 0.8em;

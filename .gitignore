@@ -12,7 +12,6 @@ amplifytools.xcconfig
 **.sample
 # amplify
 .amplify
-amplify_outputs*
 amplifyconfiguration*
 .idea/
 .vscode/

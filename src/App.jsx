@@ -6,8 +6,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import HeaderImage from './images/header_image.png';
+import FacebookIcon from './images/facebook-40x40.jpg';
+import LinkedInIcon from './images/linkedin-40x40.png';
+import XIcon from './images/x-40x40.png';
 
-import { API } from 'aws-amplify';
+import { get } from 'aws-amplify/api';
 
 import {
     Routes, Route, Link, useLocation
@@ -26,10 +29,16 @@ function App()
     const fetchBackend = useCallback(async (path) => {
         const apiPath = `/${path}`;
         try {
-            const response = await API.get(API_NAME, apiPath, {});
+            const restOperation = get({
+              apiName: API_NAME,
+              path: apiPath
+            });
+            const response = await restOperation.response;
+            const body = await response.body.text();
+            
             // The actual business logic data is often in the `body` property and may be a JSON string.
             // This safely parses it. If it's not a string, it returns the response as is.
-            return typeof response === 'string' ? JSON.parse(response) : response;
+            return body ? JSON.parse(body) : body;
         } catch (error) {
             console.error("API call failed:", error);
             return { error: 'Failed to fetch data from the backend.' };
@@ -66,11 +75,11 @@ function App()
         <div className="App">
                 <Container>
                     <Row className="header-row">
-                        <Col sm={8} className="header-col">
+                        <Col sm={9} className="header-col">
                             <Navbar className="header-brand">
                                 <Navbar.Brand as={Link} to="/">
                                     <img
-                                        alt=""
+                                        alt="Amplify React App"
                                         src={HeaderImage}
                                         className="img-fluid"
                                     />{'  '}
@@ -85,13 +94,14 @@ function App()
                                 </Row>
                             </Container>
                         </Col>
-                        <Col sm={4} className="sidebar">
+                        <Col sm={3} className="sidebar">
                             <Navbar>
                                 <Nav>
                                     <ul>
                                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-1">Page 1</Nav.Link></li>
-                                        <li><Nav.Link as={Link} to="/page-2">Page 2</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/about">About</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/pricing">Pricing</Nav.Link></li>
+                                        <li><Nav.Link as={Link} to="/contact">Contact</Nav.Link></li>
                                     </ul>
                                 </Nav>
                             </Navbar>
@@ -100,9 +110,10 @@ function App()
                     <Row className="content-row">
                         <Col sm>
                             <Routes>
-                                <Route path="/"       element={<HomeContent backendResponse={backendResponse} />} />
-                                <Route path="/page-1" element={<Page1Content backendResponse={backendResponse} />} />
-                                <Route path="/page-2" element={<Page2Content backendResponse={backendResponse} />} />
+                                <Route path="/" element={<HomeContent backendResponse={backendResponse} />} />
+                                <Route path="/about" element={<AboutContent backendResponse={backendResponse} />} />
+                                <Route path="/pricing" element={<PricingContent backendResponse={backendResponse} />} />
+                                <Route path="/contact" element={<ContactContent backendResponse={backendResponse} />} />
                             </Routes>
                         </Col>
                     </Row>
@@ -133,26 +144,40 @@ function HomeContent({ backendResponse })
     return Content(
         <>
             <h2>Home</h2>
+            <p>Welcome to our website! We're glad you're here. Take a look around to learn more about what we do.</p>
         </>,
         backendResponse
     );
 }
 
-function Page1Content({ backendResponse })
+function AboutContent({ backendResponse })
 {
     return Content(
         <>
-            <h2>Page 1</h2>
+            <h2>About Us</h2>
+            <p>We are a company dedicated to providing the best services to our customers. Our team is passionate about technology and innovation.</p>
         </>,
         backendResponse
     );
 }
 
-function Page2Content({ backendResponse })
+function PricingContent({ backendResponse })
 {
     return Content(
         <>
-            <h2>Page 2</h2>
+            <h2>Pricing</h2>
+            <p>We offer a variety of plans to fit your needs. Please contact us for more information on our competitive pricing.</p>
+        </>,
+        backendResponse
+    );
+}
+
+function ContactContent({ backendResponse })
+{
+    return Content(
+        <>
+            <h2>Contact Us</h2>
+            <p>You can reach us by email at contact@example.com or by phone at 555-555-5555.</p>
         </>,
         backendResponse
     );
@@ -162,7 +187,12 @@ function Footer()
 {
     return (
         <div className="footer">
-            <Nav.Link as={Link} to="/">The {SiteName} website</Nav.Link>
+            <Nav.Link as={Link} to="/">Home page for {SiteName}</Nav.Link>
+            <div className="social-links">
+                <a href="#facebook"><img src={FacebookIcon} alt="Visit our Facebook page" /></a>
+                <a href="#x"><img src={XIcon} alt="Visit our X page" /></a>
+                <a href="#linkedin"><img src={LinkedInIcon} alt="Visit our LinkedIn page" /></a>
+            </div>
             <div className='established'>Established {new Date().getFullYear()}</div>
             <BuiltWith />
         </div>
