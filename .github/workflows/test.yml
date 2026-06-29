@@ -18,15 +18,41 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Verify private repo access token
+        run: |
+          if [ -z "${{ secrets.GH_PRIVATE_REPO_TOKEN }}" ]; then
+            echo "::error::❌ GH_PRIVATE_REPO_TOKEN secret is not configured."
+            echo ""
+            echo "This repo depends on private GitHub packages (git+ssh dependencies)."
+            echo "To fix this, add a fine-grained PAT as a repository secret:"
+            echo ""
+            echo "  1. Create a PAT: https://github.com/settings/personal-access-tokens/new"
+            echo "     - Repository access: MattThommes/hypertext-craft-built-with"
+            echo "     - Permissions → Contents: Read-only"
+            echo "  2. Add it as a secret named GH_PRIVATE_REPO_TOKEN:"
+            echo "     Settings → Secrets and variables → Actions → New repository secret"
+            echo ""
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
+      - name: Configure git HTTPS auth for private deps
+        run: |
+          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+          git config --global --add url."https://github.com/".insteadOf "git@github.com:"
+          echo "machine github.com login x-access-token password ${{ secrets.GH_PRIVATE_REPO_TOKEN }}" > ~/.netrc
+          chmod 600 ~/.netrc
+
       - name: Remove package-lock.json
         run: rm -f package-lock.json
 
       - name: Install dependencies
+        env:
+          GIT_TERMINAL_PROMPT: "0"
         run: |
           npm install --legacy-peer-deps
 
