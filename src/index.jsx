@@ -7,12 +7,23 @@ import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import { Amplify } from "aws-amplify";
+import { parseAmplifyConfig } from "aws-amplify/utils";
 import outputs from '../amplify_outputs.json';
 
 // Check for development environment (supports both Vite and standard Node envs)
 const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) || process.env.NODE_ENV === 'development';
 
-let amplifyConfig = { ...outputs };
+// 1. Parse Gen 2 outputs into the standard runtime format
+const amplifyConfig = parseAmplifyConfig(outputs);
+
+// 2. Configure API / REST custom settings
+let config = {
+  ...amplifyConfig,
+  API: {
+    ...amplifyConfig.API,
+    REST: outputs.custom?.API?.REST || {},
+  },
+};
 
 if (isDev) {
     console.log("Environment: development");
@@ -20,12 +31,12 @@ if (isDev) {
     
     const API_NAME = 'apirest1';
 
-    amplifyConfig = {
-      ...amplifyConfig,
+    config = {
+      ...config,
       API: {
-        ...amplifyConfig.API,
+        ...config.API,
         REST: {
-          ...amplifyConfig.API?.REST,
+          ...config.API?.REST,
           [API_NAME]: {
             endpoint: "http://localhost:3001",
             region: "us-east-1"
@@ -35,7 +46,7 @@ if (isDev) {
     };
 }
 
-Amplify.configure(amplifyConfig);
+Amplify.configure(config);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
