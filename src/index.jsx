@@ -16,12 +16,22 @@ const isDev = (typeof import.meta !== 'undefined' && import.meta.env && import.m
 // 1. Parse Gen 2 outputs into the standard runtime format
 const amplifyConfig = parseAmplifyConfig(outputs);
 
-// 2. Configure API / REST custom settings
+// 2. Configure API / REST custom settings and trim trailing slashes
+const restConfig = {};
+if (outputs.custom?.API?.REST) {
+  for (const [key, value] of Object.entries(outputs.custom.API.REST)) {
+    restConfig[key] = {
+      ...value,
+      endpoint: value.endpoint?.endsWith('/') ? value.endpoint.slice(0, -1) : value.endpoint
+    };
+  }
+}
+
 let config = {
   ...amplifyConfig,
   API: {
     ...amplifyConfig.API,
-    REST: outputs.custom?.API?.REST || {},
+    REST: restConfig,
   },
 };
 
