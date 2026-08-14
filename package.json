@@ -31,7 +31,8 @@
     "preview": "vite preview",
     "start:api": "node _localApiServer.cjs",
     "postinstall": "npm run node-version-check",
-    "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read"
+    "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read",
+    "test:a11y": "playwright test"
   },
   "browserslist": {
     "production": [
@@ -48,6 +49,8 @@
   "devDependencies": {
     "@aws-amplify/backend": "^1.22.0",
     "@aws-amplify/backend-cli": "^1.8.2",
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.46.0",
     "@vitejs/plugin-react": "^4.3.1",
     "cors": "^2.8.5",
     "esbuild": "^0.20.2",
