@@ -18,10 +18,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Varela+Round&display=swap" rel="stylesheet">
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-    -->
     <title>Amplify React Template</title>
+
+    <!-- Schema.org JSON-LD Structured Data Template for AI Agents & Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://yourdomain.com/#website",
+          "url": "https://yourdomain.com",
+          "name": "Site Name",
+          "description": "Site description for search engines and AI agents.",
+          "publisher": {
+            "@id": "https://yourdomain.com/#author"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://yourdomain.com/#author",
+          "name": "Author Name",
+          "url": "https://yourdomain.com/about",
+          "sameAs": [
+            "https://github.com/yourhandle"
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

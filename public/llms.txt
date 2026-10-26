@@ -1,0 +1,12 @@
+# Your Site Name
+
+> A single-sentence summary of what this site covers and who publishes it.
+
+## Core Topics & Guides
+- [Title of Primary Guide](/guide-slug): Concise summary of what this document covers.
+- [Project Documentation](/project-slug): Key specifications, setup steps, or teardown findings.
+
+## Feeds & Endpoints
+- [RSS Feed](/feed.xml): Clean XML feed of recent long-form posts.
+- [Sitemap](/sitemap.xml): Machine-readable URL list.
+- [Full Documentation](/llms-full.txt): Comprehensive plain-text dump for deep RAG ingestion.
