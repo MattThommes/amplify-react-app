@@ -109,10 +109,21 @@ if [ -f "package.json" ]; then
     const upstreamPkg = JSON.parse(upstreamRaw);
     const localPkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
-    // Preserve child site identity and domain settings
-    const preservedName = localPkg.name;
-    const preservedDescription = localPkg.description;
-    const preservedVersion = localPkg.version;
+    const path = require("path");
+    const repoDir = path.basename(process.cwd());
+
+    // Fallback description from index.html if localPkg description is still default
+    let siteDescFallback = "";
+    try {
+      const indexHtml = fs.readFileSync("index.html", "utf8");
+      const m = indexHtml.match(/<meta[^>]*name=["\x27]description["\x27][^>]*content=["\x27]([^"\x27]+)["\x27]/i);
+      if (m) siteDescFallback = m[1].trim();
+    } catch {}
+
+    // Preserve child site identity and domain settings, auto-resolving template defaults
+    const preservedName = (localPkg.name && localPkg.name !== "amplify-react-app") ? localPkg.name : repoDir;
+    const preservedDescription = (localPkg.description && localPkg.description !== "Amplify React App") ? localPkg.description : (siteDescFallback || repoDir);
+    const preservedVersion = localPkg.version || "1.0.0";
     const preservedHomepage = localPkg.homepage;
     const preservedDomain = localPkg.domain;
 
