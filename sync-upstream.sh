@@ -274,19 +274,26 @@ try {
   console.warn("     ! Could not personalize public/llms.txt:", e.message);
 }
 
-// 6b. Personalize public/robots.txt sitemap
+// 6b. Personalize and upgrade public/robots.txt
 try {
-  let robotsContent = "";
-  if (fs.existsSync("public/robots.txt")) {
-    robotsContent = fs.readFileSync("public/robots.txt", "utf8");
-  } else {
-    try {
-      robotsContent = execSync(`git show upstream/${branch}:public/robots.txt`, { encoding: "utf8" });
-    } catch {}
-  }
-  if (robotsContent) {
-    let updatedRobots = robotsContent.replace(/https:\/\/yourdomain\.com/g, `https://${domain}`);
-    if (updatedRobots !== robotsContent || !fs.existsSync("public/robots.txt")) {
+  let upstreamRobots = "";
+  try {
+    upstreamRobots = execSync(`git show upstream/${branch}:public/robots.txt`, { encoding: "utf8" });
+  } catch {}
+
+  let currentRobots = fs.existsSync("public/robots.txt") ? fs.readFileSync("public/robots.txt", "utf8") : "";
+
+  // If local robots.txt lacks AI bot directives, upgrade it from upstream
+  if (!currentRobots.includes("OAI-SearchBot") && upstreamRobots) {
+    let updatedRobots = upstreamRobots;
+    if (domain && domain !== "yourdomain.com") {
+      updatedRobots = updatedRobots.replace(/https:\/\/yourdomain\.com/g, `https://${domain}`);
+    }
+    fs.writeFileSync("public/robots.txt", updatedRobots);
+    console.log("     - Upgraded public/robots.txt with AI search bot directives & sitemap");
+  } else if (currentRobots && domain && domain !== "yourdomain.com") {
+    let updatedRobots = currentRobots.replace(/https:\/\/yourdomain\.com/g, `https://${domain}`);
+    if (updatedRobots !== currentRobots) {
       fs.writeFileSync("public/robots.txt", updatedRobots);
       console.log("     - Configured public/robots.txt with site domain");
     }
