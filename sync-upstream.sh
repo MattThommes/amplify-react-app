@@ -96,11 +96,12 @@ if [ ! -f "tests/a11y-config.json" ]; then
   fi
 fi
 
-# 5. Safely merge package.json dependencies and scripts without touching site name/description/homepage
+# 5. Safely merge package.json dependencies and scripts without touching site customizations
 if [ -f "package.json" ]; then
   echo "-> Safely checking package.json for upstream dependency updates..."
   node -e '
   const fs = require("fs");
+  const path = require("path");
   const { execSync } = require("child_process");
 
   try {
@@ -109,20 +110,11 @@ if [ -f "package.json" ]; then
     const upstreamPkg = JSON.parse(upstreamRaw);
     const localPkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
-    const path = require("path");
     const repoDir = path.basename(process.cwd());
-
-    // Fallback description from index.html if localPkg description is still default
-    let siteDescFallback = "";
-    try {
-      const indexHtml = fs.readFileSync("index.html", "utf8");
-      const m = indexHtml.match(/<meta[^>]*name=["\x27]description["\x27][^>]*content=["\x27]([^"\x27]+)["\x27]/i);
-      if (m) siteDescFallback = m[1].trim();
-    } catch {}
 
     // Preserve child site identity and domain settings, auto-resolving template defaults
     const preservedName = (localPkg.name && localPkg.name !== "amplify-react-app") ? localPkg.name : repoDir;
-    const preservedDescription = (localPkg.description && localPkg.description !== "Amplify React App") ? localPkg.description : (siteDescFallback || repoDir);
+    const preservedDescription = (localPkg.description && localPkg.description !== "Amplify React App") ? localPkg.description : (localPkg.description || repoDir);
     const preservedVersion = localPkg.version || "1.0.0";
     const preservedHomepage = localPkg.homepage;
     const preservedDomain = localPkg.domain;
@@ -170,223 +162,32 @@ if [ -f "package.json" ]; then
   ' "$UPSTREAM_BRANCH"
 fi
 
-# 6. Personalize template files (llms.txt, robots.txt, JSON-LD in index.html, image-sync)
-echo "-> Applying site identifiers to newly synced template files..."
-node -e '
-const fs = require("fs");
-const path = require("path");
-const { execSync } = require("child_process");
-
-const branch = process.argv[1];
-
-let pkg = {};
-try { pkg = JSON.parse(fs.readFileSync("package.json", "utf8")); } catch {}
-
-let manifest = {};
-try { manifest = JSON.parse(fs.readFileSync("public/manifest.json", "utf8")); } catch {}
-
-let indexHtml = "";
-try { indexHtml = fs.readFileSync("index.html", "utf8"); } catch {}
-
-let metaDesc = "";
-const descMatch = indexHtml.match(/<meta[^>]*name=["\x27]description["\x27][^>]*content=["\x27]([^"\x27]+)["\x27]/i);
-if (descMatch) metaDesc = descMatch[1].trim();
-
-let pageTitle = "";
-const titleMatch = indexHtml.match(/<title>([^<]+)<\/title>/i);
-if (titleMatch) pageTitle = titleMatch[1].trim();
-
-const siteName = manifest.short_name || manifest.name || (pageTitle ? pageTitle.split("|")[0].split("-")[0].trim() : "") || pkg.name || "Site Name";
-const siteDesc = metaDesc || pkg.description || "Site description for search engines and AI agents.";
-let authorName = "Author Name";
-try { authorName = execSync("git config user.name", { encoding: "utf8" }).trim() || authorName; } catch {}
-
-// Resolve production domain
-let domain = "";
-
-// 1. Primary: package.json homepage or domain field
-if (pkg.homepage) {
-  try {
-    domain = new URL(pkg.homepage.startsWith("http") ? pkg.homepage : `https://${pkg.homepage}`).hostname;
-  } catch {
-    domain = pkg.homepage.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
-  }
-} else if (pkg.domain) {
-  domain = pkg.domain.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
-}
-
-// 2. Secondary: tests/a11y-config.json baseURL
-if (!domain && fs.existsSync("tests/a11y-config.json")) {
-  try {
-    const a11y = JSON.parse(fs.readFileSync("tests/a11y-config.json", "utf8"));
-    if (a11y.baseURL && !a11y.baseURL.includes("localhost") && !a11y.baseURL.includes("127.0.0.1")) {
-      domain = new URL(a11y.baseURL.startsWith("http") ? a11y.baseURL : `https://${a11y.baseURL}`).hostname;
-    }
-  } catch {}
-}
-
-// 3. Tertiary: scan index.html for existing domain in OpenGraph / JSON-LD / title
-if (!domain && indexHtml) {
-  const urlMatches = indexHtml.match(/https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g) || [];
-  for (const u of urlMatches) {
-    try {
-      const host = new URL(u).hostname;
-      if (!/^(fonts\.googleapis\.com|fonts\.gstatic\.com|schema\.org|www\.w3\.org|github\.com|reactjs\.org)$/i.test(host)) {
-        domain = host;
-        break;
-      }
-    } catch {}
-  }
-}
-
-// If domain was found from HTML/config and not yet recorded in package.json, save it to package.json homepage
-if (domain && !pkg.homepage) {
-  pkg.homepage = `https://${domain}`;
-  fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
-  console.log(`     - Saved production domain (${pkg.homepage}) to package.json homepage`);
-}
-
-// Fallback domain if none detected
-if (!domain) {
-  domain = "yourdomain.com";
-}
-
-// 6a. Personalize public/llms.txt
-try {
-  let llmsContent = "";
-  if (fs.existsSync("public/llms.txt")) {
-    llmsContent = fs.readFileSync("public/llms.txt", "utf8");
-  } else {
-    try {
-      llmsContent = execSync(`git show upstream/${branch}:public/llms.txt`, { encoding: "utf8" });
-    } catch {}
-  }
-  if (llmsContent) {
-    let updatedLlms = llmsContent
-      .replace(/^#\s+Your Site Name/m, `# ${siteName}`)
-      .replace(/^>\s+A single-sentence summary of what this site covers and who publishes it\./m, `> ${siteDesc}`);
-    if (updatedLlms !== llmsContent || !fs.existsSync("public/llms.txt")) {
-      fs.writeFileSync("public/llms.txt", updatedLlms);
-      console.log("     - Configured public/llms.txt with site name and description");
-    }
-  }
-} catch (e) {
-  console.warn("     ! Could not personalize public/llms.txt:", e.message);
-}
-
-// 6b. Personalize and upgrade public/robots.txt
-try {
-  let upstreamRobots = "";
-  try {
-    upstreamRobots = execSync(`git show upstream/${branch}:public/robots.txt`, { encoding: "utf8" });
-  } catch {}
-
-  let currentRobots = fs.existsSync("public/robots.txt") ? fs.readFileSync("public/robots.txt", "utf8") : "";
-
-  // If local robots.txt lacks AI bot directives, upgrade it from upstream
-  if (!currentRobots.includes("OAI-SearchBot") && upstreamRobots) {
-    let updatedRobots = upstreamRobots;
-    if (domain && domain !== "yourdomain.com") {
-      updatedRobots = updatedRobots.replace(/https:\/\/yourdomain\.com/g, `https://${domain}`);
-    }
-    fs.writeFileSync("public/robots.txt", updatedRobots);
-    console.log("     - Upgraded public/robots.txt with AI search bot directives & sitemap");
-  } else if (currentRobots && domain && domain !== "yourdomain.com") {
-    let updatedRobots = currentRobots.replace(/https:\/\/yourdomain\.com/g, `https://${domain}`);
-    if (updatedRobots !== currentRobots) {
-      fs.writeFileSync("public/robots.txt", updatedRobots);
-      console.log("     - Configured public/robots.txt with site domain");
-    }
-  }
-} catch (e) {
-  console.warn("     ! Could not personalize public/robots.txt:", e.message);
-}
-
-// 6c. Inject JSON-LD into index.html if missing
-try {
-  if (indexHtml && !indexHtml.includes("application/ld+json")) {
-    const escapedName = siteName.replace(/"/g, "\\\"");
-    const escapedDesc = siteDesc.replace(/"/g, "\\\"");
-    const escapedAuthor = authorName.replace(/"/g, "\\\"");
-    const jsonLdSnippet = `
-    <!-- Schema.org JSON-LD Structured Data for AI Agents & Search Engines -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://${domain}/#website",
-          "url": "https://${domain}",
-          "name": "${escapedName}",
-          "description": "${escapedDesc}",
-          "publisher": {
-            "@id": "https://${domain}/#author"
-          }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://${domain}/#author",
-          "name": "${escapedAuthor}"
-        }
-      ]
-    }
-    </script>
-`;
-    if (indexHtml.includes("</head>")) {
-      const updatedHtml = indexHtml.replace("</head>", `${jsonLdSnippet}  </head>`);
-      fs.writeFileSync("index.html", updatedHtml);
-      console.log("     - Injected personalized Schema.org JSON-LD into index.html");
-    }
-  }
-} catch (e) {
-  console.warn("     ! Could not inject JSON-LD into index.html:", e.message);
-}
-
-// 6d. Personalize package.json image-sync
-try {
-  if (pkg.scripts && pkg.scripts["image-sync"]) {
-    const repoDir = path.basename(process.cwd());
-    let syncCmd = pkg.scripts["image-sync"];
-    if (syncCmd.includes("[LOCAL_PATH]") || syncCmd.includes("[CLOUD_PATH]")) {
-      syncCmd = syncCmd.replace("[LOCAL_PATH]", repoDir).replace("[CLOUD_PATH]", `${repoDir}-images`);
-      pkg.scripts["image-sync"] = syncCmd;
-      fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
-      console.log("     - Configured package.json image-sync with repo paths");
-    }
-  }
-} catch (e) {
-  console.warn("     ! Could not personalize image-sync script:", e.message);
-}
-' "$UPSTREAM_BRANCH"
-
-# 7. Stage and commit synced core and personalized files if changed
+# 6. Stage and commit synced core infrastructure files if changed
 CHANGES_COMMITTED=false
 if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain)" ]; then
   echo "-> Staging updated files..."
   git add -u
-  for item in "${FILES_TO_SYNC[@]}" "public/llms.txt" "public/robots.txt" "tests/a11y-config.json"; do
+  for item in "${FILES_TO_SYNC[@]}" "tests/a11y-config.json"; do
     if [ -e "$item" ]; then
       git add "$item" 2>/dev/null || true
     fi
   done
   if [ -f "package.json" ]; then git add package.json; fi
-  if [ -f "index.html" ]; then git add index.html; fi
 
   if ! git diff --cached --quiet; then
     echo "-> Committing updated files..."
-    git commit -m "Sync: Update core template files and apply site identifiers from upstream"
+    git commit -m "Sync: Update core template files from upstream"
     CHANGES_COMMITTED=true
   else
     echo "-> No staged changes to commit."
   fi
 else
-  echo "-> Core files and site identifiers are already up to date with upstream."
+  echo "-> Core files are already up to date with upstream."
 fi
 
-# 8. Check for upstream updates to customized site files and notify
+# 7. Check for upstream updates to customized site files and notify
 echo "-> Checking for upstream updates to customized site files..."
-SITE_FILES=("src/App.jsx" "src/App.scss" "public/manifest.json")
+SITE_FILES=("src/App.jsx" "src/App.scss" "index.html" "public/manifest.json" "public/robots.txt" "public/llms.txt")
 for check_file in "${SITE_FILES[@]}"; do
   if [ -f "$check_file" ]; then
     if ! git diff --quiet "upstream/$UPSTREAM_BRANCH" HEAD -- "$check_file" 2>/dev/null; then
@@ -396,7 +197,7 @@ for check_file in "${SITE_FILES[@]}"; do
   fi
 done
 
-# 9. If package.json dependencies changed and were committed, run npm install
+# 8. If package.json dependencies changed and were committed, run npm install
 if [ "$CHANGES_COMMITTED" = true ] && git diff HEAD~1 --name-only 2>/dev/null | grep -q "^package\.json$"; then
   DEPS_CHANGED=$(node -e '
     const { execSync } = require("child_process");
@@ -423,10 +224,9 @@ if [ "$CHANGES_COMMITTED" = true ] && git diff HEAD~1 --name-only 2>/dev/null | 
   fi
 fi
 
-# 10. Push synced changes to origin if origin remote exists
+# 9. Push synced changes to origin if origin remote exists
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if git remote | grep -q '^origin$'; then
-  # Fetch origin to be certain of comparison
   git fetch origin "$CURRENT_BRANCH" 2>/dev/null || true
   if ! git diff --quiet "origin/$CURRENT_BRANCH"..HEAD 2>/dev/null; then
     echo "-> Pushing synced commits to origin/$CURRENT_BRANCH..."
@@ -440,4 +240,4 @@ fi
 echo ""
 echo -e "${GREEN}-> Upstream sync complete! Zero git conflicts.${NC}"
 echo "   - Core tools, scripts, and workflows are synchronized."
-echo "   - Site-specific identifiers and customizations have been applied."
+echo "   - Site-specific customizations have been preserved."
