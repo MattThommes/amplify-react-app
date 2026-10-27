@@ -8,6 +8,17 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+# Ensure nvm and correct Node version are loaded
+if [ -s "$(brew --prefix nvm 2>/dev/null)/nvm.sh" ]; then
+  source "$(brew --prefix nvm 2>/dev/null)/nvm.sh"
+elif [ -s "$HOME/.nvm/nvm.sh" ]; then
+  source "$HOME/.nvm/nvm.sh"
+fi
+
+if command -v nvm &>/dev/null && [ -f ".nvmrc" ]; then
+  nvm use 2>/dev/null || true
+fi
+
 # 1. Guard against running inside the parent template repository itself
 ORIGIN_URL=$(git config --get remote.origin.url 2>/dev/null || true)
 PKG_NAME=$(node -p "require('./package.json').name" 2>/dev/null || true)
@@ -173,13 +184,30 @@ for check_file in "${SITE_FILES[@]}"; do
   fi
 done
 
-# 8. If package.json was updated and committed, run npm install
+# 8. If package.json dependencies changed and were committed, run npm install
 if [ "$CHANGES_COMMITTED" = true ] && git diff HEAD~1 --name-only 2>/dev/null | grep -q "^package\.json$"; then
-  echo "-> package.json was updated. Installing updated dependencies..."
-  npm install --prefer-offline --no-audit --progress=false
-  if ! git diff --quiet package-lock.json 2>/dev/null; then
-    git add package-lock.json
-    git commit -m "Sync: Update package-lock.json after upstream dependency sync"
+  DEPS_CHANGED=$(node -e '
+    const { execSync } = require("child_process");
+    try {
+      const prev = JSON.parse(execSync("git show HEAD~1:package.json", { encoding: "utf8" }));
+      const curr = JSON.parse(execSync("git show HEAD:package.json", { encoding: "utf8" }));
+      const prevDeps = JSON.stringify({ d: prev.dependencies, dev: prev.devDependencies });
+      const currDeps = JSON.stringify({ d: curr.dependencies, dev: curr.devDependencies });
+      console.log(prevDeps !== currDeps ? "yes" : "no");
+    } catch {
+      console.log("yes");
+    }
+  ' 2>/dev/null || echo "yes")
+
+  if [ "$DEPS_CHANGED" = "yes" ]; then
+    echo "-> package.json dependencies were updated. Installing updated dependencies..."
+    npm install --prefer-offline --no-audit --progress=false
+    if ! git diff --quiet package-lock.json 2>/dev/null; then
+      git add package-lock.json
+      git commit -m "Sync: Update package-lock.json after upstream dependency sync"
+    fi
+  else
+    echo "-> package.json dependencies are unchanged. Skipping npm install."
   fi
 fi
 
