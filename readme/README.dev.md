@@ -64,7 +64,7 @@ Optional but good to do early for new projects: update these files to include yo
 1.  [README.md](../README.md)
     1. The setup script will adjust the header automatically.
     2. Keep this file though: [README.dev.md](README.dev.md) – for general app updates and instructions synced in via upstream.
-2.  [package.json](../package.json) (name and description)
+2.  [package.json](../package.json) (name, description, and "homepage": "https://yourdomain.com")
 3.  [public/index.html](../index.html) (`<title>` and `<meta name="description"`)
 4.  [public/manifest.json](../public/manifest.json) (`short_name` and `name`)
 

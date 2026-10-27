@@ -96,7 +96,7 @@ if [ ! -f "tests/a11y-config.json" ]; then
   fi
 fi
 
-# 5. Safely merge package.json dependencies and scripts without touching site name/description
+# 5. Safely merge package.json dependencies and scripts without touching site name/description/homepage
 if [ -f "package.json" ]; then
   echo "-> Safely checking package.json for upstream dependency updates..."
   node -e '
@@ -109,10 +109,12 @@ if [ -f "package.json" ]; then
     const upstreamPkg = JSON.parse(upstreamRaw);
     const localPkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
-    // Preserve child site identity
+    // Preserve child site identity and domain settings
     const preservedName = localPkg.name;
     const preservedDescription = localPkg.description;
     const preservedVersion = localPkg.version;
+    const preservedHomepage = localPkg.homepage;
+    const preservedDomain = localPkg.domain;
 
     // Merge scripts: keep all local scripts, bring in new upstream scripts
     const mergedScripts = {
@@ -142,13 +144,15 @@ if [ -f "package.json" ]; then
       name: preservedName,
       description: preservedDescription,
       version: preservedVersion,
+      ...(preservedHomepage ? { homepage: preservedHomepage } : {}),
+      ...(preservedDomain ? { domain: preservedDomain } : {}),
       scripts: mergedScripts,
       dependencies: mergedDependencies,
       devDependencies: mergedDevDependencies
     };
 
     fs.writeFileSync("package.json", JSON.stringify(merged, null, 2) + "\n");
-    console.log("     - Merged upstream dependencies/scripts into package.json (preserved site name & custom scripts)");
+    console.log("     - Merged upstream dependencies/scripts into package.json (preserved site name, domain, & custom scripts)");
   } catch (err) {
     console.warn("     ! Could not auto-merge package.json:", err.message);
   }
@@ -186,20 +190,54 @@ const siteDesc = metaDesc || pkg.description || "Site description for search eng
 let authorName = "Author Name";
 try { authorName = execSync("git config user.name", { encoding: "utf8" }).trim() || authorName; } catch {}
 
+// Resolve production domain
 let domain = "";
-const urlMatches = indexHtml.match(/https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g) || [];
-for (const u of urlMatches) {
+
+// 1. Primary: package.json homepage or domain field
+if (pkg.homepage) {
   try {
-    const host = new URL(u).hostname;
-    if (!/^(fonts\.googleapis\.com|fonts\.gstatic\.com|schema\.org|www\.w3\.org|github\.com|reactjs\.org)$/i.test(host)) {
-      domain = host;
-      break;
+    domain = new URL(pkg.homepage.startsWith("http") ? pkg.homepage : `https://${pkg.homepage}`).hostname;
+  } catch {
+    domain = pkg.homepage.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  }
+} else if (pkg.domain) {
+  domain = pkg.domain.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+}
+
+// 2. Secondary: tests/a11y-config.json baseURL
+if (!domain && fs.existsSync("tests/a11y-config.json")) {
+  try {
+    const a11y = JSON.parse(fs.readFileSync("tests/a11y-config.json", "utf8"));
+    if (a11y.baseURL && !a11y.baseURL.includes("localhost") && !a11y.baseURL.includes("127.0.0.1")) {
+      domain = new URL(a11y.baseURL.startsWith("http") ? a11y.baseURL : `https://${a11y.baseURL}`).hostname;
     }
   } catch {}
 }
+
+// 3. Tertiary: scan index.html for existing domain in OpenGraph / JSON-LD / title
+if (!domain && indexHtml) {
+  const urlMatches = indexHtml.match(/https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g) || [];
+  for (const u of urlMatches) {
+    try {
+      const host = new URL(u).hostname;
+      if (!/^(fonts\.googleapis\.com|fonts\.gstatic\.com|schema\.org|www\.w3\.org|github\.com|reactjs\.org)$/i.test(host)) {
+        domain = host;
+        break;
+      }
+    } catch {}
+  }
+}
+
+// If domain was found from HTML/config and not yet recorded in package.json, save it to package.json homepage
+if (domain && !pkg.homepage) {
+  pkg.homepage = `https://${domain}`;
+  fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
+  console.log(`     - Saved production domain (${pkg.homepage}) to package.json homepage`);
+}
+
+// Fallback domain if none detected
 if (!domain) {
-  const cleanName = (pkg.name || siteName).toLowerCase().replace(/[^a-z0-9]/g, "");
-  domain = cleanName + ".com";
+  domain = "yourdomain.com";
 }
 
 // 6a. Personalize public/llms.txt
