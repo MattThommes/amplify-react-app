@@ -12,17 +12,7 @@ const { execSync } = require('child_process');
 
 const DEV_DIR = path.resolve(__dirname, '../../../../');
 
-// Known domain overrides if not present in package.json homepage
-const KNOWN_DOMAINS = {
-  'game-script': 'gamescript.pro',
-  'thommesfamily-20260225': 'thommesfamily.net',
-  'cannedrage-20260125': 'cannedrage.com',
-  'mattthommesfamily-20261016': 'matt.thommesfamily.net',
-  'hypertext-craft-20260127': 'hypertextcraft.com',
-  'thommesfamilyvacations-20260222': 'vacations.thommesfamily.net'
-};
-
-function processRepo(repoName) {
+function processRepo(repoName, customDomain) {
   const repoPath = path.join(DEV_DIR, repoName);
   if (!fs.existsSync(repoPath)) {
     console.error(`[Error] Repository directory not found: ${repoPath}`);
@@ -62,7 +52,7 @@ function processRepo(repoName) {
 
   const siteName = manifest.short_name || manifest.name || (pageTitle ? pageTitle.split('|')[0].split('-')[0].trim() : '') || pkg.name || repoName;
   const siteDesc = metaDesc || pkg.description || `${siteName} website.`;
-  let authorName = 'Matt Thommes';
+  let authorName = 'Site Author';
   try {
     const gitAuthor = execSync('git config user.name', { cwd: repoPath, encoding: 'utf8' }).trim();
     if (gitAuthor) authorName = gitAuthor;
@@ -70,11 +60,11 @@ function processRepo(repoName) {
 
   // 2. Resolve domain
   let domain = '';
-  if (pkg.homepage) {
-    try { domain = new URL(pkg.homepage.startsWith('http') ? pkg.homepage : `https://${pkg.homepage}`).hostname; } catch {}
+  if (customDomain) {
+    try { domain = new URL(customDomain.startsWith('http') ? customDomain : `https://${customDomain}`).hostname; } catch { domain = customDomain; }
   }
-  if (!domain && KNOWN_DOMAINS[repoName]) {
-    domain = KNOWN_DOMAINS[repoName];
+  if (!domain && pkg.homepage) {
+    try { domain = new URL(pkg.homepage.startsWith('http') ? pkg.homepage : `https://${pkg.homepage}`).hostname; } catch {}
   }
   if (!domain && indexHtml) {
     const urlMatches = indexHtml.match(/https?:\/\/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g) || [];
@@ -233,9 +223,10 @@ ${routeLines}
 
 // CLI Execution
 const targetRepo = process.argv[2];
+const targetDomain = process.argv[3];
 if (targetRepo) {
-  processRepo(targetRepo);
+  processRepo(targetRepo, targetDomain);
 } else {
-  console.log(`Usage: node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs <repo-name>`);
-  console.log(`Example: node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs cannedrage-20260125`);
+  console.log(`Usage: node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs <repo-name> [prod-domain]`);
+  console.log(`Example: node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs my-app-repo example.com`);
 }

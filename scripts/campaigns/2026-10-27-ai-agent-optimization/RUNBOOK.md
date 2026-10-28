@@ -63,7 +63,7 @@ Inject structured entity metadata before `</head>`:
     {
       "@type": "Person",
       "@id": "https://[PROD_DOMAIN]/#author",
-      "name": "Matt Thommes"
+      "name": "[Author Name]"
     }
   ]
 }
@@ -78,25 +78,8 @@ Record the site's production domain in the `"homepage"` field:
 
 ---
 
-## 3. Rollout Status across Child Repos
-
-| Repository | Domain | Status |
-| :--- | :--- | :--- |
-| **`game-script`** | `https://gamescript.pro` | ✅ Complete & Pushed |
-| **`thommesfamily-20260225`** | `https://thommesfamily.net` | ✅ Complete & Pushed |
-| **`hypertext-craft-20260127`** | `https://hypertextcraft.com` | ✅ Complete & Pushed |
-| **`cannedrage-20260125`** | `https://cannedrage.com` | ✅ Complete & Pushed |
-| **`mattthommesfamily-20261016`** | `https://matt.thommesfamily.net` | ✅ Complete & Pushed |
-| **`thommesfamilyvacations-20260222`** | `https://vacations.thommesfamily.net` | ✅ Complete & Pushed |
-| `ara-trish-basic-author-site-20260511` | TBD | ⏳ Pending |
-| `ara-trish-basic-author-site-20260520` | TBD | ⏳ Pending |
-| `hypertext-craft-showcase-fake1` | TBD | ⏳ Pending |
-| `hypertext-craft-showcase-fake2` | TBD | ⏳ Pending |
-
----
-
-## 4. How to Execute
-Run the companion script `apply.cjs` targeting a specific child repo or all pending repos:
+## 3. How to Execute
+Run the companion script `apply.cjs` targeting a specific child repo directory (and optionally its production domain if not already set in `package.json` `"homepage"`):
 ```bash
-node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs <repo-name>
+node scripts/campaigns/2026-10-27-ai-agent-optimization/apply.cjs <repo-name> [prod-domain]
 ```
