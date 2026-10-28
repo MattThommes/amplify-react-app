@@ -116,6 +116,10 @@ function processRepo(repoName) {
 
   // 4. Update robots.txt
   const robotsPath = path.join(repoPath, 'public/robots.txt');
+  const hasSitemap = fs.existsSync(path.join(repoPath, 'public/sitemap.xml'));
+  const sitemapLine = hasSitemap
+    ? `Sitemap: https://${domain}/sitemap.xml`
+    : `# Sitemap: https://${domain}/sitemap.xml`;
   const robotsContent = `# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
@@ -136,7 +140,7 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Sitemap: https://${domain}/sitemap.xml
+${sitemapLine}
 `;
   fs.writeFileSync(robotsPath, robotsContent);
   console.log(`- Updated public/robots.txt`);

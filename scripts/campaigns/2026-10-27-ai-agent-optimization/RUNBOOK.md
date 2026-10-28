@@ -84,11 +84,11 @@ Record the site's production domain in the `"homepage"` field:
 | :--- | :--- | :--- |
 | **`game-script`** | `https://gamescript.pro` | ✅ Complete & Pushed |
 | **`thommesfamily-20260225`** | `https://thommesfamily.net` | ✅ Complete & Pushed |
+| **`hypertext-craft-20260127`** | `https://hypertextcraft.com` | ✅ Complete & Pushed |
 | `cannedrage-20260125` | `https://cannedrage.com` | ⏳ Pending |
 | `mattthommesfamily-20261016` | `https://matt.thommesfamily.net` | ⏳ Pending |
 | `ara-trish-basic-author-site-20260511` | TBD | ⏳ Pending |
 | `ara-trish-basic-author-site-20260520` | TBD | ⏳ Pending |
-| `hypertext-craft-20260127` | TBD | ⏳ Pending |
 | `hypertext-craft-showcase-fake1` | TBD | ⏳ Pending |
 | `hypertext-craft-showcase-fake2` | TBD | ⏳ Pending |
 | `thommesfamilyvacations-20260222` | TBD | ⏳ Pending |
