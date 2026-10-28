@@ -18,7 +18,8 @@ const KNOWN_DOMAINS = {
   'thommesfamily-20260225': 'thommesfamily.net',
   'cannedrage-20260125': 'cannedrage.com',
   'mattthommesfamily-20261016': 'matt.thommesfamily.net',
-  'hypertext-craft-20260127': 'hypertextcraft.com'
+  'hypertext-craft-20260127': 'hypertextcraft.com',
+  'thommesfamilyvacations-20260222': 'vacations.thommesfamily.net'
 };
 
 function processRepo(repoName) {
