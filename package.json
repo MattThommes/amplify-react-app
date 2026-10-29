@@ -27,7 +27,7 @@
   "scripts": {
     "node-version-check": "node check_node_version.cjs",
     "dev": "vite --force",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo.cjs",
     "preview": "vite preview",
     "start:api": "node _localApiServer.cjs",
     "postinstall": "npm run node-version-check",

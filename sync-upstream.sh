@@ -79,6 +79,8 @@ FILES_TO_SYNC=(
   "src/reportWebVitals.js"
   "src/setupTests.js"
   "src/index.jsx"
+  "src/SEO.jsx"
+  "scripts/generate-seo.cjs"
 )
 
 for item in "${FILES_TO_SYNC[@]}"; do
@@ -124,6 +126,9 @@ if [ -f "package.json" ]; then
       ...upstreamPkg.scripts,
       ...localPkg.scripts
     };
+    if (mergedScripts.build && !mergedScripts.build.includes("generate-seo.cjs")) {
+      mergedScripts.build = `${mergedScripts.build} && node scripts/generate-seo.cjs`;
+    }
     // If local site configured a custom image-sync, preserve it
     if (localPkg.scripts && localPkg.scripts["image-sync"]) {
       mergedScripts["image-sync"] = localPkg.scripts["image-sync"];
@@ -187,7 +192,7 @@ fi
 
 # 7. Check for upstream updates to customized site files and notify
 echo "-> Checking for upstream updates to customized site files..."
-SITE_FILES=("src/App.jsx" "src/App.scss" "index.html" "public/manifest.json" "public/robots.txt" "public/llms.txt")
+SITE_FILES=("src/App.jsx" "src/App.scss" "index.html" "public/manifest.json" "public/robots.txt" "public/llms.txt" "public/llms-full.txt" "public/sitemap.xml")
 for check_file in "${SITE_FILES[@]}"; do
   if [ -f "$check_file" ]; then
     if ! git diff --quiet "upstream/$UPSTREAM_BRANCH" HEAD -- "$check_file" 2>/dev/null; then

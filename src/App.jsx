@@ -15,6 +15,7 @@ import { get } from 'aws-amplify/api';
 import {
     Routes, Route, Link, useLocation
 } from "react-router-dom";
+import SEO from './SEO';
 import { BuiltWith } from '@hypertext-craft/built-with';
 import '@hypertext-craft/built-with/dist/style.css';
 
@@ -131,10 +132,10 @@ function Content(pageOutput, backendResponse)
 {
     return (
         <>
-            <div className="content">
+            <main className="content">
                 {pageOutput}
                 {backendResponse && backendResponse.message && <p>{backendResponse.message}</p>}
-            </div>
+            </main>
         </>
     );
 }
@@ -143,6 +144,11 @@ function HomeContent({ backendResponse })
 {
     return Content(
         <>
+            <SEO
+                title={`Home - ${SiteName}`}
+                description="Welcome to our website! Take a look around to learn more about what we do."
+                path="/"
+            />
             <h2>Home</h2>
             <p>Welcome to our website! We're glad you're here. Take a look around to learn more about what we do.</p>
         </>,
@@ -154,6 +160,11 @@ function AboutContent({ backendResponse })
 {
     return Content(
         <>
+            <SEO
+                title={`About Us - ${SiteName}`}
+                description="Learn about our team, mission, and passion for technology and innovation."
+                path="/about"
+            />
             <h2>About Us</h2>
             <p>We are a company dedicated to providing the best services to our customers. Our team is passionate about technology and innovation.</p>
         </>,
@@ -165,6 +176,11 @@ function PricingContent({ backendResponse })
 {
     return Content(
         <>
+            <SEO
+                title={`Pricing - ${SiteName}`}
+                description="Explore our flexible service plans and competitive pricing options."
+                path="/pricing"
+            />
             <h2>Pricing</h2>
             <p>We offer a variety of plans to fit your needs. Please contact us for more information on our competitive pricing.</p>
         </>,
@@ -176,6 +192,11 @@ function ContactContent({ backendResponse })
 {
     return Content(
         <>
+            <SEO
+                title={`Contact Us - ${SiteName}`}
+                description="Get in touch with us by email or phone for questions and inquiries."
+                path="/contact"
+            />
             <h2>Contact Us</h2>
             <p>You can reach us by email at contact@example.com or by phone at 555-555-5555.</p>
         </>,
