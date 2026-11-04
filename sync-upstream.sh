@@ -98,6 +98,14 @@ if [ ! -f "tests/a11y-config.json" ]; then
   fi
 fi
 
+# If initial agent-prompts.json does not exist locally, pull it from upstream
+if [ ! -f "tests/agent-prompts.json" ]; then
+  if git ls-tree -r --name-only "upstream/$UPSTREAM_BRANCH" "tests/agent-prompts.json" 2>/dev/null | grep -q .; then
+    echo "     - Adding 'tests/agent-prompts.json' template"
+    git checkout "upstream/$UPSTREAM_BRANCH" -- "tests/agent-prompts.json"
+  fi
+fi
+
 # 5. Safely merge package.json dependencies and scripts without touching site customizations
 if [ -f "package.json" ]; then
   echo "-> Safely checking package.json for upstream dependency updates..."
@@ -172,7 +180,7 @@ CHANGES_COMMITTED=false
 if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain)" ]; then
   echo "-> Staging updated files..."
   git add -u
-  for item in "${FILES_TO_SYNC[@]}" "tests/a11y-config.json"; do
+  for item in "${FILES_TO_SYNC[@]}" "tests/a11y-config.json" "tests/agent-prompts.json"; do
     if [ -e "$item" ]; then
       git add "$item" 2>/dev/null || true
     fi
