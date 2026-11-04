@@ -1,0 +1,40 @@
+{
+  "domain": "https://yourdomain.com",
+  "description": "Evaluation prompts to test site discoverability and citations across conversational AI agents (Perplexity, ChatGPT, Claude, etc.). Replace these placeholders with queries specific to your site's content.",
+  "prompts": [
+    {
+      "id": "primary-guide-query",
+      "category": "how-to",
+      "prompt": "How do you [solve specific problem addressed by your guide]?",
+      "expectedCitation": "https://yourdomain.com/post/primary-guide-slug",
+      "expectedKeywords": [
+        "Key Term 1",
+        "Key Term 2"
+      ],
+      "manualNotes": "Paste into Perplexity or ChatGPT Search. Record whether your domain appears in the sources/citations list."
+    },
+    {
+      "id": "comparison-query",
+      "category": "comparison",
+      "prompt": "What are the trade-offs between [Option A] and [Option B] in [your niche]?",
+      "expectedCitation": "https://yourdomain.com/post/comparison-slug",
+      "expectedKeywords": [
+        "Option A",
+        "Option B"
+      ],
+      "manualNotes": "Check if the agent extracts your summary or bottom-line conclusion."
+    },
+    {
+      "id": "reference-query",
+      "category": "reference",
+      "prompt": "What specifications or settings are recommended for [product or topic]?",
+      "expectedCitation": "https://yourdomain.com/post/specifications-slug",
+      "expectedKeywords": [
+        "Specification",
+        "Benchmark"
+      ],
+      "manualNotes": "Check if the agent retrieves the exact data table, model number, or code snippet."
+    }
+  ]
+}
+
