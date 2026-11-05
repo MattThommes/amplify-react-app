@@ -159,6 +159,7 @@ function buildPrerenderHtml(parsed, activePath = null) {
       parts.push(`      <li><a href="${escapeHtml(href)}">${escapeHtml(s.heading)}</a></li>`);
     }
     parts.push('    </ul>');
+    parts.push('  </nav>');
   }
 
   parts.push('</main>');

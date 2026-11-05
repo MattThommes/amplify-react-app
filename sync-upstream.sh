@@ -83,12 +83,31 @@ FILES_TO_SYNC=(
   "scripts/generate-seo.cjs"
 )
 
+# Preserve custom API_NAME in src/index.jsx and backend phase in amplify.yml if present
+CUSTOM_API_NAME=""
+if [ -f "src/index.jsx" ]; then
+  CUSTOM_API_NAME=$(sed -n "s/.*const API_NAME = ['\"]\([^'\"]*\)['\"].*/\1/p" src/index.jsx | head -n 1)
+fi
+HAS_CUSTOM_AMPLIFY_BACKEND=false
+if [ -f "amplify.yml" ] && grep -q "^backend:" amplify.yml 2>/dev/null; then
+  HAS_CUSTOM_AMPLIFY_BACKEND=true
+fi
+
 for item in "${FILES_TO_SYNC[@]}"; do
+  if [ "$item" = "amplify.yml" ] && [ "$HAS_CUSTOM_AMPLIFY_BACKEND" = true ]; then
+    echo "     - Preserving custom 'amplify.yml' (has backend pipeline configuration)"
+    continue
+  fi
   if git ls-tree -r --name-only "upstream/$UPSTREAM_BRANCH" "$item" 2>/dev/null | grep -q .; then
     echo "     - Updating '${item}'"
     git checkout "upstream/$UPSTREAM_BRANCH" -- "$item"
   fi
 done
+
+if [ -n "$CUSTOM_API_NAME" ] && [ "$CUSTOM_API_NAME" != "apirest1" ] && [ -f "src/index.jsx" ]; then
+  sed -i '' "s/const API_NAME = 'apirest1';/const API_NAME = '${CUSTOM_API_NAME}';/g" src/index.jsx
+  echo "     - Preserved custom API_NAME ('${CUSTOM_API_NAME}') in 'src/index.jsx'"
+fi
 
 # If initial a11y-config.json does not exist locally, pull it from upstream
 if [ ! -f "tests/a11y-config.json" ]; then
