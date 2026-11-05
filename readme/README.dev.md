@@ -123,31 +123,30 @@ const restOperation = get({
 const response = await restOperation.response;
 ```
 
-### Rewrite rule
+### Rewrite and Redirect Rules (Single Page App Routing & Agent Readiness)
 
-For single-page apps (SPA’s), you need a rewrite rule to serve `/index.html` for all client-side routes. This also helps avoid a trailing slash at the end of the path in the URL and API requests, example: https://master.d1j6aypbzelxhd.amplifyapp.com/about/
+For single-page apps (SPAs) and AI search agent discovery (Perplexity, ChatGPT, Claude), you must configure a 200 rewrite rule in the AWS Amplify Console.
 
-In the “Rewrites and redirects” section, Amplify often creates a default rule for you. If not, or if you need to edit it, click “Edit” to open the JSON editor and ensure it contains the following rule:
+> ⚠️ **Important:** Do NOT use the default `"status": "404-200"`. Returning 404 headers causes AI search bots and search engine crawlers to reject or de-index your client-side routes (like `/about`, `/services`, `/pricing`). Always use `"status": "200"`.
+
+In the AWS Amplify Console:
+1. Navigate to your app > **Hosting** > **Rewrites and redirects**.
+2. Click **Edit** (JSON editor) and replace the configuration with the following rule:
 
 ```json
 [
   {
-    "source": "/<*>",
-    "status": "404-200",
-    "target": "/index.html"
+    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json)$)([^.]+$)/>",
+    "target": "/index.html",
+    "status": "200"
   }
 ]
 ```
 
-This one is not there by default, and is good to add to avoid the trailing slash issue:
-
-```
-{
-    "source": "</^((?!\\.(css|gif|ico|jpg|js|png|txt|svg|woff|ttf)$).)*$/>",
-    "status": "200",
-    "target": "/index.html"
-}
-```
+#### Why this rule is essential:
+* **Clean `200 OK` status:** Ensures all client-side paths (`/about`, `/pricing`, `/services`) return an `HTTP 200 OK` header so AI agents and search engines index the pages without issue.
+* **Protects static files:** Static assets (`.css`, `.js`, `robots.txt`, `llms.txt`, `.png`, fonts) are served directly without being mistakenly rewritten to HTML.
+* **Eliminates trailing slash issues:** Requests without trailing slashes are properly handled without unwanted 301 redirect drops.
 
 ## Adding a custom domain
 

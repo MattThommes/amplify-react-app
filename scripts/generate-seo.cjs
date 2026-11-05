@@ -30,6 +30,13 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
+function slugify(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
 function parseMarkdownToSections(markdown, baseUrl) {
   const lines = markdown.split(/\r?\n/);
   let siteTitle = '';
@@ -110,7 +117,7 @@ function formatInlineMarkdown(text) {
   );
 }
 
-function buildNoscriptHtml(parsed, activePath = null) {
+function buildPrerenderHtml(parsed, activePath = null) {
   const parts = [];
   parts.push('<main class="seo-prerender">');
   parts.push(`  <h1>${escapeHtml(parsed.siteTitle)}</h1>`);
@@ -125,8 +132,10 @@ function buildNoscriptHtml(parsed, activePath = null) {
   const finalSections = sectionsToRender.length > 0 ? sectionsToRender : parsed.sections;
 
   for (const sec of finalSections) {
+    const headingId = slugify(sec.heading);
+    const idAttr = headingId ? ` id="${escapeHtml(headingId)}"` : '';
     parts.push('  <section>');
-    parts.push(`    <h2>${escapeHtml(sec.heading)}</h2>`);
+    parts.push(`    <h2${idAttr}>${escapeHtml(sec.heading)}</h2>`);
     for (const p of sec.paragraphs) {
       parts.push(`    <p>${formatInlineMarkdown(p)}</p>`);
     }
@@ -150,14 +159,13 @@ function buildNoscriptHtml(parsed, activePath = null) {
       parts.push(`      <li><a href="${escapeHtml(href)}">${escapeHtml(s.heading)}</a></li>`);
     }
     parts.push('    </ul>');
-    parts.push('  </nav>');
   }
 
   parts.push('</main>');
   return parts.join('\n      ');
 }
 
-function updateHtmlMetadata(html, { title, description, canonicalUrl, noscriptInner }) {
+function updateHtmlMetadata(html, { title, description, canonicalUrl, prerenderHtml }) {
   let out = html;
 
   if (title) {
@@ -182,10 +190,19 @@ function updateHtmlMetadata(html, { title, description, canonicalUrl, noscriptIn
     }
   }
 
-  if (noscriptInner) {
+  if (prerenderHtml) {
+    // 1. Inject directly into <div id="root"> so headless browsers (Perplexity, ChatGPT, Claude)
+    // with JavaScript enabled receive full semantic HTML without waiting for client-side hydration.
+    // React 18 createRoot seamlessly replaces this content when client JS loads.
+    out = out.replace(
+      /<div id=["']root["']>\s*<\/div>/i,
+      `<div id="root">\n      ${prerenderHtml}\n    </div>`
+    );
+
+    // 2. Also inject into <noscript> for strict non-JS bots (e.g. curl, legacy crawlers).
     out = out.replace(
       /<noscript>[\s\S]*?<\/noscript>/i,
-      `<noscript>\n      ${noscriptInner}\n    </noscript>`
+      `<noscript>\n      ${prerenderHtml}\n    </noscript>`
     );
   }
 
@@ -223,14 +240,14 @@ function run() {
   }
 
   const parsed = parseMarkdownToSections(markdownSource, baseUrl);
-  const rootNoscript = buildNoscriptHtml(parsed, null);
+  const rootPrerender = buildPrerenderHtml(parsed, null);
 
-  // 1. Update root dist/index.html with canonical link and full semantic <noscript>
+  // 1. Update root dist/index.html with canonical link and semantic prerender in #root and <noscript>
   const updatedRootHtml = updateHtmlMetadata(baseHtml, {
     title: null,
     description: null,
     canonicalUrl: `${baseUrl}/`,
-    noscriptInner: rootNoscript
+    prerenderHtml: rootPrerender
   });
   fs.writeFileSync(indexHtmlPath, updatedRootHtml, 'utf8');
 
@@ -244,25 +261,31 @@ function run() {
 
     const targetDir = path.join(DIST_DIR, cleanRoute);
     const targetFile = path.join(targetDir, 'index.html');
+    const cleanHtmlFile = path.join(DIST_DIR, `${cleanRoute}.html`);
 
     const sectionTitle = `${section.heading} - ${parsed.siteTitle}`;
     const sectionDesc = section.paragraphs[0] || parsed.siteSummary || pkg.description || '';
     const canonicalUrl = `${baseUrl}/${cleanRoute}`;
-    const sectionNoscript = buildNoscriptHtml(parsed, section.path);
+    const sectionPrerender = buildPrerenderHtml(parsed, section.path);
 
     const routeHtml = updateHtmlMetadata(baseHtml, {
       title: sectionTitle,
       description: sectionDesc,
       canonicalUrl,
-      noscriptInner: sectionNoscript
+      prerenderHtml: sectionPrerender
     });
 
+    // Write folder index (dist/route/index.html) for /route/ requests
     fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(targetFile, routeHtml, 'utf8');
+
+    // Also write clean HTML file (dist/route.html) to eliminate S3 301 trailing slash redirects
+    fs.writeFileSync(cleanHtmlFile, routeHtml, 'utf8');
+
     routeCount++;
   }
 
-  console.log(`✅ [generate-seo] Injected semantic AI fallback into dist/index.html and pre-rendered ${routeCount} route page(s).`);
+  console.log(`✅ [generate-seo] Injected semantic AI fallback into dist/index.html and pre-rendered ${routeCount} route page(s) (dual index.html + .html).`);
 }
 
 run();
