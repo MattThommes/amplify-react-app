@@ -65,7 +65,7 @@ Optional but good to do early for new projects: update these files to include yo
     1. The setup script will adjust the header automatically.
     2. Keep this file though: [README.dev.md](README.dev.md) – for general app updates and instructions synced in via upstream.
 2.  [package.json](../package.json) (name, description, and "homepage": "https://yourdomain.com")
-3.  [public/index.html](../index.html) (`<title>` and `<meta name="description"`)
+3.  [index.html](../index.html) (`<title>`, `<meta name="description">`, `<link rel="canonical">`, and JSON-LD URLs)
 4.  [public/manifest.json](../public/manifest.json) (`short_name` and `name`)
 
 Commit your project-specific updates:
@@ -136,16 +136,16 @@ In the AWS Amplify Console:
 ```json
 [
   {
-    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json)$)([^.]+$)/>",
-    "target": "/index.html",
-    "status": "200"
+    "source": "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|xml|webp|html)$)([^.]+$)/>",
+    "status": "200",
+    "target": "/index.html"
   }
 ]
 ```
 
 #### Why this rule is essential:
 * **Clean `200 OK` status:** Ensures all client-side paths (`/about`, `/pricing`, `/services`) return an `HTTP 200 OK` header so AI agents and search engines index the pages without issue.
-* **Protects static files:** Static assets (`.css`, `.js`, `robots.txt`, `llms.txt`, `.png`, fonts) are served directly without being mistakenly rewritten to HTML.
+* **Protects static files:** Static assets (`sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt`, `.css`, `.js`, `.png`, `.webp`, `.html`, fonts) are served directly without being mistakenly rewritten to `/index.html`.
 * **Eliminates trailing slash issues:** Requests without trailing slashes are properly handled without unwanted 301 redirect drops.
 
 ## Adding a custom domain

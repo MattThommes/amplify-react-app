@@ -188,6 +188,20 @@ if [ -f "package.json" ]; then
 
     fs.writeFileSync("package.json", JSON.stringify(merged, null, 2) + "\n");
     console.log("     - Merged upstream dependencies/scripts into package.json (preserved site name, domain, & custom scripts)");
+
+    // Ensure index.html includes canonical link if homepage is configured
+    if (preservedHomepage && !/yourdomain\.com/i.test(preservedHomepage) && fs.existsSync("index.html")) {
+      const indexHtml = fs.readFileSync("index.html", "utf8");
+      if (!/<link\s+rel=["\x27]canonical["\x27]/i.test(indexHtml) && /<\/title>/i.test(indexHtml)) {
+        const canonicalBase = preservedHomepage.replace(/\/+$/, "");
+        const updatedIndexHtml = indexHtml.replace(
+          /(<\/title>)/i,
+          `$1\n    <link rel="canonical" href="${canonicalBase}/" />`
+        );
+        fs.writeFileSync("index.html", updatedIndexHtml, "utf8");
+        console.log(`     - Injected <link rel="canonical" href="${canonicalBase}/" /> into index.html`);
+      }
+    }
   } catch (err) {
     console.warn("     ! Could not auto-merge package.json:", err.message);
   }

@@ -15,9 +15,12 @@ const SEO = ({ title, description, path }) => {
         }
 
         if (typeof window !== 'undefined' && window.location) {
-            const canonicalUrl = path
-                ? `${window.location.origin}${path.startsWith('/') ? path : `/${path}`}`
-                : `${window.location.origin}${window.location.pathname}`;
+            const origin = getCanonicalOrigin();
+            const rawPath = path
+                ? (path.startsWith('/') ? path : `/${path}`)
+                : window.location.pathname;
+            const normalizedPath = rawPath === '/' ? '/' : rawPath.replace(/\/+$/, '');
+            const canonicalUrl = `${origin}${normalizedPath}`;
             setCanonicalLink(canonicalUrl);
             setMetaTag('property', 'og:url', canonicalUrl);
         }
@@ -25,6 +28,21 @@ const SEO = ({ title, description, path }) => {
 
     return null;
 };
+
+function getCanonicalOrigin() {
+    const existingCanonical = document.querySelector('link[rel="canonical"]');
+    if (existingCanonical) {
+        const href = existingCanonical.getAttribute('href');
+        if (href && /^https?:\/\//i.test(href) && !/yourdomain\.com/i.test(href)) {
+            try {
+                return new URL(href).origin;
+            } catch {
+                // Fall back to window.location.origin normalization below
+            }
+        }
+    }
+    return window.location.origin.replace(/^(https?:\/\/)www\./i, '$1');
+}
 
 function setMetaTag(attrName, attrValue, content) {
     let element = document.querySelector(`meta[${attrName}="${attrValue}"]`);
