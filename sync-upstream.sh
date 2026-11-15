@@ -260,10 +260,13 @@ if [ "$CHANGES_COMMITTED" = true ] && git diff HEAD~1 --name-only 2>/dev/null | 
 
   if [ "$DEPS_CHANGED" = "yes" ]; then
     echo "-> package.json dependencies were updated. Installing updated dependencies..."
-    npm install --prefer-offline --no-audit --progress=false
-    if ! git diff --quiet package-lock.json 2>/dev/null; then
-      git add package-lock.json
-      git commit -m "Sync: Update package-lock.json after upstream dependency sync"
+    if npm install --prefer-offline --no-audit --progress=false; then
+      if ! git diff --quiet package-lock.json 2>/dev/null; then
+        git add package-lock.json
+        git commit -m "Sync: Update package-lock.json after upstream dependency sync"
+      fi
+    else
+      echo -e "${YELLOW}   ! Warning: npm install encountered an error; skipping package-lock.json update.${NC}"
     fi
   else
     echo "-> package.json dependencies are unchanged. Skipping npm install."
