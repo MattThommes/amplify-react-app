@@ -32,7 +32,8 @@
     "start:api": "node _localApiServer.cjs",
     "postinstall": "npm run node-version-check",
     "image-sync": "aws s3 sync ~/Documents/dev/[LOCAL_PATH]/images/ s3://[CLOUD_PATH]/images/ --acl public-read",
-    "test:a11y": "playwright test"
+    "test:a11y": "playwright test",
+    "test:agent": "playwright test tests/agent-prompts.spec.ts"
   },
   "browserslist": {
     "production": [

@@ -76,6 +76,7 @@ FILES_TO_SYNC=(
   ".nvmrc"
   ".github/workflows"
   "tests/accessibility.spec.ts"
+  "tests/agent-prompts.spec.ts"
   "src/reportWebVitals.js"
   "src/setupTests.js"
   "src/index.jsx"
