@@ -93,7 +93,7 @@ test.describe('AI Agent Optimization (AEO / GEO) & Prompts Verification', () => 
     });
 
     test('homepage includes Schema.org JSON-LD structured data', async ({ page }) => {
-        await page.goto('/');
+        await page.goto('/', { waitUntil: 'domcontentloaded' });
 
         const jsonLdElements = await page.locator('script[type="application/ld+json"]').all();
         expect(jsonLdElements.length).toBeGreaterThan(0);
@@ -130,7 +130,7 @@ test.describe('AI Agent Optimization (AEO / GEO) & Prompts Verification', () => 
                 // Keep targetUrl as is
             }
 
-            const response = await page.goto(targetUrl);
+            const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
             expect(response?.status(), `Failed loading citation ${item.expectedCitation}`).toBe(200);
 
             const bodyText = await page.locator('body').innerText();
