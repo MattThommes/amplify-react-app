@@ -183,7 +183,12 @@ function updateHtmlMetadata(html, { title, description, canonicalUrl, prerenderH
   }
 
   if (canonicalUrl) {
-    const canonicalTag = `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />`;
+    // Synchronous inline canonical normalizer so dynamic SPA sub-routes served via
+    // Amplify's 200 rewrite to /index.html immediately update <link rel="canonical">
+    // to match the current pathname (stripped of trailing slashes and www.) before
+    // React hydration or async data fetches complete.
+    const canonicalScript = `<script>(function(){try{var l=document.querySelector('link[rel="canonical"]');if(l&&window.location){var u=new URL(l.href);var o=u.origin.replace(/^(https?:\\/\\/)www\\./i,'$1');var p=window.location.pathname;var n=p==='/'?'/':p.replace(/\\/+$/,'');l.href=o+n;}}catch(e){}})();</script>`;
+    const canonicalTag = `<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />\n    ${canonicalScript}`;
     if (/<link\s+rel=["']canonical["'][^>]*>/i.test(out)) {
       out = out.replace(/<link\s+rel=["']canonical["'][^>]*>/i, canonicalTag);
     } else {
